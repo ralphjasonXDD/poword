@@ -16,7 +16,7 @@ class App extends Component {
     this.setState({
       username: username
     });
-    history.replace({ pathname: `/room/${username}` })
+    history.push({ pathname: `/room/${username}` })
   }
 
   render() {

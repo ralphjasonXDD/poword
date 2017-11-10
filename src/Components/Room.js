@@ -3,10 +3,36 @@ import { Link } from 'react-router-dom';
 
 const Room = () => {
   return(
-    <div>
-      <Link to='/play'>+ challenge</Link>
+    <div style={RoomStyle.container}>
+      <div style={RoomStyle.challenger}>
+        <Link to='/play' style={RoomStyle.link}>+ challenge</Link>
+      </div>
+      <div style={RoomStyle.listChallenger}>
+        <ul>
+          <li>Tarzan</li>
+          <li>erecka7</li>
+          <li>jejemon</li>
+          <li>hunterXhunter</li>
+        </ul>
+      </div>
     </div>
   );
+}
+
+const RoomStyle = {
+  container: {
+    margin: '30px 30% 5% 30%'
+  },
+  listChallenger: {
+    border: '1px solid'
+  },
+  challenger: {
+    margin: '5px 0 5px 0',
+    textAlign: 'right'
+  },
+  link: {
+    textDecoration: 'none'
+  }
 }
 
 export default Room;

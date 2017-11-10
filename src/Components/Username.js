@@ -28,11 +28,23 @@ class Username extends React.Component {
       <form onSubmit={this.onLogin.bind(this)}>
         <input
           type="text"
+          style={UsernameStyle.username}
           value={this.state.username}
           onChange={this.handleChange.bind(this)} />
-        <button>login</button>
+        <button style={UsernameStyle.btn} >login</button>
       </form>
     );
+  }
+}
+
+const UsernameStyle = {
+  btn: {
+    height: '46px',
+    width: '15%'
+  },
+  username: {
+    height: '40px',
+    width: '80%'
   }
 }
 

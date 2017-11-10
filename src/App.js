@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import history from './History';
 import Username from './Components/Username';
+import logo from './logo.png'
 
 
 class App extends Component {
@@ -21,10 +22,22 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Username onLogin={this.onLogin.bind(this)} />
+      <div style={AppStyle.container}>
+        <div style={AppStyle.logo}>
+          <img src={logo} alt="poword logo" />
+          <Username onLogin={this.onLogin.bind(this)} />
+        </div>
       </div>
     );
+  }
+}
+
+const AppStyle = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '5%',
+    height: '100%'
   }
 }
 

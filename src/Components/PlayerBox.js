@@ -12,13 +12,13 @@ const jssStyles = {
     letterSpacing: '0.5px',
     lineHeight: 1,
     width: '500px',
-  },
-  ul: {
-    listStyle: 'none',
-    backgroundColor: '#ffffff',
-    paddingLeft: 0,
-    '& li': {
-      padding: '5px 0 5px 10px',
+    '& ul': {
+      listStyle: 'none',
+      backgroundColor: '#ffffff',
+      paddingLeft: 0,
+      '& li': {
+        padding: '5px 0 5px 10px',
+      },
     },
   },
 };
@@ -30,15 +30,13 @@ const PlayerBox = ({
   words,
 }) => {
   const wordList = words.map(word =>
-    <li>{word}</li>,
+    <li key={word.id}>{word.text}</li>,
   );
 
   return (
     <div className={classes.container}>
       <h4>Player {player}: {username}</h4>
-      <ul className={classes.ul}>
-        {wordList}
-      </ul>
+      <ul> {wordList} </ul>
     </div>
   );
 };
@@ -46,7 +44,10 @@ const PlayerBox = ({
 PlayerBox.propTypes = {
   player: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  words: PropTypes.arrayOf(PropTypes.string).isRequired,
+  words: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    text: PropTypes.string,
+  })).isRequired,
   classes: PropTypes.shape().isRequired,
 };
 

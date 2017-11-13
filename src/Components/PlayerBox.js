@@ -11,7 +11,6 @@ const jssStyles = {
     fontSize: '12px',
     letterSpacing: '0.5px',
     lineHeight: 1,
-    width: '500px',
     '& ul': {
       listStyle: 'none',
       backgroundColor: '#ffffff',

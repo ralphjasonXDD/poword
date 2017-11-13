@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
 import fire from '.././fire';
 import PlayerBox from './PlayerBox';
+import injectSheet from 'react-jss';
+
+const jssStyles = {
+  container: {
+    maxWidth: '960px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingLeft: '15px',
+    paddingRight: '15px'
+  },
+  playWrap: {
+    display: 'flex',
+    marginLeft: '-15px',
+    marginRight: '-15px'
+  },
+  sideBar: {
+    flex: '0 0 25%',
+    paddingLeft: '15px',
+    paddingRight: '15px'
+  },
+  wordWrap: {
+    flex: '0 0 50%',
+    paddingLeft: '15px',
+    paddingRight: '15px'
+  }
+}
 
 class Play extends Component {
   constructor() {
@@ -28,18 +54,31 @@ class Play extends Component {
   }
 
   render() {
+    const {classes} = this.props;
     return (
-      <div>
-        <div className="form-group">
-          <form className="" onSubmit={this.addWord.bind(this)}>
-            <input type="text" ref={el => this.inputWord = el} placeholder="blah" />
-            <input type="submit" />
-          </form>
+      <div className={classes.container}>
+        <div className={classes.playWrap}>
+          <div className={classes.sideBar}>
+            <PlayerBox player="1" username="kizuchie" words={this.state.words} />
+          </div>
+          <div className={classes.wordWrap}>
+            box
+          </div>
+          <div className={classes.sideBar}>
+            sidebar
+          </div>
         </div>
-        <PlayerBox player="1" username="kizuchie" words={this.state.words} />
+        <div>
+          <div className="form-group">
+            <form className="" onSubmit={this.addWord.bind(this)}>
+              <input type="text" ref={el => this.inputWord = el} placeholder="blah" />
+              <input type="submit" />
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default Play;
+export default injectSheet(jssStyles)(Play);

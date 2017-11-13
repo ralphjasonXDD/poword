@@ -17,14 +17,34 @@ const jssStyles = {
     marginRight: '-15px'
   },
   sideBar: {
-    flex: '0 0 25%',
     paddingLeft: '15px',
-    paddingRight: '15px'
+    paddingRight: '15px',
+    width: '210px'
   },
   wordWrap: {
-    flex: '0 0 50%',
-    paddingLeft: '15px',
-    paddingRight: '15px'
+    backgroundColor: '#20293f',
+    padding: '20px',
+    width: '500px'
+  },
+  wordRow: {
+    display: 'flex',
+    fontSize: '72px',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+    justifyContent: 'space-between',
+    textTransform: 'uppercase',
+    '& div': {
+      alignItems: 'center',
+      backgroundColor: '#e8f0f3',
+      cursor: 'default',
+      display: 'flex',
+      height: '106px',
+      justifyContent: 'center',
+      width: '106px'
+    },
+    '&:last-child': {
+      marginBottom: '0'
+    }
   }
 }
 
@@ -62,7 +82,32 @@ class Play extends Component {
             <PlayerBox player="1" username="kizuchie" words={this.state.words} />
           </div>
           <div className={classes.wordWrap}>
-            box
+            <div>
+              <div className={classes.wordRow}>
+                <div>s</div>
+                <div>a</div>
+                <div>j</div>
+                <div>o</div>
+              </div>
+              <div className={classes.wordRow}>
+                <div>s</div>
+                <div>a</div>
+                <div>j</div>
+                <div>o</div>
+              </div>
+              <div className={classes.wordRow}>
+                <div>s</div>
+                <div>a</div>
+                <div>j</div>
+                <div>o</div>
+              </div>
+              <div className={classes.wordRow}>
+                <div>s</div>
+                <div>a</div>
+                <div>j</div>
+                <div>o</div>
+              </div>
+            </div>
           </div>
           <div className={classes.sideBar}>
             sidebar

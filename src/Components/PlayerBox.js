@@ -24,7 +24,6 @@ const jssStyles = {
 
 const PlayerBox = ({
   classes,
-  player,
   username,
   words,
 }) => {
@@ -34,14 +33,13 @@ const PlayerBox = ({
 
   return (
     <div className={classes.container}>
-      <h4>Player {player}: {username}</h4>
+      <h4>{username}</h4>
       <ul> {wordList} </ul>
     </div>
   );
 };
 
 PlayerBox.propTypes = {
-  player: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,

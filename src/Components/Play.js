@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import injectSheet from 'react-jss';
 import fire from '.././fire';
 import PlayerBox from './PlayerBox';
-import injectSheet from 'react-jss';
 
 const jssStyles = {
   container: {
@@ -56,18 +56,33 @@ class Play extends Component {
       player: {
         id: 5,
         username: 'kizuchie',
+        words: [],
       },
-      words: [],
+      opponent: {
+        id: 2,
+        username: 'chi',
+        words: [],
+      },
     };
   }
 
   componentWillMount() {
+    this.getWords(this.state.player.id, 'player');
+    this.getWords(this.state.opponent.id, 'opponent');
+  }
+
+  getWords(id, thePlayer) {
     /* Create reference to words in Firebase Database */
-    const wordsRef = fire.database().ref('words').orderByChild('id').equalTo(this.state.player.id);
+    const wordsRef = fire.database().ref('words').orderByChild('id').equalTo(id);
     wordsRef.on('child_added', snapshot => {
       /* Update React state when word is added at Firebase Database */
       const word = { text: snapshot.val().text, id: snapshot.key };
-      this.setState({ words: [word].concat(this.state.words) });
+      this.setState({
+        [thePlayer]: {
+          ...this.state[thePlayer],
+          words: [word].concat(this.state[thePlayer].words),
+        },
+      });
     });
   }
 
@@ -87,7 +102,7 @@ class Play extends Component {
       <div className={classes.container}>
         <div className={classes.playWrap}>
           <div className={classes.sideBar}>
-            <PlayerBox player="1" username="kizuchie" words={this.state.words} />
+            <PlayerBox username={this.state.player.username} words={this.state.player.words} />
           </div>
           <div className={classes.wordWrap}>
             <div>
@@ -118,7 +133,7 @@ class Play extends Component {
             </div>
           </div>
           <div className={classes.sideBar}>
-            sidebar
+            <PlayerBox username={this.state.opponent.username} words={this.state.opponent.words} />
           </div>
         </div>
         <div>

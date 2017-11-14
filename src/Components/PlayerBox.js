@@ -50,5 +50,4 @@ PlayerBox.propTypes = {
   classes: PropTypes.shape().isRequired,
 };
 
-
 export default injectSheet(jssStyles)(PlayerBox);

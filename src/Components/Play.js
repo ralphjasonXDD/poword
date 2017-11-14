@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import fire from '.././fire';
 import PlayerBox from './PlayerBox';
 import injectSheet from 'react-jss';
@@ -9,22 +10,22 @@ const jssStyles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingLeft: '15px',
-    paddingRight: '15px'
+    paddingRight: '15px',
   },
   playWrap: {
     display: 'flex',
     marginLeft: '-15px',
-    marginRight: '-15px'
+    marginRight: '-15px',
   },
   sideBar: {
     paddingLeft: '15px',
     paddingRight: '15px',
-    width: '210px'
+    width: '210px',
   },
   wordWrap: {
     backgroundColor: '#20293f',
     padding: '20px',
-    width: '500px'
+    width: '500px',
   },
   wordRow: {
     display: 'flex',
@@ -40,28 +41,32 @@ const jssStyles = {
       display: 'flex',
       height: '106px',
       justifyContent: 'center',
-      width: '106px'
+      width: '106px',
     },
     '&:last-child': {
-      marginBottom: '0'
-    }
-  }
-}
+      marginBottom: '0',
+    },
+  },
+};
 
 class Play extends Component {
   constructor() {
     super();
     this.state = {
+      player: {
+        id: 5,
+        username: 'kizuchie',
+      },
       words: [],
     };
   }
 
   componentWillMount() {
     /* Create reference to words in Firebase Database */
-    const wordsRef = fire.database().ref('words').orderByKey().limitToLast(100);
+    const wordsRef = fire.database().ref('words').orderByChild('id').equalTo(this.state.player.id);
     wordsRef.on('child_added', snapshot => {
       /* Update React state when word is added at Firebase Database */
-      const word = { text: snapshot.val(), id: snapshot.key };
+      const word = { text: snapshot.val().text, id: snapshot.key };
       this.setState({ words: [word].concat(this.state.words) });
     });
   }
@@ -69,12 +74,15 @@ class Play extends Component {
   addWord(e) {
     e.preventDefault();
     /* Send the word to Firebase */
-    fire.database().ref('words').push(this.inputWord.value);
+    fire.database().ref('words').push({
+      id: this.state.player.id,
+      text: this.inputWord.value,
+    });
     this.inputWord.value = '';
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.container}>
         <div className={classes.playWrap}>
@@ -125,5 +133,9 @@ class Play extends Component {
     );
   }
 }
+
+Play.propTypes = {
+  classes: PropTypes.shape().isRequired,
+};
 
 export default injectSheet(jssStyles)(Play);

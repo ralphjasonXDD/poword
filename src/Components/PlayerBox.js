@@ -4,8 +4,8 @@ import injectSheet from 'react-jss';
 
 const jssStyles = {
   container: {
-    backgroundColor: '#f0f0f0',
-    boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.05)',
+    backgroundColor: '#fff',
+    border: '1px solid #e5ebec',
     borderRadius: '4px',
     color: '#333333',
     fontFamily: 'Lato',
@@ -14,13 +14,31 @@ const jssStyles = {
     lineHeight: 1,
     '& ul': {
       listStyle: 'none',
-      backgroundColor: '#ffffff',
+      margin: '0 auto',
       paddingLeft: 0,
       '& li': {
-        padding: '5px 0 5px 10px',
+        borderBottom: '1px solid #e6eaee',
+        color: '#7f8fa4',
+        fontSize: '13px',
+        padding: '12px 15px',
       },
     },
   },
+  playerTitle: {
+    color: '#7f8fa4',
+    fontSize: '14px',
+    margin: '0 auto 15px',
+    textTransform: 'uppercase'
+  },
+  playerName: {
+    backgroundColor: '#e74a25',
+    borderRadius: '4px 4px 0 0',
+    color: '#fff',
+    fontSize: '18px',
+    fontWeight: 'normal',
+    padding: '12px 18px',
+    margin: '0 auto'
+  }
 };
 
 const PlayerBox = ({
@@ -33,9 +51,12 @@ const PlayerBox = ({
   );
 
   return (
-    <div className={classes.container}>
-      <h4>{username}</h4>
-      <ul> {wordList} </ul>
+    <div>
+      <h3 className={classes.playerTitle}>Player 1</h3>
+      <div className={classes.container}>
+        <h4 className={classes.playerName}>{username}</h4>
+        <ul> {wordList} </ul>
+      </div>
     </div>
   );
 };

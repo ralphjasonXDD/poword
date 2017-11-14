@@ -16,6 +16,7 @@ const jssStyles = {
     display: 'flex',
     marginLeft: '-15px',
     marginRight: '-15px',
+    marginTop: '45px'
   },
   sideBar: {
     paddingLeft: '15px',
@@ -23,7 +24,10 @@ const jssStyles = {
     width: '210px',
   },
   wordWrap: {
-    backgroundColor: '#20293f',
+    backgroundColor: '#fff',
+    boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #d7dfe3',
+    borderRadius: '4px',
     padding: '20px',
     width: '500px',
   },
@@ -36,7 +40,8 @@ const jssStyles = {
     textTransform: 'uppercase',
     '& div': {
       alignItems: 'center',
-      backgroundColor: '#e8f0f3',
+      backgroundColor: '#e4e6eb',
+      color: '#3b3b3b',
       cursor: 'default',
       display: 'flex',
       height: '106px',

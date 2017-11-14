@@ -5,7 +5,8 @@ import injectSheet from 'react-jss';
 const jssStyles = {
   container: {
     backgroundColor: '#f0f0f0',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.3)',
+    boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.05)',
+    borderRadius: '4px',
     color: '#333333',
     fontFamily: 'Lato',
     fontSize: '12px',

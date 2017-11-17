@@ -70,8 +70,8 @@ class Play extends Component {
         username: 'chi',
         words: [],
       },
-      random_letters: "ksiqopedksjekdso",
-      current_answer: "",
+      random_letters: 'ksiqopedksjekdso',
+      current_answer: '',
     };
   }
 
@@ -135,7 +135,7 @@ class Play extends Component {
 
     fire.database().ref('words').push({
       id: this.state.player.id,
-      text: word
+      text: word,
     });
   }
 
@@ -148,19 +148,23 @@ class Play extends Component {
             <PlayerBox username={this.state.player.username} words={this.state.player.words} />
           </div>
           <div className={classes.wordWrap}>
-            <RandomLetter random_letters = { this.chunkRandomLetters() } />
+            <RandomLetter random_letters={this.chunkRandomLetters()} />
           </div>
           <div className={classes.sideBar}>
-            <PlayerBox username={this.state.opponent.username} words={this.state.opponent.words} />
+            <PlayerBox
+              username={this.state.opponent.username}
+              words={this.state.opponent.words}
+              isOpponent
+            />
           </div>
         </div>
         <div>
           <UserAnswer
-            sendWord = { this.sendWord }
-            setAnswer = { this.setAnswer }
-            answer = { this.state.current_answer }
-            letters = { this.state.random_letters }
-            />
+            sendWord={this.sendWord}
+            setAnswer={this.setAnswer}
+            answer={this.state.current_answer}
+            letters={this.state.random_letters}
+          />
         </div>
       </div>
     );

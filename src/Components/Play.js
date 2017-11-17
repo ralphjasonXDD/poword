@@ -115,16 +115,6 @@ class Play extends Component {
     });
   }
 
-  addWord(e) {
-    e.preventDefault();
-    /* Send the word to Firebase */
-    fire.database().ref('words').push({
-      id: this.state.player.id,
-      text: this.inputWord.value,
-    });
-    this.inputWord.value = '';
-  }
-
   setAnswer = (ans) => {
     this.setLetterStyle(ans);
     this.setState({ current_answer: ans });

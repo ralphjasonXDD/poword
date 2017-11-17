@@ -13,8 +13,10 @@ const jssStyles = {
     letterSpacing: '0.5px',
     lineHeight: 1,
     '& ul': {
+      height: '485px',
       listStyle: 'none',
       margin: '0 auto',
+      overflowY: 'auto',
       paddingLeft: 0,
       '& li': {
         borderBottom: '1px solid #e6eaee',
@@ -23,12 +25,6 @@ const jssStyles = {
         padding: '12px 15px',
       },
     },
-  },
-  playerTitle: {
-    color: '#7f8fa4',
-    fontSize: '14px',
-    margin: '0 auto 15px',
-    textTransform: 'uppercase',
   },
   playerName: {
     backgroundColor: props => (props.isOpponent ? '#ffb22b' : '#e74a25'),
@@ -45,7 +41,6 @@ const PlayerBox = ({
   classes,
   username,
   words,
-  isOpponent,
 }) => {
   const wordList = words.map(word =>
     <li key={word.id}>{word.text}</li>,
@@ -53,7 +48,6 @@ const PlayerBox = ({
 
   return (
     <div>
-      <h3 className={classes.playerTitle}>Player { isOpponent ? 2 : 1 }</h3>
       <div className={classes.container}>
         <h4 className={classes.playerName}>{username}</h4>
         <ul> {wordList} </ul>
@@ -63,17 +57,12 @@ const PlayerBox = ({
 };
 
 PlayerBox.propTypes = {
-  isOpponent: PropTypes.string,
   username: PropTypes.string.isRequired,
   words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     text: PropTypes.string,
   })).isRequired,
   classes: PropTypes.shape().isRequired,
-};
-
-PlayerBox.defaultProps = {
-  isOpponent: false,
 };
 
 export default injectSheet(jssStyles)(PlayerBox);

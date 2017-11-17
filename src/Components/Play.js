@@ -18,7 +18,7 @@ const jssStyles = {
     display: 'flex',
     marginLeft: '-15px',
     marginRight: '-15px',
-    marginTop: '45px'
+    marginTop: '45px',
   },
   sideBar: {
     paddingLeft: '15px',
@@ -29,7 +29,6 @@ const jssStyles = {
     backgroundColor: '#fff',
     border: '1px solid #e6eaee',
     borderRadius: '4px',
-    marginTop: '30px',
     padding: '20px',
     width: '500px',
   },

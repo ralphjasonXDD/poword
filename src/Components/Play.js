@@ -5,6 +5,7 @@ import fire from '.././fire';
 import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
+import Timer from './Timer';
 
 const jssStyles = {
   container: {
@@ -131,29 +132,34 @@ class Play extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.container}>
-        <div className={classes.playWrap}>
-          <div className={classes.sideBar}>
-            <PlayerBox username={this.state.player.username} words={this.state.player.words} />
+      <div>
+        <div>
+          <Timer seconds="30" />
+        </div>
+        <div className={classes.container}>
+          <div className={classes.playWrap}>
+            <div className={classes.sideBar}>
+              <PlayerBox username={this.state.player.username} words={this.state.player.words} />
+            </div>
+            <div className={classes.wordWrap}>
+              <RandomLetter random_letters={this.chunkRandomLetters()} />
+            </div>
+            <div className={classes.sideBar}>
+              <PlayerBox
+                username={this.state.opponent.username}
+                words={this.state.opponent.words}
+                isOpponent
+              />
+            </div>
           </div>
-          <div className={classes.wordWrap}>
-            <RandomLetter random_letters={this.chunkRandomLetters()} />
-          </div>
-          <div className={classes.sideBar}>
-            <PlayerBox
-              username={this.state.opponent.username}
-              words={this.state.opponent.words}
-              isOpponent
+          <div>
+            <UserAnswer
+              sendWord={this.sendWord}
+              setAnswer={this.setAnswer}
+              answer={this.state.current_answer}
+              letters={this.state.random_letters}
             />
           </div>
-        </div>
-        <div>
-          <UserAnswer
-            sendWord={this.sendWord}
-            setAnswer={this.setAnswer}
-            answer={this.state.current_answer}
-            letters={this.state.random_letters}
-          />
         </div>
       </div>
     );

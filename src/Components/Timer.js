@@ -44,7 +44,7 @@ class Timer extends Component {
     });
 
     if (seconds == 0) {
-      this.setState({seconds: this.props.seconds})
+      clearInterval(this.timer);
     }
   }
   render() {

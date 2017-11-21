@@ -1,48 +1,59 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import history from './History';
-import Username from './Components/Username';
 import logo from './logo.png'
+
+import {
+  auth,
+  fbProvider,
+  fbKey,
+  isAuthenticated
+} from './fire';
 
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      username: ''
-    }
   }
 
-  onLogin(username) {
-    this.setState({
-      username: username
+  onLogin() {
+    auth.signInWithPopup(fbProvider).then(function(result) {
+      window.localStorage.setItem(
+        fbKey,
+        JSON.stringify({
+          uid: auth.currentUser.uid,
+          username: auth.currentUser.displayName
+        })
+      );
+
+      history.push({pathname: '/room'});
+    }).catch(function(error) {
+      console.log('fb login: ', error);
     });
-    history.push({ pathname: `/room/${username}` })
+  }
+
+  onLogout() {
+    auth.signOut().then(function() {
+      window.localStorage.removeItem(fbKey);
+      history.replace({pathname: '/'})
+    }).catch(function(error) {
+      console.log('fb logout: ', error);
+    });
   }
 
   render() {
     return (
-      <div style={AppStyle.container}>
-        <div style={AppStyle.logo}>
+      <div>
+        {isAuthenticated() && <Redirect to={{pathname: '/room'}} />}
+        <div>
           <img src={logo} alt="poword logo" />
-          <Username onLogin={this.onLogin.bind(this)} />
+          <button onClick={this.onLogin}>FB Login</button>
         </div>
       </div>
     );
   }
 }
 
-const AppStyle = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '5%',
-    height: '100%'
-  }
-}
-
-App.propTypes = {
-  username: PropTypes.string
-}
 
 export default App;

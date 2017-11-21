@@ -54,6 +54,15 @@ const jssStyles = {
       marginBottom: '0',
     },
   },
+  playHeader: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderBottom: '1px solid #e6eaee',
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '20px',
+    textAlign: 'center'
+  },
 };
 
 class Play extends Component {
@@ -143,8 +152,8 @@ class Play extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <div>
-          <Timer seconds="30" />
+        <div className={classes.playHeader}>
+          <Timer seconds="120" />
         </div>
         <div className={classes.container}>
           <div className={classes.playWrap}>

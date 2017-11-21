@@ -1,4 +1,17 @@
 import React, { Component } from 'react';
+import injectSheet from 'react-jss';
+
+const jssStyles = {
+  time: {
+    color: '#4e4e4e',
+    fontSize: '40px',
+    margin: '10px auto 0'
+  },
+  timeHeading: {
+    color: '#7f8fa4',
+    margin: '0 auto'
+  }
+};
 
 class Timer extends Component {
   constructor (props) {
@@ -35,12 +48,14 @@ class Timer extends Component {
     }
   }
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        {this.state.time.mins}:{this.state.time.secs}
+        <h5 className={classes.timeHeading}>Time remaining</h5>
+        <h4 className={classes.time}>{this.state.time.mins}:{this.state.time.secs}</h4>
       </div>
     );
   }
 }
 
-export default Timer;
+export default injectSheet(jssStyles)(Timer);

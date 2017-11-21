@@ -65,8 +65,10 @@ class UserAnswer extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div contenteditable="true" data-placeholder="Type your answer" className={classes.answerHolder}>
-        { this.props.answer }
+      <div>
+        <div className={classes.answerHolder}>
+          { this.props.answer }
+        </div>
       </div>
     )
   }

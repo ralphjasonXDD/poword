@@ -1,5 +1,27 @@
 import React, { Component } from 'react';
+import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
+
+const jssStyles = {
+  answerHolder: {
+    alignItems: 'center',
+    backgroundColor: '#e0e5e9',
+    border: '1px solid #d8dcdf',
+    borderRadius: '4px',
+    color: '#9d9e9f',
+    cursor: 'text',
+    display: 'flex',
+    fontSize: '60px',
+    fontWeight: 'bold',
+    height: '80px',
+    justifyContent: 'center',
+    margin: '30px auto',
+    maxWidth: '490px',
+    padding: '15px',
+    textAlign: 'center',
+    textTransform: 'uppercase'
+  }
+};
 
 class UserAnswer extends Component {
 
@@ -41,12 +63,13 @@ class UserAnswer extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
-        <h2> Mao ni iyang answer: { this.props.answer } </h2>
+      <div contenteditable="true" data-placeholder="Type your answer" className={classes.answerHolder}>
+        { this.props.answer }
       </div>
     )
   }
 }
 
-export default UserAnswer;
+export default injectSheet(jssStyles)(UserAnswer);

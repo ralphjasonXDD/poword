@@ -70,9 +70,19 @@ class Play extends Component {
         username: 'chi',
         words: [],
       },
-      random_letters: 'ksiqopedksjekdso',
+      random_letters: this.setRandomLetters(),
       current_answer: '',
     };
+  }
+
+  setRandomLetters() {
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz";
+
+    for (var i = 0; i < 16; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text.toString();
   }
 
   setLetterStyle(answer) {

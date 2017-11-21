@@ -5,6 +5,7 @@ import fire from '.././fire';
 import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
+import Timer from './Timer';
 
 const jssStyles = {
   container: {
@@ -53,6 +54,15 @@ const jssStyles = {
       marginBottom: '0',
     },
   },
+  playHeader: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderBottom: '1px solid #e6eaee',
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '20px',
+    textAlign: 'center'
+  },
 };
 
 class Play extends Component {
@@ -69,9 +79,19 @@ class Play extends Component {
         username: 'chi',
         words: [],
       },
-      random_letters: 'ksiqopedksjekdso',
+      random_letters: this.setRandomLetters(),
       current_answer: '',
     };
+  }
+
+  setRandomLetters() {
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz";
+
+    for (var i = 0; i < 16; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text.toString();
   }
 
   setLetterStyle(answer) {
@@ -131,29 +151,34 @@ class Play extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.container}>
-        <div className={classes.playWrap}>
-          <div className={classes.sideBar}>
-            <PlayerBox username={this.state.player.username} words={this.state.player.words} />
+      <div>
+        <div className={classes.playHeader}>
+          <Timer seconds="120" />
+        </div>
+        <div className={classes.container}>
+          <div className={classes.playWrap}>
+            <div className={classes.sideBar}>
+              <PlayerBox username={this.state.player.username} words={this.state.player.words} />
+            </div>
+            <div className={classes.wordWrap}>
+              <RandomLetter random_letters={this.chunkRandomLetters()} />
+            </div>
+            <div className={classes.sideBar}>
+              <PlayerBox
+                username={this.state.opponent.username}
+                words={this.state.opponent.words}
+                isOpponent
+              />
+            </div>
           </div>
-          <div className={classes.wordWrap}>
-            <RandomLetter random_letters={this.chunkRandomLetters()} />
-          </div>
-          <div className={classes.sideBar}>
-            <PlayerBox
-              username={this.state.opponent.username}
-              words={this.state.opponent.words}
-              isOpponent
+          <div>
+            <UserAnswer
+              sendWord={this.sendWord}
+              setAnswer={this.setAnswer}
+              answer={this.state.current_answer}
+              letters={this.state.random_letters}
             />
           </div>
-        </div>
-        <div>
-          <UserAnswer
-            sendWord={this.sendWord}
-            setAnswer={this.setAnswer}
-            answer={this.state.current_answer}
-            letters={this.state.random_letters}
-          />
         </div>
       </div>
     );

@@ -9,7 +9,7 @@ import Timer from './Timer';
 
 const jssStyles = {
   container: {
-    maxWidth: '960px',
+    maxWidth: '720px',
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingLeft: '15px',
@@ -24,14 +24,14 @@ const jssStyles = {
   sideBar: {
     paddingLeft: '15px',
     paddingRight: '15px',
-    width: '210px',
+    width: '25%',
   },
   wordWrap: {
     backgroundColor: '#fff',
     border: '1px solid #e6eaee',
     borderRadius: '4px',
     padding: '20px',
-    width: '500px',
+    width: '50%',
   },
   wordRow: {
     display: 'flex',
@@ -46,9 +46,9 @@ const jssStyles = {
       color: '#4e4e4e',
       cursor: 'default',
       display: 'flex',
-      height: '110px',
+      height: '60px',
       justifyContent: 'center',
-      width: '110px',
+      width: '60px',
     },
     '&:last-child': {
       marginBottom: '0',
@@ -60,7 +60,7 @@ const jssStyles = {
     borderBottom: '1px solid #e6eaee',
     display: 'flex',
     justifyContent: 'center',
-    padding: '20px',
+    padding: '12px',
     textAlign: 'center'
   },
 };
@@ -161,7 +161,7 @@ class Play extends Component {
               <PlayerBox username={this.state.player.username} words={this.state.player.words} />
             </div>
             <div className={classes.wordWrap}>
-              <RandomLetter random_letters={this.chunkRandomLetters()} />
+              <RandomLetter randomLetters={this.chunkRandomLetters()} />
             </div>
             <div className={classes.sideBar}>
               <PlayerBox

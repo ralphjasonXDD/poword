@@ -11,6 +11,7 @@ import Play from './Components/Play';
 import App from './App';
 import Signout from './Signout';
 import 'normalize.css';
+import WebFont from 'webfontloader';
 
 const MatchWhenAuthorized = ({ component: Component, ...rest }) => (
   <Route
@@ -37,5 +38,11 @@ const route = (
     </div>
   </BrowserRouter>
 );
+
+WebFont.load({
+  google: {
+    families: ['Boogaloo', 'sans-serif']
+  }
+});
 
 ReactDOM.render(route, document.getElementById('root'));

@@ -11,7 +11,8 @@
     "react-dom": "^16.0.0",
     "react-jss": "^7.2.0",
     "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",

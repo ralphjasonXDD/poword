@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 const jssStyles = {
   wordRow: {
     display: 'flex',
-    fontSize: '38px',
+    fontFamily: 'Boogaloo',
+    fontSize: '44px',
     fontWeight: 'bold',
     marginBottom: '15px',
     justifyContent: 'space-between',

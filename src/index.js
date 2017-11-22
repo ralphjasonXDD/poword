@@ -5,7 +5,10 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import { isAuthenticated } from './fire';
+import {
+  fbKey,
+  isAuthenticated,
+} from './fire';
 import Room from './Components/Room';
 import Play from './Components/Play';
 import App from './App';
@@ -22,19 +25,26 @@ const MatchWhenAuthorized = ({ component: Component, ...rest }) => (
   />
 );
 
-const route = (
-  <BrowserRouter>
-    <div>
-      <div>
-        {isAuthenticated() && <Signout />}
-      </div>
-      <div>
-        <Route exact path="/" component={App} />
-        <MatchWhenAuthorized exact path="/room" component={Room} />
-        <MatchWhenAuthorized exact path="/play" component={Play} />
-      </div>
-    </div>
-  </BrowserRouter>
-);
+const CustomRoute = () => {
+  const user = JSON.parse(window.localStorage.getItem(fbKey));
 
-ReactDOM.render(route, document.getElementById('root'));
+  return (
+    <BrowserRouter>
+      <div>
+        <div>
+          {isAuthenticated() && <Signout />}
+        </div>
+        <div>
+          {isAuthenticated() && (<div>Username: {user.username}</div>)}
+        </div>
+        <div>
+          <Route exact path="/" component={App} />
+          <MatchWhenAuthorized exact path="/room" component={Room} />
+          <MatchWhenAuthorized exact path="/play" component={Play} />
+        </div>
+      </div>
+    </BrowserRouter>
+  );
+};
+
+ReactDOM.render(<CustomRoute />, document.getElementById('root'));

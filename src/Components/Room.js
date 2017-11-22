@@ -1,12 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../fire';
+
+const RoomStyle = {
+  container: {
+    margin: '30px 30% 5% 30%',
+  },
+  listChallenger: {
+    border: '1px solid',
+  },
+  challenger: {
+    margin: '5px 0 5px 0',
+    textAlign: 'right',
+  },
+  link: {
+    textDecoration: 'none',
+  },
+};
 
 const Room = () => {
-  return(
+  return (
     <div style={RoomStyle.container}>
       <div style={RoomStyle.challenger}>
-        <Link to='/play' style={RoomStyle.link}>+ challenge</Link>
+        <Link to="/play" style={RoomStyle.link}>+ challenge</Link>
       </div>
       <div style={RoomStyle.listChallenger}>
         <ul>
@@ -20,20 +35,5 @@ const Room = () => {
   );
 }
 
-const RoomStyle = {
-  container: {
-    margin: '30px 30% 5% 30%'
-  },
-  listChallenger: {
-    border: '1px solid'
-  },
-  challenger: {
-    margin: '5px 0 5px 0',
-    textAlign: 'right'
-  },
-  link: {
-    textDecoration: 'none'
-  }
-}
 
 export default Room;

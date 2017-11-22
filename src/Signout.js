@@ -23,7 +23,7 @@ const jssStyles = {
 };
 
 class Signout extends Component {
-  onSignout = (e) => {
+  onSignout(e) {
     e.preventDefault();
     auth.signOut().then(() => {
       window.localStorage.removeItem(fbKey);

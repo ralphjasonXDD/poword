@@ -15,7 +15,7 @@ const Letter = (props) => {
 };
 
 Letter.propTypes = {
-  letterStyle: PropTypes.arrayOf(PropTypes.array).isRequired,
+  letterStyle: PropTypes.arrayOf(PropTypes.string).isRequired,
   letter: PropTypes.string.isRequired,
 };
 

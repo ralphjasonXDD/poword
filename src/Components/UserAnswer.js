@@ -82,8 +82,8 @@ class UserAnswer extends Component {
 
 UserAnswer.propTypes = {
   answer: PropTypes.string.isRequired,
-  setAnswer: PropTypes.string.isRequired,
-  sendWord: PropTypes.string.isRequired,
+  setAnswer: PropTypes.func.isRequired,
+  sendWord: PropTypes.func.isRequired,
 };
 
 export default injectSheet(jssStyles)(UserAnswer);

@@ -34,7 +34,7 @@ const RandomLetter = ({
 }) => {
   const letters = letter => (
     letter.map((l, i) => (
-      <Letter key={i} letter={l[0]} color={l[1]} />
+      <Letter key={i} letter={l[0]} letterStyle={l[1]} />
     ))
   );
 

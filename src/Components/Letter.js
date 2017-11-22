@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const Letter = (props) => {
   const LetterStyle = {
     letter: {
-      color: props.color,
+      color: props.letterStyle[0],
+      backgroundColor: props.letterStyle[1]
     },
   };
 
@@ -14,7 +15,7 @@ const Letter = (props) => {
 };
 
 Letter.propTypes = {
-  color: PropTypes.string.isRequired,
+  letterStyle: PropTypes.arrayOf(PropTypes.array).isRequired,
   letter: PropTypes.string.isRequired,
 };
 

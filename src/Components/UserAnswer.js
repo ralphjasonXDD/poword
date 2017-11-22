@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
 
@@ -21,47 +22,50 @@ const jssStyles = {
     maxWidth: '46%',
     padding: '15px',
     textAlign: 'center',
-    textTransform: 'uppercase'
-  }
+    textTransform: 'uppercase',
+  },
 };
 
 class UserAnswer extends Component {
-
   constructor(props) {
     super(props);
     this.keyEventHandler();
   }
 
   keyEventHandler() {
-    document.addEventListener("keydown", function (e) {
+    const keyHandle = (e) => {
       this.handleKeys(e.keyCode);
-    }.bind(this))
+    };
+
+    document.addEventListener('keydown', keyHandle.bind(this));
   }
 
-  handleKeys(key_code) {
-    var ans = this.props.answer;
+  handleKeys(keyCode) {
+    let ans = this.props.answer;
 
-    if (this.isLetterCode(key_code) && this.isValidLetter(KeyCodes.letter_codes[key_code]))
-      ans = ans + KeyCodes.letter_codes[key_code];
-    else if (KeyCodes.action_codes[key_code] === 'enter') {
+    if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
+      ans += KeyCodes.letter_codes[keyCode];
+    } else if (KeyCodes.action_codes[keyCode] === 'enter') {
       this.props.sendWord(ans);
-      ans = "";
-    } else if (KeyCodes.action_codes[key_code] === 'delete')
+      ans = '';
+    } else if (KeyCodes.action_codes[keyCode] === 'delete') {
       ans = ans.substr(0, ans.length - 1);
+    }
 
     this.props.setAnswer(ans);
   }
 
   isValidLetter(letter) {
-    return this.filterOccurence(this.props.answer, letter) < this.filterOccurence(this.props.letters, letter)
+    const prop = this.props;
+    return this.filterOccurence(prop.answer, letter) < this.filterOccurence(prop.letters, letter);
   }
 
   filterOccurence(word, letter) {
-    return word.split("").filter(v => v === letter).length
+    return word.split('').filter(v => v === letter).length;
   }
 
   isLetterCode(code) {
-    return Object.keys(KeyCodes.letter_codes).indexOf(code.toString()) >= 0
+    return Object.keys(KeyCodes.letter_codes).indexOf(code.toString()) >= 0;
   }
 
   render() {
@@ -72,8 +76,14 @@ class UserAnswer extends Component {
           { this.props.answer }
         </div>
       </div>
-    )
+    );
   }
 }
+
+UserAnswer.propTypes = {
+  answer: PropTypes.string.isRequired,
+  setAnswer: PropTypes.string.isRequired,
+  sendWord: PropTypes.string.isRequired,
+};
 
 export default injectSheet(jssStyles)(UserAnswer);

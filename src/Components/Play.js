@@ -98,10 +98,10 @@ class Play extends Component {
     var ans = answer.split("");
     return this.state.random_letters.split("").map ((letter, i) => {
       if (ans.indexOf(letter) === -1)
-        return [letter, "#4e4e4e"];
+        return [letter, ['#4e4e4e', '#e4e6eb']];
 
       ans.splice(ans.indexOf(letter), 1);
-      return [letter, "red"];
+      return [letter, ['#fff', '#398bf7']];
     });
   }
 

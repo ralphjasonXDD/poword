@@ -13,7 +13,7 @@ const jssStyles = {
     letterSpacing: '0.5px',
     lineHeight: 1,
     '& ul': {
-      height: '485px',
+      height: '323px',
       listStyle: 'none',
       margin: '0 auto',
       overflowY: 'auto',
@@ -30,9 +30,9 @@ const jssStyles = {
     backgroundColor: props => (props.isOpponent ? '#ffb22b' : '#e74a25'),
     borderRadius: '4px 4px 0 0',
     color: '#fff',
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 'normal',
-    padding: '12px 18px',
+    padding: '10px 15px',
     margin: '0 auto',
   },
 };

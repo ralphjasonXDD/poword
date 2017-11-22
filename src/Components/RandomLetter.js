@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const jssStyles = {
   wordRow: {
     display: 'flex',
-    fontSize: '72px',
+    fontSize: '38px',
     fontWeight: 'bold',
     marginBottom: '15px',
     justifyContent: 'space-between',
@@ -17,9 +17,9 @@ const jssStyles = {
       color: '#4e4e4e',
       cursor: 'default',
       display: 'flex',
-      height: '110px',
+      height: '70px',
       justifyContent: 'center',
-      width: '110px',
+      width: '70px',
     },
     '&:last-child': {
       marginBottom: '0',

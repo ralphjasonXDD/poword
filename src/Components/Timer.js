@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 const jssStyles = {
   time: {
     color: '#4e4e4e',
-    fontSize: '40px',
+    fontSize: '30px',
     margin: '10px auto 0'
   },
   timeHeading: {

@@ -10,6 +10,7 @@ import Room from './Components/Room';
 import Play from './Components/Play';
 import App from './App';
 import Signout from './Signout';
+import 'normalize.css';
 
 const MatchWhenAuthorized = ({ component: Component, ...rest }) => (
   <Route

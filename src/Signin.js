@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
+import injectSheet from 'react-jss';
 import history from './History';
 import {
   fbKey,
   fbProvider,
   auth,
 } from './fire';
-import fbLogin from './fb_login.png';
+import fbLogin from './fb-login.png';
+import mainLogo from './logo-poword.png'
+
+const jssStyles = {
+  fbLogin: {
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '80px'
+  },
+  images: {
+    maxWidth: '100%'
+  }
+};
 
 class Signin extends Component {
   onSignin(e) {
@@ -26,10 +40,18 @@ class Signin extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <img src={fbLogin} alt="fb login" onClick={this.onSignin} />
+      <div>
+        <figure>
+          <img className={classes.images} src={mainLogo} alt="poword logo"/>
+        </figure>
+        <figure className={classes.fbLogin}>
+          <img className={classes.images} src={fbLogin} alt="fb login" onClick={this.onSignin} />
+        </figure>
+      </div>
     );
   }
 }
 
-export default Signin;
+export default injectSheet(jssStyles)(Signin);

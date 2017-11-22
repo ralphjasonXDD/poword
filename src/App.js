@@ -5,10 +5,12 @@ import Signin from './Signin';
 
 const AppStyle = {
   container: {
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
     height: '100%',
-    marginTop: '5%',
+    position: 'absolute',
+    width: '100%'
   },
 };
 

@@ -37,5 +37,4 @@ const route = (
   </BrowserRouter>
 );
 
-
 ReactDOM.render(route, document.getElementById('root'));

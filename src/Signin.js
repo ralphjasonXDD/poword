@@ -5,6 +5,7 @@ import {
   fbProvider,
   auth,
 } from './fire';
+import fbLogin from './fb_login.png';
 
 class Signin extends Component {
   onSignin = (e) => {
@@ -26,7 +27,7 @@ class Signin extends Component {
 
   render() {
     return (
-      <button onClick={this.onSignin}>fb login</button>
+      <img src={fbLogin} alt="fb login" onClick={this.onSignin} />
     );
   }
 }

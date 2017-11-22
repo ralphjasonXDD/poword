@@ -1,17 +1,22 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import logo from './logo.png';
 import { isAuthenticated } from './fire';
 import Signin from './Signin';
 
+const AppStyle = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: '100%',
+    marginTop: '5%',
+  },
+};
+
 const App = () => {
   return (
-    <div>
+    <div style={AppStyle.container}>
       {isAuthenticated() && <Redirect to={{ pathname: '/room' }} />}
-      <div>
-        <img src={logo} alt="poword logo" />
-        <Signin />
-      </div>
+      <Signin />
     </div>
   );
 };

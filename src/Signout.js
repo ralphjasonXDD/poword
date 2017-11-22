@@ -3,7 +3,7 @@ import history from './History';
 import { auth, fbKey } from './fire';
 
 class Signout extends Component {
-  onSignout = (e) => {
+  onSignout(e) {
     e.preventDefault();
     auth.signOut().then(() => {
       window.localStorage.removeItem(fbKey);

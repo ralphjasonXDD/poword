@@ -161,7 +161,7 @@ class Play extends Component {
               <PlayerBox username={this.state.player.username} words={this.state.player.words} />
             </div>
             <div className={classes.wordWrap}>
-              <RandomLetter random_letters={this.chunkRandomLetters()} />
+              <RandomLetter randomLetters={this.chunkRandomLetters()} />
             </div>
             <div className={classes.sideBar}>
               <PlayerBox

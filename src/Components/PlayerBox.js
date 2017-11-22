@@ -12,6 +12,15 @@ const jssStyles = {
     fontSize: '12px',
     letterSpacing: '0.5px',
     lineHeight: 1,
+    '& h4': {
+      backgroundColor: props => (props.isOpponent ? '#ffb22b' : '#e74a25'),
+      borderRadius: '4px 4px 0 0',
+      color: '#fff',
+      fontSize: '18px',
+      fontWeight: 'normal',
+      padding: '12px 18px',
+      margin: '0 auto',
+    },
     '& ul': {
       height: '485px',
       listStyle: 'none',
@@ -26,15 +35,6 @@ const jssStyles = {
       },
     },
   },
-  playerName: {
-    backgroundColor: props => (props.isOpponent ? '#ffb22b' : '#e74a25'),
-    borderRadius: '4px 4px 0 0',
-    color: '#fff',
-    fontSize: '18px',
-    fontWeight: 'normal',
-    padding: '12px 18px',
-    margin: '0 auto',
-  },
 };
 
 const PlayerBox = ({
@@ -42,15 +42,15 @@ const PlayerBox = ({
   username,
   words,
 }) => {
-  const wordList = words.map(word =>
-    <li key={word.id}>{word.text}</li>,
-  );
+  const wordList = words.map(word => (
+    <li key={word.id}>{word.text}</li>
+  ));
 
   return (
     <div>
       <div className={classes.container}>
-        <h4 className={classes.playerName}>{username}</h4>
-        <ul> {wordList} </ul>
+        <h4>{username}</h4>
+        <ul>{wordList}</ul>
       </div>
     </div>
   );

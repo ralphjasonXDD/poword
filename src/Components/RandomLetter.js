@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React from 'react';
 import Letter from './Letter';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
@@ -23,37 +23,32 @@ const jssStyles = {
     },
     '&:last-child': {
       marginBottom: '0',
-    }
-  }
-}
+    },
+  },
+};
 
-class RandomLetter extends Component {
-  constructor (props) {
-    super(props);
-  }
+const RandomLetter = ({
+  classes,
+  randomLetters,
+}) => {
+  const letters = letter => (
+    letter.map((l, i) => (
+      <Letter key={i} letter={l[0]} color={l[1]} />
+    ))
+  );
 
-  letters(letter) {
-    return letter.map((l,i) => {
-      return <Letter letter = { l[0] } color = { l[1] } />
-    });
-  }
+  const letterRows = randomLetters.map((row, i) => (
+    <div key={i} className={classes.wordRow}>{letters(row)}</div>
+  ));
 
-
-  render() {
-    const { classes } = this.props;
-
-    const letter_rows = this.props.random_letters.map ((row, i) => {
-      return <div className = { classes.wordRow }>{ this.letters(row) }</div>
-    });
-
-    return (
-      <div>{ letter_rows }</div>
-    )
-  }
-}
+  return (
+    <div>{letterRows}</div>
+  );
+};
 
 RandomLetter.propTypes = {
+  randomLetters: PropTypes.arrayOf(PropTypes.array).isRequired,
   classes: PropTypes.shape().isRequired,
-}
+};
 
 export default injectSheet(jssStyles)(RandomLetter);

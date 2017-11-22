@@ -8,7 +8,7 @@ import {
 import fbLogin from './fb_login.png';
 
 class Signin extends Component {
-  onSignin = (e) => {
+  onSignin(e) {
     e.preventDefault();
     auth.signInWithPopup(fbProvider).then(() => {
       window.localStorage.setItem(

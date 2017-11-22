@@ -3,23 +3,23 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter,
   Route,
-  Redirect
-} from 'react-router-dom'
-import history from './History';
+  Redirect,
+} from 'react-router-dom';
 import { isAuthenticated } from './fire';
-import Room from './Components/Room.js';
-import Play from './Components/Play.js';
-import App from './App.js';
+import Room from './Components/Room';
+import Play from './Components/Play';
+import App from './App';
 import Signout from './Signout';
 
-import 'normalize.css';
-
-const MatchWhenAuthorized = ({component: Component, ...rest}) => (
-  <Route {...rest} render={renderProps => (
-    isAuthenticated()
-      ? <Component {...renderProps} />
-      : <Redirect to={{pathname: '/'}} />
-  )} />
+const MatchWhenAuthorized = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={renderProps => (
+      isAuthenticated()
+        ? <Component {...renderProps} />
+        : <Redirect to={{ pathname: '/' }} />
+    )}
+  />
 );
 
 const route = (

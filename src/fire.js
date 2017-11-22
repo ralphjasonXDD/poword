@@ -19,6 +19,6 @@ export const fbKey = 'FB_INFO_LOCAL_STORAGE';
 
 export const isAuthenticated = () => {
   return !!auth.currentUser || !!localStorage.getItem(fbKey);
-}
+};
 
 export default fire;

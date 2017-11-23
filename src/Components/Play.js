@@ -6,64 +6,7 @@ import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
-
-const jssStyles = {
-  container: {
-    maxWidth: '720px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-  },
-  playWrap: {
-    display: 'flex',
-    marginLeft: '-15px',
-    marginRight: '-15px',
-    marginTop: '45px',
-  },
-  sideBar: {
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    width: '25%',
-  },
-  wordWrap: {
-    backgroundColor: '#fff',
-    border: '1px solid #e6eaee',
-    borderRadius: '4px',
-    padding: '20px',
-    width: '50%',
-  },
-  wordRow: {
-    display: 'flex',
-    fontSize: '72px',
-    fontWeight: 'bold',
-    marginBottom: '15px',
-    justifyContent: 'space-between',
-    textTransform: 'uppercase',
-    '& div': {
-      alignItems: 'center',
-      backgroundColor: '#e4e6eb',
-      color: '#4e4e4e',
-      cursor: 'default',
-      display: 'flex',
-      height: '60px',
-      justifyContent: 'center',
-      width: '60px',
-    },
-    '&:last-child': {
-      marginBottom: '0',
-    },
-  },
-  playHeader: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderBottom: '1px solid #e6eaee',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '12px',
-    textAlign: 'center'
-  },
-};
+import JssStyle from '../Resources/jss_styles.js';
 
 class Play extends Component {
   constructor() {
@@ -189,4 +132,4 @@ Play.propTypes = {
   classes: PropTypes.shape().isRequired,
 };
 
-export default injectSheet(jssStyles)(Play);
+export default injectSheet(JssStyle.play)(Play);

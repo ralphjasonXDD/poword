@@ -2,31 +2,9 @@ import React from 'react';
 import Letter from './Letter';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
+import JssStyle from '../Resources/jss_styles.js';
 
-const jssStyles = {
-  wordRow: {
-    display: 'flex',
-    fontFamily: 'Boogaloo',
-    fontSize: '44px',
-    fontWeight: 'bold',
-    marginBottom: '15px',
-    justifyContent: 'space-between',
-    textTransform: 'uppercase',
-    '& div': {
-      alignItems: 'center',
-      backgroundColor: '#e4e6eb',
-      color: '#4e4e4e',
-      cursor: 'default',
-      display: 'flex',
-      height: '70px',
-      justifyContent: 'center',
-      width: '70px',
-    },
-    '&:last-child': {
-      marginBottom: '0',
-    },
-  },
-};
+const jssStyles = JssStyle.randomLetter;
 
 const RandomLetter = ({
   classes,

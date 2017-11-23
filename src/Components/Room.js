@@ -1,21 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import JssStyle from '../Resources/jss_styles.js';
 
-const RoomStyle = {
-  container: {
-    margin: '30px 30% 5% 30%',
-  },
-  listChallenger: {
-    border: '1px solid',
-  },
-  challenger: {
-    margin: '5px 0 5px 0',
-    textAlign: 'right',
-  },
-  link: {
-    textDecoration: 'none',
-  },
-};
+const RoomStyle = JssStyle.roomStyle;
 
 const Room = () => {
   return (
@@ -34,6 +21,5 @@ const Room = () => {
     </div>
   );
 }
-
 
 export default Room;

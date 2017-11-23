@@ -42,8 +42,8 @@ const PlayerBox = ({
   username,
   words,
 }) => {
-  const wordList = words.map(word => (
-    <li key={word.id}>{word.text}</li>
+  const wordList = words.map((word, index) => (
+    <li key={index}>{word}</li>
   ));
 
   return (
@@ -58,10 +58,7 @@ const PlayerBox = ({
 
 PlayerBox.propTypes = {
   username: PropTypes.string.isRequired,
-  words: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    text: PropTypes.string,
-  })).isRequired,
+  words: PropTypes.arrayOf(PropTypes.string).isRequired,
   classes: PropTypes.shape().isRequired,
 };
 

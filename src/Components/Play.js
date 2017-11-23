@@ -121,14 +121,14 @@ class Play extends Component {
 
   getWords(id, thePlayer) {
     /* Create reference to words in Firebase Database */
-    const wordsRef = fire.database().ref('words').orderByChild('id').equalTo(id);
-    wordsRef.on('child_added', snapshot => {
+    const wordsRef = fire.database().ref('words').orderByChild('game_info_id').equalTo(id);
+    wordsRef.on('value', snapshot => {
+      const wordList = Object.values(snapshot.val() || {}).map(words => words.text);
       /* Update React state when word is added at Firebase Database */
-      const word = { text: snapshot.val().text, id: snapshot.key };
       this.setState({
         [thePlayer]: {
           ...this.state[thePlayer],
-          words: [word].concat(this.state[thePlayer].words),
+          words: wordList.reverse(),
         },
       });
     });
@@ -143,7 +143,7 @@ class Play extends Component {
     if (word == null) return false;
 
     fire.database().ref('words').push({
-      id: this.state.player.id,
+      game_info_id: this.state.player.id,
       text: word,
     });
   }

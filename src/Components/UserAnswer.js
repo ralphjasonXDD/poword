@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
-import JssStyle from '../Resources/jss_styles.js';
+import { JssUserAnswer } from '../Resources/jss_styles.js';
 
 class UserAnswer extends Component {
 
@@ -66,4 +66,4 @@ UserAnswer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default injectSheet(JssStyle.userAnswer)(UserAnswer);
+export default injectSheet(JssUserAnswer)(UserAnswer);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import JssStyle from '../Resources/jss_styles.js';
+import { JssPlayerBox } from '../Resources/jss_styles.js';
 
 const PlayerBox = ({
   classes,
@@ -31,4 +31,4 @@ PlayerBox.propTypes = {
   classes: PropTypes.shape().isRequired,
 };
 
-export default injectSheet(JssStyle.playerBox)(PlayerBox);
+export default injectSheet(JssPlayerBox)(PlayerBox);

@@ -2,9 +2,7 @@ import React from 'react';
 import Letter from './Letter';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import JssStyle from '../Resources/jss_styles.js';
-
-const jssStyles = JssStyle.randomLetter;
+import { JssRandomLetter } from '../Resources/jss_styles.js';
 
 const RandomLetter = ({
   classes,
@@ -30,4 +28,4 @@ RandomLetter.propTypes = {
   classes: PropTypes.shape().isRequired,
 };
 
-export default injectSheet(jssStyles)(RandomLetter);
+export default injectSheet(JssRandomLetter)(RandomLetter);

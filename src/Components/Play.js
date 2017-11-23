@@ -6,7 +6,7 @@ import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
-import JssStyle from '../Resources/jss_styles.js';
+import { JssPlay } from '../Resources/jss_styles.js';
 
 class Play extends Component {
   constructor() {
@@ -132,4 +132,4 @@ Play.propTypes = {
   classes: PropTypes.shape().isRequired,
 };
 
-export default injectSheet(JssStyle.play)(Play);
+export default injectSheet(JssPlay)(Play);

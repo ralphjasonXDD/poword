@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
-import JssStyle from '../Resources/jss_styles.js';
+import { JssTimer } from '../Resources/jss_styles.js';
 
 class Timer extends Component {
   constructor (props) {
@@ -47,4 +47,4 @@ class Timer extends Component {
   }
 }
 
-export default injectSheet(JssStyle.timer)(Timer);
+export default injectSheet(JssTimer)(Timer);

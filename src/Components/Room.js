@@ -1,29 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const RoomStyle = {
-  container: {
-    margin: '30px 30% 5% 30%',
-  },
-  listChallenger: {
-    border: '1px solid',
-  },
-  challenger: {
-    margin: '5px 0 5px 0',
-    textAlign: 'right',
-  },
-  link: {
-    textDecoration: 'none',
-  },
-};
+import { JssRoom } from '../Resources/jss_styles.js';
 
 const Room = () => {
   return (
-    <div style={RoomStyle.container}>
-      <div style={RoomStyle.challenger}>
-        <Link to="/play" style={RoomStyle.link}>+ challenge</Link>
+    <div style={JssRoom.container}>
+      <div style={JssRoom.challenger}>
+        <Link to="/play" style={JssRoom.link}>+ challenge</Link>
       </div>
-      <div style={RoomStyle.listChallenger}>
+      <div style={JssRoom.listChallenger}>
         <ul>
           <li>Tarzan</li>
           <li>erecka7</li>
@@ -34,6 +19,5 @@ const Room = () => {
     </div>
   );
 }
-
 
 export default Room;

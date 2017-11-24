@@ -2,31 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
-
-const jssStyles = {
-  answerHolder: {
-    alignItems: 'center',
-    backgroundColor: '#e0e5e9',
-    border: '1px solid #d8dcdf',
-    borderRadius: '4px',
-    color: '#9d9e9f',
-    cursor: 'text',
-    display: 'flex',
-    fontFamily: 'Boogaloo',
-    fontSize: '40px',
-    fontWeight: 'bold',
-    height: '40px',
-    justifyContent: 'center',
-    letterSpacing: '10px',
-    margin: '30px auto',
-    maxWidth: '46%',
-    padding: '15px',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  },
-};
+import { JssUserAnswer } from '../Resources/jss_styles.js';
 
 class UserAnswer extends Component {
+
   constructor(props) {
     super(props);
     this.keyEventHandler();
@@ -72,7 +51,7 @@ class UserAnswer extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <div className={classes.answerHolder}>
+        <div className={ classes.answerHolder }>
           { this.props.answer }
         </div>
       </div>
@@ -84,6 +63,7 @@ UserAnswer.propTypes = {
   answer: PropTypes.string.isRequired,
   setAnswer: PropTypes.func.isRequired,
   sendWord: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default injectSheet(jssStyles)(UserAnswer);
+export default injectSheet(JssUserAnswer)(UserAnswer);

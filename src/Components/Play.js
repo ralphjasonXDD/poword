@@ -6,64 +6,7 @@ import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
-
-const jssStyles = {
-  container: {
-    maxWidth: '720px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-  },
-  playWrap: {
-    display: 'flex',
-    marginLeft: '-15px',
-    marginRight: '-15px',
-    marginTop: '45px',
-  },
-  sideBar: {
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    width: '25%',
-  },
-  wordWrap: {
-    backgroundColor: '#fff',
-    border: '1px solid #e6eaee',
-    borderRadius: '4px',
-    padding: '20px',
-    width: '50%',
-  },
-  wordRow: {
-    display: 'flex',
-    fontSize: '72px',
-    fontWeight: 'bold',
-    marginBottom: '15px',
-    justifyContent: 'space-between',
-    textTransform: 'uppercase',
-    '& div': {
-      alignItems: 'center',
-      backgroundColor: '#e4e6eb',
-      color: '#4e4e4e',
-      cursor: 'default',
-      display: 'flex',
-      height: '60px',
-      justifyContent: 'center',
-      width: '60px',
-    },
-    '&:last-child': {
-      marginBottom: '0',
-    },
-  },
-  playHeader: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderBottom: '1px solid #e6eaee',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '12px',
-    textAlign: 'center',
-  },
-};
+import { JssPlay } from '../Resources/jss_styles.js';
 
 class Play extends Component {
   constructor() {
@@ -125,14 +68,14 @@ class Play extends Component {
 
   getWords(id, thePlayer) {
     /* Create reference to words in Firebase Database */
-    const wordsRef = fire.database().ref('words').orderByChild('id').equalTo(id);
-    wordsRef.on('child_added', snapshot => {
+    const wordsRef = fire.database().ref('words').orderByChild('game_info_id').equalTo(id);
+    wordsRef.on('value', snapshot => {
+      const wordList = Object.values(snapshot.val() || {}).map(words => words.text);
       /* Update React state when word is added at Firebase Database */
-      const word = { text: snapshot.val().text, id: snapshot.key };
       this.setState({
         [thePlayer]: {
           ...this.state[thePlayer],
-          words: [word].concat(this.state[thePlayer].words),
+          words: wordList.reverse(),
         },
       });
     });
@@ -156,8 +99,8 @@ class Play extends Component {
   sendWord = (word) => {
     if (word == null) return false;
 
-    return fire.database().ref('words').push({
-      id: this.state.player.id,
+    fire.database().ref('words').push({
+      game_info_id: this.state.player.id,
       text: word,
     });
   }
@@ -203,4 +146,4 @@ Play.propTypes = {
   classes: PropTypes.shape().isRequired,
 };
 
-export default injectSheet(jssStyles)(Play);
+export default injectSheet(JssPlay)(Play);

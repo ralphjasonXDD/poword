@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
 import { JssUserAnswer } from '../Resources/jss_styles.js';
+import Dictionary from '../Resources/dictionary.json';
 
 class UserAnswer extends Component {
 

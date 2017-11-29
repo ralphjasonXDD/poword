@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
 import { JssUserAnswer } from '../Resources/jss_styles.js';
+import Dictionary from '../Resources/dictionary.json';
 
 class UserAnswer extends Component {
 
@@ -24,7 +25,7 @@ class UserAnswer extends Component {
 
     if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
       ans += KeyCodes.letter_codes[keyCode];
-    } else if (KeyCodes.action_codes[keyCode] === 'enter') {
+    } else if (KeyCodes.action_codes[keyCode] === 'enter' && this.isValidWord(ans)) {
       this.props.sendWord(ans);
       ans = '';
     } else if (KeyCodes.action_codes[keyCode] === 'delete') {
@@ -45,6 +46,10 @@ class UserAnswer extends Component {
 
   isLetterCode(code) {
     return Object.keys(KeyCodes.letter_codes).indexOf(code.toString()) >= 0;
+  }
+
+  isValidWord(word) {
+    return Dictionary.words.includes(word);
   }
 
   render() {

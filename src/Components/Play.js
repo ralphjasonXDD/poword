@@ -27,39 +27,43 @@ class Play extends Component {
     };
   }
 
-  setRandomLetters() {
-    var text = "";
-    var possible = "abcdefghijklmnopqrstuvwxyz";
-
-    for (var i = 0; i < 16; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text.toString();
-  }
-
-  setLetterStyle(answer) {
-    var ans = answer.split("");
-    return this.state.random_letters.split("").map ((letter, i) => {
-      if (ans.indexOf(letter) === -1)
-        return [letter, ['#4e4e4e', '#e4e6eb']];
-
-      ans.splice(ans.indexOf(letter), 1);
-      return [letter, ['#fff', '#398bf7']];
-    });
-  }
-
-  chunkRandomLetters() {
-    var letter_styles = this.setLetterStyle(this.state.current_answer);
-    var j, chunk = 4, arr = [];
-    for (var i = 0, j = letter_styles.length; i < j; i += chunk) {
-      arr.push(letter_styles.slice(i, i + chunk));
-    }
-    return arr;
-  }
 
   componentWillMount() {
     this.getWords(this.state.player.id, 'player');
     this.getWords(this.state.opponent.id, 'opponent');
+  }
+
+  setRandomLetters() {
+    let text = '';
+    const consonants = 'bcdfghjklmnpqrstvwxyz';
+    const vowels = 'aeiou';
+
+    /* Generate random vowel letters: min 4, max 8 */
+    const vowelCount = Math.floor(Math.random() * 3) + 4;
+    for (let i = 0; i < vowelCount; i++) {
+      text += vowels.charAt(Math.floor(Math.random() * vowels.length));
+    }
+
+    /* Generate random consonant letters */
+    for (let j = 0; j < 16 - vowelCount; j++) {
+      text += consonants.charAt(Math.floor(Math.random() * consonants.length));
+    }
+
+    const letters = text.split('').sort(() => Math.random() - 0.5);
+
+    return letters.join('');
+  }
+
+  setLetterStyle(answer) {
+    const ans = answer.split('');
+    return this.state.random_letters.split('').map ((letter, i) => {
+      if (ans.indexOf(letter) === -1) {
+        return [letter, ['#4e4e4e', '#e4e6eb']];
+      }
+
+      ans.splice(ans.indexOf(letter), 1);
+      return [letter, ['#fff', '#398bf7']];
+    });
   }
 
   getWords(id, thePlayer) {
@@ -80,6 +84,16 @@ class Play extends Component {
   setAnswer = (ans) => {
     this.setLetterStyle(ans);
     this.setState({ current_answer: ans });
+  }
+
+  chunkRandomLetters() {
+    const setLetterStyle = this.setLetterStyle(this.state.current_answer);
+    const chunk = 4;
+    const arr = [];
+    for (let i = 0, j = setLetterStyle.length; i < j; i += chunk) {
+      arr.push(setLetterStyle.slice(i, i + chunk));
+    }
+    return arr;
   }
 
   sendWord = (word) => {

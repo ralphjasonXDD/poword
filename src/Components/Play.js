@@ -6,6 +6,7 @@ import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
+import ReadyButton from './ReadyButton';
 import { JssPlay } from '../Resources/jss_styles.js';
 
 class Play extends Component {
@@ -16,6 +17,7 @@ class Play extends Component {
         id: 5,
         username: 'kizuchie',
         words: [],
+        isReady: false,
       },
       opponent: {
         id: 2,
@@ -25,8 +27,9 @@ class Play extends Component {
       random_letters: this.setRandomLetters(),
       current_answer: '',
     };
-  }
 
+    this.handlePlay = this.handlePlay.bind(this);
+  }
 
   componentWillMount() {
     this.getWords(this.state.player.id, 'player');
@@ -86,6 +89,15 @@ class Play extends Component {
     this.setState({ current_answer: ans });
   }
 
+  handlePlay() {
+    this.setState(prevState => ({
+      player: {
+        ...prevState.player,
+        isReady: true,
+      },
+    }));
+  }
+
   chunkRandomLetters() {
     const setLetterStyle = this.setLetterStyle(this.state.current_answer);
     const chunk = 4;
@@ -106,11 +118,15 @@ class Play extends Component {
   }
 
   render() {
+    const { isReady } = this.state.player;
     const { classes } = this.props;
+
+    if (isReady) { console.log('ready'); }
     return (
       <div>
         <div className={classes.playHeader}>
           <Timer seconds="120" />
+          <ReadyButton handler={this.handlePlay} />
         </div>
         <div className={classes.container}>
           <div className={classes.playWrap}>

@@ -1,10 +1,9 @@
 export const JssUserAnswer = {
   answerHolder: {
     alignItems: 'center',
-    backgroundColor: '#e0e5e9',
-    border: '1px solid #d8dcdf',
+    backgroundColor: '#3a3d46',
     borderRadius: '4px',
-    color: '#9d9e9f',
+    color: 'rgba(255,255,255,0.6)',
     cursor: 'text',
     display: 'flex',
     fontFamily: 'Boogaloo',
@@ -23,12 +22,12 @@ export const JssUserAnswer = {
 
 export const JssTimer = {
   time: {
-    color: '#4e4e4e',
+    color: '#fff',
     fontSize: '30px',
     margin: '10px auto 0',
   },
   timeHeading: {
-    color: '#7f8fa4',
+    color: 'rgba(255,255,255,0.6)',
     margin: '0 auto',
   },
 };
@@ -51,8 +50,7 @@ export const JssRoom = {
 
 export const JssPlayerBox = {
   container: {
-    backgroundColor: '#fff',
-    border: '1px solid #e5ebec',
+    backgroundColor: '#3a3d46',
     borderRadius: '4px',
     color: '#333333',
     fontFamily: 'Lato',
@@ -60,12 +58,13 @@ export const JssPlayerBox = {
     letterSpacing: '0.5px',
     lineHeight: 1,
     '& h4': {
-      backgroundColor: props => (props.isOpponent ? '#ffb22b' : '#e74a25'),
+      backgroundColor: '#363841',
+      borderTop: props => (props.isOpponent ? '3px solid #1bbf89' : '3px solid #ff6666'),
       borderRadius: '4px 4px 0 0',
-      color: '#fff',
+      color: props => (props.isOpponent ? '#1bbf89' : '#ff6666'),
       fontSize: '16px',
       fontWeight: 'normal',
-      padding: '10px 15px',
+      padding: '15px',
       margin: '0 auto',
     },
     '& ul': {
@@ -75,8 +74,8 @@ export const JssPlayerBox = {
       overflowY: 'auto',
       paddingLeft: 0,
       '& li': {
-        borderBottom: '1px solid #e6eaee',
-        color: '#7f8fa4',
+        borderBottom: '1px solid #33363f',
+        color: '#949ba2',
         fontSize: '13px',
         padding: '12px 15px',
       },
@@ -104,8 +103,7 @@ export const JssPlay = {
     width: '25%',
   },
   wordWrap: {
-    backgroundColor: '#fff',
-    border: '1px solid #e6eaee',
+    backgroundColor: '#3a3d46',
     borderRadius: '4px',
     padding: '20px',
     width: '50%',
@@ -133,8 +131,7 @@ export const JssPlay = {
   },
   playHeader: {
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderBottom: '1px solid #e6eaee',
+    backgroundColor: '#2a2d35',
     display: 'flex',
     justifyContent: 'center',
     padding: '12px',

@@ -5,7 +5,7 @@ import { auth, fbKey } from './fire';
 
 const jssStyles = {
   wrap: {
-    backgroundColor: '#dfe4e7',
+    backgroundColor: '#24262d',
     display: 'flex',
     justifyContent: 'flex-end',
     padding: '10px'
@@ -13,11 +13,11 @@ const jssStyles = {
   signOutBtn: {
     backgroundColor: 'transparent',
     border: '0',
-    color: '#4e4e4e',
+    color: '#A9CF54',
     cursor: 'pointer',
     fontSize: '13px',
     '&:hover': {
-      color: '#398bf7'
+      textDecoration: 'underline'
     },
   }
 };

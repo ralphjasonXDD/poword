@@ -68,10 +68,9 @@ export const JssPlayerBox = {
       margin: '0 auto',
     },
     '& ul': {
-      height: '323px',
+      height: '100%',
       listStyle: 'none',
       margin: '0 auto',
-      overflowY: 'auto',
       paddingLeft: 0,
       '& li': {
         borderBottom: '1px solid #33363f',

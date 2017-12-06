@@ -109,7 +109,9 @@ class Play extends Component {
   }
 
   sendWord = (word) => {
-    if (word == null) return false;
+    if (word == null || this.state.player.words.includes(word)) {
+      return false;
+    }
 
     fire.database().ref('words').push({
       game_info_id: this.state.player.id,

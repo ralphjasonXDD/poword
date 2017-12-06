@@ -26,6 +26,7 @@ class Play extends Component {
       },
       random_letters: this.setRandomLetters(),
       current_answer: '',
+      isPlay: false
     };
 
     this.handlePlay = this.handlePlay.bind(this);
@@ -95,6 +96,7 @@ class Play extends Component {
         ...prevState.player,
         isReady: true,
       },
+      isPlay: true
     }));
   }
 
@@ -122,12 +124,10 @@ class Play extends Component {
   render() {
     const { isReady } = this.state.player;
     const { classes } = this.props;
-
-    if (isReady) { console.log('ready'); }
     return (
       <div>
         <div className={classes.playHeader}>
-          <Timer seconds="120" />
+          <Timer seconds="5" start={this.state.isPlay} />
           <ReadyButton handler={this.handlePlay} />
         </div>
         <div className={classes.container}>

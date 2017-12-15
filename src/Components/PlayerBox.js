@@ -8,7 +8,7 @@ const PlayerBox = (props) => {
   const wordList = props.words.map((word, index) => (
     <li key={index}>
       {word}
-      <span> {props.getWordScore(word)} </span>
+      <span className={props.classes.score}>{props.getWordScore(word)}</span>
     </li>
   ));
 

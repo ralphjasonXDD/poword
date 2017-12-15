@@ -59,9 +59,9 @@ export const JssPlayerBox = {
     lineHeight: 1,
     '& h4': {
       backgroundColor: '#363841',
-      borderTop: props => (props.isOpponent ? '3px solid #1bbf89' : '3px solid #ff6666'),
+      borderTop: props => (props.isOpponent ? '3px solid #1bbf89' : '3px solid #2c97de'),
       borderRadius: '4px 4px 0 0',
-      color: props => (props.isOpponent ? '#1bbf89' : '#ff6666'),
+      color: props => (props.isOpponent ? '#1bbf89' : '#2c97de'),
       fontSize: '16px',
       fontWeight: 'normal',
       padding: '15px',
@@ -75,11 +75,20 @@ export const JssPlayerBox = {
       paddingLeft: 0,
       '& li': {
         borderBottom: '1px solid #33363f',
-        color: '#949ba2',
+        color: '#bfc6cd',
         fontSize: '13px',
         padding: '12px 15px',
       },
     },
+  },
+  score: {
+    backgroundColor: props => (props.isOpponent ? 'rgba(27, 191, 137, 0.12)' : 'rgba(44, 151, 222, 0.12)'),
+    border: props => (props.isOpponent ? '1px solid rgba(27, 191, 137, 0.50)' : '1px solid rgba(44, 151, 222, 0.50)'),
+    borderRadius: '2px',
+    color: props => (props.isOpponent ? '#1bbf89' : '#2c97de'),
+    fontSize: '10px',
+    float: 'right',
+    padding: '3px 7px',
   },
 };
 

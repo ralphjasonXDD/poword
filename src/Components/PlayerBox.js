@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { JssPlayerBox } from '../Resources/jss_styles.js';
 
 const PlayerBox = (props) => {
@@ -16,7 +17,9 @@ const PlayerBox = (props) => {
     <div>
       <div className={props.classes.container}>
         <h4>{props.username}</h4>
-        <ul>{wordList}</ul>
+        <Scrollbars style={{ height: 323 }}>
+          <ul>{wordList}</ul>
+        </Scrollbars>
       </div>
     </div>
   );

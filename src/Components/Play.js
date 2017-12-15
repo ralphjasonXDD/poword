@@ -8,6 +8,7 @@ import RandomLetter from './RandomLetter';
 import Timer from './Timer';
 import ReadyButton from './ReadyButton';
 import { JssPlay } from '../Resources/jss_styles.js';
+import LetterScores from '../Resources/keycodes.json';
 
 class Play extends Component {
   constructor() {
@@ -110,6 +111,20 @@ class Play extends Component {
     return arr;
   }
 
+  wordScore(word) {
+    return 1;
+  }
+
+  appendWordScore() {
+    let words = ["a", "b", "c", "d"];
+    let word_score = [];
+    words.forEach(function(word) {
+      word_score.push([this.wordScore(word),word]);
+    }.bind(this));
+    return word_score;
+  }
+
+
   sendWord = (word) => {
     if (word == null || this.state.player.words.includes(word)) {
       return false;
@@ -119,6 +134,15 @@ class Play extends Component {
       game_info_id: this.state.player.id,
       text: word,
     });
+  }
+
+  getWordScore = (word) => {
+    console.log(this.appendWordScore());
+    let score = 0;
+    word.split("").forEach(function(letter) {
+      score += LetterScores.words_score[letter];
+    });
+    return score;
   }
 
   render() {
@@ -133,7 +157,11 @@ class Play extends Component {
         <div className={classes.container}>
           <div className={classes.playWrap}>
             <div className={classes.sideBar}>
-              <PlayerBox username={this.state.player.username} words={this.state.player.words} />
+              <PlayerBox
+                username={this.state.player.username}
+                words={this.state.player.words}
+                getWordScore={this.getWordScore}
+              />
             </div>
             <div className={classes.wordWrap}>
               <RandomLetter randomLetters={this.chunkRandomLetters()} />
@@ -142,6 +170,7 @@ class Play extends Component {
               <PlayerBox
                 username={this.state.opponent.username}
                 words={this.state.opponent.words}
+                getWordScore={this.getWordScore}
                 isOpponent
               />
             </div>

@@ -4,19 +4,19 @@ import injectSheet from 'react-jss';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { JssPlayerBox } from '../Resources/jss_styles.js';
 
-const PlayerBox = ({
-  classes,
-  username,
-  words,
-}) => {
-  const wordList = words.map((word, index) => (
-    <li key={index}>{word}</li>
+const PlayerBox = (props) => {
+
+  const wordList = props.words.map((word, index) => (
+    <li key={index}>
+      {word}
+      <span className={props.classes.score}>{props.getWordScore(word)}</span>
+    </li>
   ));
 
   return (
     <div>
-      <div className={classes.container}>
-        <h4>{username}</h4>
+      <div className={props.classes.container}>
+        <h4>{props.username}</h4>
         <Scrollbars style={{ height: 323 }}>
           <ul>{wordList}</ul>
         </Scrollbars>
@@ -28,6 +28,7 @@ const PlayerBox = ({
 PlayerBox.propTypes = {
   username: PropTypes.string.isRequired,
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getWordScore: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired,
 };
 

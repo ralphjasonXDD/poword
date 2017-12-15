@@ -5,7 +5,7 @@ import { auth, fbKey } from './fire';
 
 const jssStyles = {
   wrap: {
-    backgroundColor: '#24262d',
+    backgroundColor: '#322f40',
     display: 'flex',
     justifyContent: 'flex-end',
     padding: '10px'

@@ -63,7 +63,7 @@ class Play extends Component {
     const ans = answer.split('');
     return this.state.random_letters.split('').map ((letter, i) => {
       if (ans.indexOf(letter) === -1) {
-        return [letter, ['#949ba2', 'rgba(255,255,255,0.08)']];
+        return [letter, ['#383740', '#eceaee']];
       }
 
       ans.splice(ans.indexOf(letter), 1);

@@ -1,7 +1,7 @@
 export const JssUserAnswer = {
   answerHolder: {
     alignItems: 'center',
-    backgroundColor: '#3a3d46',
+    backgroundColor: '#3e3c4b',
     borderRadius: '4px',
     color: 'rgba(255,255,255,0.6)',
     cursor: 'text',
@@ -50,7 +50,7 @@ export const JssRoom = {
 
 export const JssPlayerBox = {
   container: {
-    backgroundColor: '#3a3d46',
+    backgroundColor: '#3e3c4b',
     borderRadius: '4px',
     color: '#333333',
     fontFamily: 'Lato',
@@ -58,7 +58,7 @@ export const JssPlayerBox = {
     letterSpacing: '0.5px',
     lineHeight: 1,
     '& h4': {
-      backgroundColor: '#363841',
+      backgroundColor: '#383646',
       borderTop: props => (props.isOpponent ? '3px solid #1bbf89' : '3px solid #56c0e0'),
       borderRadius: '4px 4px 0 0',
       color: props => (props.isOpponent ? '#1bbf89' : '#56c0e0'),
@@ -74,7 +74,7 @@ export const JssPlayerBox = {
       paddingLeft: 0,
       '& li': {
         borderBottom: '1px solid #33363f',
-        color: '#bfc6cd',
+        color: '#b9b3c1',
         fontSize: '13px',
         padding: '12px 15px',
       },
@@ -111,7 +111,7 @@ export const JssPlay = {
     width: '25%',
   },
   wordWrap: {
-    backgroundColor: '#3a3d46',
+    backgroundColor: '#3e3c4b',
     borderRadius: '4px',
     padding: '20px',
     width: '50%',
@@ -139,7 +139,7 @@ export const JssPlay = {
   },
   playHeader: {
     alignItems: 'center',
-    backgroundColor: '#2a2d35',
+    backgroundColor: '#363344',
     display: 'flex',
     justifyContent: 'center',
     padding: '12px',

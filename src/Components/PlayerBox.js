@@ -9,7 +9,7 @@ const PlayerBox = (props) => {
   const wordList = props.words.map((word, index) => (
     <li key={index}>
       {word}
-      <span className={props.classes.score}>{props.getWordScore(word)}</span>
+      <span className={props.classes.score}>{word[0]}</span>
     </li>
   ));
 
@@ -27,8 +27,7 @@ const PlayerBox = (props) => {
 
 PlayerBox.propTypes = {
   username: PropTypes.string.isRequired,
-  words: PropTypes.arrayOf(PropTypes.string).isRequired,
-  getWordScore: PropTypes.func.isRequired,
+  words: PropTypes.array.isRequired,
   classes: PropTypes.shape().isRequired,
 };
 

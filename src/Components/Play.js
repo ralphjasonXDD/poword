@@ -115,11 +115,10 @@ class Play extends Component {
     return 1;
   }
 
-  appendWordScore() {
-    let words = ["a", "b", "c", "d"];
+  appendWordScore(words) {
     let word_score = [];
     words.forEach(function(word) {
-      word_score.push([this.wordScore(word),word]);
+      word_score.push([this.getWordScore(word),word]);
     }.bind(this));
     return word_score;
   }
@@ -137,7 +136,6 @@ class Play extends Component {
   }
 
   getWordScore = (word) => {
-    console.log(this.appendWordScore());
     let score = 0;
     word.split("").forEach(function(letter) {
       score += LetterScores.words_score[letter];
@@ -159,8 +157,7 @@ class Play extends Component {
             <div className={classes.sideBar}>
               <PlayerBox
                 username={this.state.player.username}
-                words={this.state.player.words}
-                getWordScore={this.getWordScore}
+                words={this.appendWordScore(this.state.player.words)}
               />
             </div>
             <div className={classes.wordWrap}>

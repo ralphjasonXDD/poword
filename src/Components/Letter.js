@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LetterScores from '../Resources/keycodes.json';
 
 const Letter = (props) => {
   const LetterStyle = {
@@ -10,7 +11,10 @@ const Letter = (props) => {
   };
 
   return (
-    <div style={LetterStyle.letter}>{props.letter}</div>
+    <div style={LetterStyle.letter}>
+      {props.letter}
+      <span>{ LetterScores.words_score[props.letter] }</span>
+    </div>
   );
 };
 

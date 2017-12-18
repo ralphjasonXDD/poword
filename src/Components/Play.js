@@ -111,10 +111,6 @@ class Play extends Component {
     return arr;
   }
 
-  wordScore(word) {
-    return 1;
-  }
-
   appendWordScore(words) {
     let word_score = [];
     words.forEach(function(word) {
@@ -122,7 +118,6 @@ class Play extends Component {
     }.bind(this));
     return word_score;
   }
-
 
   sendWord = (word) => {
     if (word == null || this.state.player.words.includes(word)) {
@@ -143,6 +138,17 @@ class Play extends Component {
     return score;
   }
 
+  totalScore = (words) => {
+    let score = 0;
+
+    if (words.length === 0) return score;
+    words.forEach(function(l) {
+      score += l[0];
+    });
+    return score;
+  }
+
+
   render() {
     const { isReady } = this.state.player;
     const { classes } = this.props;
@@ -158,6 +164,7 @@ class Play extends Component {
               <PlayerBox
                 username={this.state.player.username}
                 words={this.appendWordScore(this.state.player.words)}
+                totalScore = {this.totalScore}
               />
             </div>
             <div className={classes.wordWrap}>
@@ -166,8 +173,8 @@ class Play extends Component {
             <div className={classes.sideBar}>
               <PlayerBox
                 username={this.state.opponent.username}
-                words={this.state.opponent.words}
-                getWordScore={this.getWordScore}
+                words={this.appendWordScore(this.state.opponent.words)}
+                totalScore = {this.totalScore}
                 isOpponent
               />
             </div>

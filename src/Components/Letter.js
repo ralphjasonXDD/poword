@@ -6,14 +6,20 @@ const Letter = (props) => {
   const LetterStyle = {
     letter: {
       color: props.letterStyle[0],
-      backgroundColor: props.letterStyle[1]
+      backgroundColor: props.letterStyle[1],
+    },
+    wordScore: {
+      fontSize: '13px',
+      position: 'absolute',
+      right: '7px',
+      top: '3px',
     },
   };
 
   return (
     <div style={LetterStyle.letter}>
       {props.letter}
-      <span>{ LetterScores.words_score[props.letter] }</span>
+      <span style={LetterStyle.wordScore}>{ LetterScores.words_score[props.letter] }</span>
     </div>
   );
 };

@@ -164,6 +164,7 @@ export const JssRandomLetter = {
       display: 'flex',
       height: '70px',
       justifyContent: 'center',
+      position: 'relative',
       width: '70px',
     },
     '&:last-child': {

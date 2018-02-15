@@ -6,7 +6,6 @@ import { JssPlayerBox } from '../Resources/jss_styles.js';
 
 const PlayerBox = (props) => {
 
-  console.log(props.words.length);
   const wordList = props.words.map((word, index) => (
     <li key={index}>
       {word[1]}

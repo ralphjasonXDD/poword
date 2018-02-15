@@ -10,6 +10,11 @@ class UserAnswer extends Component {
   constructor(props) {
     super(props);
     this.keyEventHandler();
+    this.state ={
+      answerStyle: {
+        color: 'rgba(255,255,255,0.6)',
+      },
+    };
   }
 
   keyEventHandler() {
@@ -23,6 +28,7 @@ class UserAnswer extends Component {
   handleKeys(keyCode) {
     let ans = this.props.answer;
 
+    this.setState({ answerStyle: { color: 'rgba(255,255,255,0.6)' } });
     if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
       ans += KeyCodes.letter_codes[keyCode];
     } else if (KeyCodes.action_codes[keyCode] === 'enter' && this.isValidWord(ans)) {
@@ -49,14 +55,19 @@ class UserAnswer extends Component {
   }
 
   isValidWord(word) {
-    return Dictionary.words.includes(word);
+    if (Dictionary.words.includes(word)) {
+      return true;
+    } else {
+      this.setState({ answerStyle: { color: 'rgba(255,0,0,0.6)' } });
+    }
   }
 
   render() {
     const { classes } = this.props;
+
     return (
       <div>
-        <div className={ classes.answerHolder }>
+        <div className={ classes.answerHolder } style={ this.state.answerStyle }>
           { this.props.answer }
         </div>
       </div>

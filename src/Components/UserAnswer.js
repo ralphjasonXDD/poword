@@ -12,7 +12,7 @@ class UserAnswer extends Component {
     this.keyEventHandler();
     this.state ={
       answerStyle: {
-        color: 'rgba(255,255,255,0.6)',
+        color: '#545454',
       },
     };
   }
@@ -28,7 +28,7 @@ class UserAnswer extends Component {
   handleKeys(keyCode) {
     let ans = this.props.answer;
 
-    this.setState({ answerStyle: { color: 'rgba(255,255,255,0.6)' } });
+    this.setState({ answerStyle: { color: '#545454' } });
     if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
       ans += KeyCodes.letter_codes[keyCode];
     } else if (KeyCodes.action_codes[keyCode] === 'enter' && this.isValidWord(ans)) {

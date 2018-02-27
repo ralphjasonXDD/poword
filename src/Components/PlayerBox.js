@@ -18,7 +18,7 @@ const PlayerBox = (props) => {
       <div className={props.classes.container}>
         <h4>
           {props.username}
-          <span className={props.classes.score}>{props.totalScore(props.words)}</span>
+          <span className={props.classes.totalscore}>{props.totalScore(props.words)}</span>
         </h4>
         <Scrollbars style={{ height: 323 }}>
           <ul>{wordList}</ul>

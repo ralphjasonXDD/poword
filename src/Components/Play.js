@@ -7,16 +7,17 @@ import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
 import ReadyButton from './ReadyButton';
-import { JssPlay } from '../Resources/jss_styles.js';
+import { JssPlay } from '../Resources/jss_styles';
 import LetterScores from '../Resources/keycodes.json';
 
 class Play extends Component {
-  constructor() {
+  constructor(props) {
+    console.log(props.location.state);
     super();
     this.state = {
       player: {
-        id: 5,
-        username: 'kizuchie',
+        id: props.location.state.playerId,
+        username: props.location.state.playerName,
         words: [],
         isReady: false,
       },
@@ -25,9 +26,10 @@ class Play extends Component {
         username: 'chi',
         words: [],
       },
-      random_letters: this.setRandomLetters(),
+      random_letters: props.location.state.randomLetters,
+      gameId: props.location.state.gameId,
       current_answer: '',
-      isPlay: false
+      isPlay: false,
     };
 
     this.handlePlay = this.handlePlay.bind(this);
@@ -36,27 +38,6 @@ class Play extends Component {
   componentWillMount() {
     this.getWords(this.state.player.id, 'player');
     this.getWords(this.state.opponent.id, 'opponent');
-  }
-
-  setRandomLetters() {
-    let text = '';
-    const consonants = 'bcdfghjklmnpqrstvwxyz';
-    const vowels = 'aeiou';
-
-    /* Generate random vowel letters: min 4, max 8 */
-    const vowelCount = Math.floor(Math.random() * 3) + 4;
-    for (let i = 0; i < vowelCount; i++) {
-      text += vowels.charAt(Math.floor(Math.random() * vowels.length));
-    }
-
-    /* Generate random consonant letters */
-    for (let j = 0; j < 16 - vowelCount; j++) {
-      text += consonants.charAt(Math.floor(Math.random() * consonants.length));
-    }
-
-    const letters = text.split('').sort(() => Math.random() - 0.5);
-
-    return letters.join('');
   }
 
   setLetterStyle(answer) {
@@ -125,6 +106,7 @@ class Play extends Component {
     }
 
     fire.database().ref('words').push({
+      game_id: this.state.gameId,
       game_info_id: this.state.player.id,
       text: word,
     });

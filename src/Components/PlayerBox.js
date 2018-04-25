@@ -5,7 +5,6 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { JssPlayerBox } from '../Resources/jss_styles.js';
 
 const PlayerBox = (props) => {
-
   const wordList = props.words.map((word, index) => (
     <li key={index}>
       {word[1]}

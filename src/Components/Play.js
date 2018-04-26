@@ -12,24 +12,25 @@ import LetterScores from '../Resources/keycodes.json';
 
 class Play extends Component {
   constructor(props) {
-    console.log(props.location.state);
     super();
+    const params = props.location.state;
     this.state = {
       player: {
-        id: props.location.state.playerId,
-        username: props.location.state.playerName,
+        id: params.playerId,
+        username: params.playerName,
         words: [],
         isReady: false,
       },
       opponent: {
-        id: 2,
+        id: null,
         username: 'chi',
         words: [],
       },
-      random_letters: props.location.state.randomLetters,
-      gameId: props.location.state.gameId,
+      random_letters: params.randomLetters,
+      gameId: params.gameId,
       current_answer: '',
       isPlay: false,
+      numPlayers: 1,
     };
 
     this.handlePlay = this.handlePlay.bind(this);
@@ -37,12 +38,12 @@ class Play extends Component {
 
   componentWillMount() {
     this.getWords(this.state.player.id, 'player');
-    this.getWords(this.state.opponent.id, 'opponent');
+    this.getOpponents();
   }
 
   setLetterStyle(answer) {
     const ans = answer.split('');
-    return this.state.random_letters.split('').map ((letter, i) => {
+    return this.state.random_letters.split('').map((letter) => {
       if (ans.indexOf(letter) === -1) {
         return [letter, ['#545454', '#e7e7e7']];
       }
@@ -52,10 +53,32 @@ class Play extends Component {
     });
   }
 
+  getOpponents() {
+    const gameRef = fire.database().ref(`games/${this.state.gameId}`);
+    gameRef.on('value', (snapshot) => {
+      const { players, numPlayers } = snapshot.val();
+      const opponentID = Object.keys(players).find(e => e !== this.state.player.id);
+      if (!opponentID) {
+        return;
+      }
+      const userName = players[opponentID].username;
+      this.setState({
+        opponent: {
+          ...this.state.opponent,
+          id: opponentID,
+          username: userName,
+        },
+        numPlayers,
+      });
+
+      this.getWords(opponentID, 'opponent');
+    });
+  }
+
   getWords(id, thePlayer) {
     /* Create reference to words in Firebase Database */
-    const wordsRef = fire.database().ref('words').orderByChild('game_info_id').equalTo(id);
-    wordsRef.on('value', snapshot => {
+    const wordsRef = fire.database().ref('words').orderByChild('player_id').equalTo(id);
+    wordsRef.on('value', (snapshot) => {
       const wordList = Object.values(snapshot.val() || {}).map(words => words.text);
       /* Update React state when word is added at Firebase Database */
       this.setState({
@@ -72,13 +95,21 @@ class Play extends Component {
     this.setState({ current_answer: ans });
   }
 
+  getWordScore = (word) => {
+    let score = 0;
+    word.split('').forEach((letter) => {
+      score += LetterScores.words_score[letter];
+    });
+    return score;
+  }
+
   handlePlay() {
     this.setState(prevState => ({
       player: {
         ...prevState.player,
         isReady: true,
       },
-      isPlay: true
+      isPlay: true,
     }));
   }
 
@@ -93,11 +124,11 @@ class Play extends Component {
   }
 
   appendWordScore(words) {
-    let word_score = [];
-    words.forEach(function(word) {
-      word_score.push([this.getWordScore(word),word]);
-    }.bind(this));
-    return word_score;
+    const wordScore = [];
+    words.forEach((word) => {
+      wordScore.push([this.getWordScore(word), word]);
+    });
+    return wordScore;
   }
 
   sendWord = (word) => {
@@ -105,26 +136,17 @@ class Play extends Component {
       return false;
     }
 
-    fire.database().ref('words').push({
-      game_id: this.state.gameId,
-      game_info_id: this.state.player.id,
+    return fire.database().ref('words').push({
+      player_id: this.state.player.id,
       text: word,
     });
-  }
-
-  getWordScore = (word) => {
-    let score = 0;
-    word.split("").forEach(function(letter) {
-      score += LetterScores.words_score[letter];
-    });
-    return score;
   }
 
   totalScore = (words) => {
     let score = 0;
 
     if (words.length === 0) return score;
-    words.forEach(function(l) {
+    words.forEach((l) => {
       score += l[0];
     });
     return score;
@@ -146,20 +168,23 @@ class Play extends Component {
               <PlayerBox
                 username={this.state.player.username}
                 words={this.appendWordScore(this.state.player.words)}
-                totalScore = {this.totalScore}
+                totalScore={this.totalScore}
               />
             </div>
             <div className={classes.wordWrap}>
               <RandomLetter randomLetters={this.chunkRandomLetters()} />
             </div>
-            <div className={classes.sideBar}>
-              <PlayerBox
-                username={this.state.opponent.username}
-                words={this.appendWordScore(this.state.opponent.words)}
-                totalScore = {this.totalScore}
-                isOpponent
-              />
-            </div>
+            {
+              this.state.numPlayers > 1 &&
+                <div className={classes.sideBar}>
+                  <PlayerBox
+                    username={this.state.opponent.username}
+                    words={this.appendWordScore(this.state.opponent.words)}
+                    totalScore={this.totalScore}
+                    isOpponent
+                  />
+                </div>
+            }
           </div>
           <div>
             <UserAnswer

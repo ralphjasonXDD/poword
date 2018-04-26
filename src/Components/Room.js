@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import { Redirect, Switch, Route } from 'react-router-dom';
+import { Redirect, Switch, Route, withRouter } from 'react-router-dom';
 import UUID from 'uuid';
 import fire from '.././fire';
 import { JssRoom } from '../Resources/jss_styles';
 import Play from './Play';
-
-
 
 class Room extends Component {
   constructor() {
     super();
     this.state = {
       list: [],
-      randomLetters: this.setRandomLetters(),
+      randomLetters: '',
       status: 'available',
       challengeStatus: null,
       gameId: null,
       playerId: null,
-      playerName: "",
+      playerName: '',
     };
   }
 
@@ -25,19 +23,19 @@ class Room extends Component {
     this.getRooms();
   }
 
-  setRandomLetters() {
+  setRandomLetters = () => {
     let text = '';
     const consonants = 'bcdfghjklmnpqrstvwxyz';
     const vowels = 'aeiou';
 
     /* Generate random vowel letters: min 4, max 8 */
     const vowelCount = Math.floor(Math.random() * 3) + 4;
-    for (let i = 0; i < vowelCount; i++) {
+    for (let i = 0; i < vowelCount; i += 1) {
       text += vowels.charAt(Math.floor(Math.random() * vowels.length));
     }
 
     /* Generate random consonant letters */
-    for (let j = 0; j < 16 - vowelCount; j++) {
+    for (let j = 0; j < 16 - vowelCount; j += 1) {
       text += consonants.charAt(Math.floor(Math.random() * consonants.length));
     }
 
@@ -48,9 +46,9 @@ class Room extends Component {
 
   getRooms() {
     const gamesRef = fire.database().ref('games');
-    gamesRef.on('value', snapshot => {
+    gamesRef.on('value', (snapshot) => {
       const list = Object.keys(snapshot.val() || {});
-      this.setState({list});
+      this.setState({ list });
     });
   }
 
@@ -58,22 +56,51 @@ class Room extends Component {
     const uid = UUID.v1();
     const gameId = `game_id_${uid}`;
     const randomLetters = this.setRandomLetters();
-    const playerId = uid;
-    const playerName = `testchi-${UUID.v1().substring(0, 7)}`;
+    const playerName = `testchi-${uid.substring(0, 7)}`;
 
     this.setState({
       challengeStatus: true,
+      playerId: uid,
       randomLetters,
       gameId,
-      playerId,
       playerName,
     });
     fire.database().ref('games').child(gameId).set({
-      [`${uid}_points`]: 0,
       status: this.state.status,
-      [`${uid}`]: playerName,
       randomLetters,
+      numPlayers: 1,
+      players: {
+        [`${uid}`]: {
+          username: playerName,
+          points: 0,
+        },
+      },
     });
+  }
+
+  savePlayer = (gameId) => {
+    const playerId = UUID.v1();
+    const playerName = `testchi-${playerId.substring(0, 7)}`;
+    fire.database().ref(`games/${gameId}/players`).update({
+      [`${playerId}`]: {
+        username: playerName,
+        points: 0,
+      },
+    });
+    const gameRef = fire.database().ref(`games/${gameId}`);
+    let numPlayers = null;
+    gameRef.on('value', (snapshot) => {
+      const { randomLetters } = snapshot.val();
+      numPlayers = snapshot.val().numPlayers + 1;
+      this.setState({
+        challengeStatus: true,
+        randomLetters,
+        gameId,
+        playerId,
+        playerName,
+      });
+    });
+    gameRef.update({ numPlayers });
   }
 
   cancelRoom = () => {
@@ -82,7 +109,7 @@ class Room extends Component {
   }
 
   render() {
-    if (this.state.challengeStatus === true) {
+    if (this.state.challengeStatus) {
       return (
         <div>
           <Switch>
@@ -104,7 +131,7 @@ class Room extends Component {
 
     const rooms = this.state.list.map((room, index) => (
       <li key={index}>
-        {room}
+        <button onClick={() => this.savePlayer(room)}> {room} </button>
       </li>
     ));
 
@@ -123,4 +150,4 @@ class Room extends Component {
   }
 }
 
-export default Room;
+export default withRouter(Room);

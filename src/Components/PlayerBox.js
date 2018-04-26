@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { JssPlayerBox } from '../Resources/jss_styles.js';
+import { JssPlayerBox } from '../Resources/jss_styles';
 
 const PlayerBox = (props) => {
   const wordList = props.words.map((word, index) => (

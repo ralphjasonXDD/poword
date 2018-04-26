@@ -3,7 +3,7 @@
     ".read": true,
     ".write": true,
     "words": {
-      ".indexOn": "id"
+      ".indexOn": ["id", "player_id"]
     }
   }
 }

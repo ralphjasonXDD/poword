@@ -2,7 +2,7 @@ import React from 'react';
 import Letter from './Letter';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import { JssRandomLetter } from '../Resources/jss_styles.js';
+import { JssRandomLetter } from '../Resources/jss_styles';
 
 const RandomLetter = ({
   classes,

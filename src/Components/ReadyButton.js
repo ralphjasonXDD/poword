@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { JssTimer } from '../Resources/jss_styles.js';
+import { JssTimer } from '../Resources/jss_styles';
 
 class ReadyButton extends Component {
   render() {

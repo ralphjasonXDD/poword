@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Redirect, Switch, Route, withRouter } from 'react-router-dom';
+import { Redirect, Switch, Route } from 'react-router-dom';
 import UUID from 'uuid';
 import fire from '.././fire';
 import { JssRoom } from '../Resources/jss_styles';
 import Play from './Play';
+import Rooms from './Rooms';
 
-class Room extends Component {
+class Game extends Component {
   constructor() {
     super();
     this.state = {
@@ -129,12 +130,6 @@ class Room extends Component {
       );
     }
 
-    const rooms = this.state.list.map((room, index) => (
-      <li key={index}>
-        <button onClick={() => this.savePlayer(room)}> {room} </button>
-      </li>
-    ));
-
     // const event = this.state.challengeStatus
     //   ? <button onClick={this.cancelRoom}> - CANCEL CHALLENGE </button>
     //   : <button onClick={this.createRoom}> + CHALLENGE </button>;
@@ -144,10 +139,12 @@ class Room extends Component {
         <div style={JssRoom.challenger}>
           <button onClick={this.createRoom}> + CHALLENGE </button>
         </div>
-        <ul>{rooms}</ul>
+        <ul>
+          <Rooms rooms={this.state.list} handleClick={this.savePlayer} />
+        </ul>
       </div>
     );
   }
 }
 
-export default withRouter(Room);
+export default Game;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Room from './Components/Room';
+import Game from './Components/Game';
 
 const App = () => (
   <BrowserRouter>
-    <Route path='/' component={Room} />
+    <Route path='/' component={Game} />
   </BrowserRouter>
 );
 

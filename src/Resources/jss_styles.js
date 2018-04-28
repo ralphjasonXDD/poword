@@ -74,6 +74,10 @@ export const JssPlayerBox = {
       listStyle: 'none',
       margin: '0 auto',
       paddingLeft: 0,
+      transform: 'rotate(180deg)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
       '& li': {
         alignItems: 'baseline',
         borderBottom: '1px solid #d8d7d7',
@@ -83,6 +87,7 @@ export const JssPlayerBox = {
         fontWeight: 'bold',
         justifyContent: 'space-between',
         padding: '12px 15px',
+        transform: 'rotate(-180deg)',
       },
     },
   },

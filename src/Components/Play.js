@@ -7,6 +7,7 @@ import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
 import ReadyButton from './ReadyButton';
+import MuteButton from './MuteButton';
 import { JssPlay } from '../Resources/jss_styles';
 import LetterScores from '../Resources/keycodes.json';
 
@@ -31,6 +32,7 @@ class Play extends Component {
       current_answer: '',
       isPlay: false,
       numPlayers: 1,
+      isMute: false,
     };
 
     this.handlePlay = this.handlePlay.bind(this);
@@ -58,9 +60,7 @@ class Play extends Component {
     gameRef.on('value', (snapshot) => {
       const { players, numPlayers } = snapshot.val();
       const opponentID = Object.keys(players).find(e => e !== this.state.player.id);
-      if (!opponentID) {
-        return;
-      }
+      if (!opponentID) return;
       const userName = players[opponentID].username;
       this.setState({
         opponent: {
@@ -78,15 +78,15 @@ class Play extends Component {
   getWords(id, thePlayer) {
     /* Create reference to words in Firebase Database */
     const wordsRef = fire.database().ref('words').orderByChild('player_id').equalTo(id);
-    wordsRef.on('value', (snapshot) => {
-      const wordList = Object.values(snapshot.val() || {}).map(words => words.text);
+    wordsRef.on('child_added', (snapshot) => {
+      const { text } = snapshot.val();
       /* Update React state when word is added at Firebase Database */
-      this.setState({
+      this.setState(prevState => ({
         [thePlayer]: {
-          ...this.state[thePlayer],
-          words: wordList.reverse(),
+          ...prevState[thePlayer],
+          words: prevState[thePlayer].words.concat(text),
         },
-      });
+      }));
     });
   }
 
@@ -131,12 +131,20 @@ class Play extends Component {
     return wordScore;
   }
 
+  playSound = (sound) => {
+    if (!sound || this.state.isMute) return;
+
+    const audio = sound;
+    audio.currentTime = 0;
+    audio.play();
+  };
+
   sendWord = (word) => {
     if (word == null || this.state.player.words.includes(word)) {
-      return false;
+      return;
     }
 
-    return fire.database().ref('words').push({
+    fire.database().ref('words').push({
       player_id: this.state.player.id,
       text: word,
     });
@@ -152,6 +160,10 @@ class Play extends Component {
     return score;
   }
 
+  toggleMute = () => {
+    this.setState({ isMute: !this.state.isMute });
+  }
+
 
   render() {
     const { isReady } = this.state.player;
@@ -159,6 +171,7 @@ class Play extends Component {
     return (
       <div>
         <div className={classes.playHeader}>
+          <MuteButton toggleMute={this.toggleMute} />
           <Timer seconds="5" start={this.state.isPlay} />
           <ReadyButton handler={this.handlePlay} />
         </div>
@@ -192,6 +205,7 @@ class Play extends Component {
               setAnswer={this.setAnswer}
               answer={this.state.current_answer}
               letters={this.state.random_letters}
+              playSound={this.playSound}
             />
           </div>
         </div>

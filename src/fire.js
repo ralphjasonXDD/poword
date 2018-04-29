@@ -11,14 +11,4 @@ const config = {
 
 const fire = firebase.initializeApp(config);
 
-export const fbProvider = new firebase.auth.FacebookAuthProvider();
-
-export const auth = fire.auth();
-
-export const fbKey = 'FB_INFO_LOCAL_STORAGE';
-
-export const isAuthenticated = () => {
-  return !!auth.currentUser || !!localStorage.getItem(fbKey);
-};
-
 export default fire;

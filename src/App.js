@@ -1,26 +1,11 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { isAuthenticated } from './fire';
-import Signin from './Signin';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Game from './Components/Game';
 
-const AppStyle = {
-  container: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    height: '100%',
-    position: 'absolute',
-    width: '100%'
-  },
-};
-
-const App = () => {
-  return (
-    <div style={AppStyle.container}>
-      {isAuthenticated() && <Redirect to={{ pathname: '/room' }} />}
-      <Signin />
-    </div>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Route path='/' component={Game} />
+  </BrowserRouter>
+);
 
 export default App;

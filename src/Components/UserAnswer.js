@@ -2,15 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import KeyCodes from '../Resources/keycodes.json';
-import { JssUserAnswer } from '../Resources/jss_styles.js';
+import { JssUserAnswer } from '../Resources/jss_styles';
 import Dictionary from '../Resources/dictionary.json';
 
-class UserAnswer extends Component {
+import beep from '../Resources/audio/beep.mp3';
+import buzz from '../Resources/audio/buzz.mp3';
 
+const SOUNDS = {
+  beep: new Audio(beep),
+  buzz: new Audio(buzz),
+};
+
+class UserAnswer extends Component {
   constructor(props) {
     super(props);
     this.keyEventHandler();
-    this.state ={
+    this.state = {
       answerStyle: {
         color: '#545454',
       },
@@ -31,9 +38,14 @@ class UserAnswer extends Component {
     this.setState({ answerStyle: { color: '#545454' } });
     if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
       ans += KeyCodes.letter_codes[keyCode];
-    } else if (KeyCodes.action_codes[keyCode] === 'enter' && this.isValidWord(ans)) {
-      this.props.sendWord(ans);
-      ans = '';
+    } else if (KeyCodes.action_codes[keyCode] === 'enter') {
+      if (!this.isValidWord(ans)) {
+        this.props.playSound(SOUNDS.buzz);
+      } else {
+        this.props.sendWord(ans);
+        this.props.playSound(SOUNDS.beep);
+        ans = '';
+      }
     } else if (KeyCodes.action_codes[keyCode] === 'delete') {
       ans = ans.substr(0, ans.length - 1);
     }
@@ -55,11 +67,8 @@ class UserAnswer extends Component {
   }
 
   isValidWord(word) {
-    if (Dictionary.words.includes(word)) {
-      return true;
-    } else {
-      this.setState({ answerStyle: { color: 'rgba(255,0,0,0.6)' } });
-    }
+    if (Dictionary.words.includes(word)) return true;
+    return this.setState({ answerStyle: { color: 'rgba(255,0,0,0.6)' } });
   }
 
   render() {
@@ -67,7 +76,7 @@ class UserAnswer extends Component {
 
     return (
       <div>
-        <div className={ classes.answerHolder } style={ this.state.answerStyle }>
+        <div className={classes.answerHolder} style={this.state.answerStyle}>
           { this.props.answer }
         </div>
       </div>
@@ -79,7 +88,8 @@ UserAnswer.propTypes = {
   answer: PropTypes.string.isRequired,
   setAnswer: PropTypes.func.isRequired,
   sendWord: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired,
+  playSound: PropTypes.func.isRequired,
+  classes: PropTypes.shape().isRequired,
 };
 
 export default injectSheet(JssUserAnswer)(UserAnswer);

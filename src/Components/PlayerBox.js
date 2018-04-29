@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -20,7 +21,15 @@ const PlayerBox = (props) => {
           <span className={props.classes.totalscore}>{props.totalScore(props.words)}</span>
         </h4>
         <Scrollbars style={{ height: 323 }}>
-          <ul>{wordList}</ul>
+          <ul>
+            <CSSTransitionGroup
+              transitionName="word-list"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}
+            >
+              {wordList}
+            </CSSTransitionGroup>
+          </ul>
         </Scrollbars>
       </div>
     </div>

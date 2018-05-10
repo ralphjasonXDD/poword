@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { JssTimer } from '../Resources/jss_styles';
+import injectSheet from 'react-jss';
+import { JssReadyButton } from '../Resources/jss_styles';
+
 
 class ReadyButton extends Component {
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <button onClick={this.props.handler}>Ready</button>
+        <button className={classes.readyButton} onClick={this.props.handler}>Play Game</button>
       </div>
     );
   }
 }
 
-export default ReadyButton;
+export default injectSheet(JssReadyButton)(ReadyButton);

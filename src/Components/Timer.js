@@ -52,7 +52,6 @@ class Timer extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <h5 className={classes.timeHeading}>Time remaining</h5>
         <h4 className={classes.time}>{this.state.time.mins}:{this.state.time.secs}</h4>
       </div>
     );

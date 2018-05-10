@@ -75,8 +75,8 @@ class UserAnswer extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <div className={classes.answerHolder} style={this.state.answerStyle}>
+      <div className={classes.answerHolder}>
+        <div className={classes.answerBox} style={this.state.answerStyle}>
           { this.props.answer }
         </div>
       </div>

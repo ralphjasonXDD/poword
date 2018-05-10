@@ -1,20 +1,22 @@
 export const JssUserAnswer = {
   answerHolder: {
+    textAlign: 'center'
+  },
+  answerBox: {
     alignItems: 'center',
     backgroundColor: '#e7e7e7',
     borderRadius: '4px',
     color: '#545454',
     cursor: 'text',
-    display: 'flex',
+    display: 'inline-flex',
     fontFamily: 'Boogaloo',
-    fontSize: '40px',
+    fontSize: '38px',
     fontWeight: 'bold',
     height: '40px',
     justifyContent: 'center',
     letterSpacing: '10px',
-    margin: '30px auto',
-    maxWidth: '46%',
-    padding: '15px',
+    margin: '30px auto 0',
+    padding: '10px 30px',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
@@ -22,14 +24,10 @@ export const JssUserAnswer = {
 
 export const JssTimer = {
   time: {
-    color: '#969696',
+    color: '#fff',
     fontSize: '30px',
-    margin: '10px auto 0',
-  },
-  timeHeading: {
-    color: '4f4f4f',
     margin: '0 auto',
-  },
+  }
 };
 
 export const JssRoom = {
@@ -116,7 +114,7 @@ export const JssPlay = {
     display: 'flex',
     marginLeft: '-15px',
     marginRight: '-15px',
-    marginTop: '45px',
+    marginTop: '20px',
   },
   sideBar: {
     paddingLeft: '15px',
@@ -125,7 +123,7 @@ export const JssPlay = {
   },
   wordWrap: {
     borderRadius: '4px',
-    width: '52%',
+    width: '324px',
   },
   wordRow: {
     display: 'flex',
@@ -150,10 +148,12 @@ export const JssPlay = {
   },
   playHeader: {
     alignItems: 'center',
-    backgroundColor: '#efefef',
+    backgroundColor: '#3479b4',
     display: 'flex',
-    justifyContent: 'center',
-    padding: '12px',
+    justifyContent: 'space-around',
+    margin: '37px auto 0',
+    maxWidth: '439px;',
+    padding: '14px 12px',
     textAlign: 'center',
   },
 };
@@ -162,24 +162,37 @@ export const JssRandomLetter = {
   wordRow: {
     display: 'flex',
     fontFamily: 'Boogaloo',
-    fontSize: '44px',
+    fontSize: '55px',
     fontWeight: 'bold',
-    marginBottom: '15px',
+    marginBottom: '5px',
     justifyContent: 'space-between',
     textTransform: 'uppercase',
     '& div': {
       alignItems: 'center',
-      backgroundColor: '#e9edee',
-      color: '#4e4e4e',
+      backgroundColor: '#dadfe2',
+      color: '#dadfe2',
       cursor: 'default',
       display: 'flex',
-      height: '80px',
+      height: '78px',
       justifyContent: 'center',
       position: 'relative',
-      width: '80px',
+      width: '78px',
     },
     '&:last-child': {
       marginBottom: '0',
     },
   },
+};
+
+export const JssReadyButton = {
+  readyButton: {
+    border: '0',
+    padding: '8px 25px',
+    borderRadius: '50px',
+    textTransform: 'uppercase',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    backgroundColor: '#2ea4d2',
+    color:' #fff',
+  }
 };

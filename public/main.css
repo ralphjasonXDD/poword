@@ -1,5 +1,5 @@
 body {
-  background-color: #ececec;
+  background-color: #518ea1;
   color: #4f4f4f;
 }
 
@@ -10,7 +10,6 @@ body {
 .word-list-enter.word-list-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
-  background: #fffa65;
 }
 
 .word-list-leave {
@@ -20,7 +19,6 @@ body {
 .word-list-leave.word-list-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
-  background: #fffa65;
 }
 
 /* MUTE TOGGLE */

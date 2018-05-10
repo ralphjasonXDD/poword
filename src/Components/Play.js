@@ -47,11 +47,11 @@ class Play extends Component {
     const ans = answer.split('');
     return this.state.random_letters.split('').map((letter) => {
       if (ans.indexOf(letter) === -1) {
-        return [letter, ['#6d7a8a', '#dadfe2']];
+        return [letter, ['#336a7b', '#478294', 'inset 0 3px 0 #3b7688']];
       }
 
       ans.splice(ans.indexOf(letter), 1);
-      return [letter, ['#fff', '#f2b34c']];
+      return [letter, ['#fff', '#f2b34c', 'inset 0 -3px 0 #ba7e1b']];
     });
   }
 
@@ -171,9 +171,15 @@ class Play extends Component {
     return (
       <div>
         <div className={classes.playHeader}>
+          <div className={classes.playHeaderCol}>
           <MuteButton toggleMute={this.toggleMute} />
+          </div>
+          <div className={classes.playHeaderCol}>
           <Timer seconds="5" start={this.state.isPlay} />
+          </div>
+          <div className={classes.playHeaderCol}>
           <ReadyButton handler={this.handlePlay} />
+          </div>
         </div>
         <div className={classes.container}>
           <UserAnswer

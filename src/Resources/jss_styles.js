@@ -4,9 +4,10 @@ export const JssUserAnswer = {
   },
   answerBox: {
     alignItems: 'center',
-    backgroundColor: '#e7e7e7',
+    backgroundColor: '#f2b34c',
+    boxShadow: 'inset 0 -3px 0 #ba7e1b',
     borderRadius: '4px',
-    color: '#545454',
+    color: '#fff',
     cursor: 'text',
     display: 'inline-flex',
     fontFamily: 'Boogaloo',
@@ -15,7 +16,7 @@ export const JssUserAnswer = {
     height: '40px',
     justifyContent: 'center',
     letterSpacing: '10px',
-    margin: '30px auto 0',
+    margin: '20px auto 0',
     padding: '10px 30px',
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -25,8 +26,32 @@ export const JssUserAnswer = {
 export const JssTimer = {
   time: {
     color: '#fff',
-    fontSize: '30px',
     margin: '0 auto',
+    fontSize: '40px',
+    fontFamily: 'Boogaloo',
+    backgroundColor: '#0599df',
+    padding: '3px 30px 8px',
+    borderRadius: '20px',
+    borderBottom: '3px solid #407b8e',
+    boxShadow: 'inset 0 -3px 0 #015e89',
+  },
+  timeWrap: {
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative'
+  },
+  timeLabel: {
+    background: '#f4b34f',
+    borderRadius: '4px',
+    position: 'absolute',
+    padding: '4px 8px',
+    color: '#fff',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    fontSize: '10px',
+    letterSpacing: '2px',
+    top: '-10px',
+    fontFamily: 'Boogaloo',
   }
 };
 
@@ -48,24 +73,25 @@ export const JssRoom = {
 
 export const JssPlayerBox = {
   container: {
-    backgroundColor: '#efefef',
-    borderRadius: '4px',
-    color: '#333333',
+    backgroundColor: '#e9e2b4',
+    boxShadow: 'inset 0 -5px 0 #c3b873',
+    borderBottom: '5px solid #407b8e',
+    color: '#333',
     fontFamily: 'Lato',
     fontSize: '12px',
     letterSpacing: '0.5px',
     lineHeight: 1,
+    paddingTop: '5px',
+    position: 'relative',
     '& h4': {
-      alignItems: 'baseline',
-      backgroundColor: props => (props.isOpponent ? '#1bbf89' : '#56c0e0'),
-      borderRadius: '4px 4px 0 0',
+      backgroundColor: props => (props.isOpponent ? '#f4777b' : '#56c0e0'),
+      boxShadow: props => (props.isOpponent ? 'inset 0 -2px 0 #d64d52' : 'inset 0 -2px 0 #43afd0'),
+      borderBottom: '3px solid #d3cb9a',
       color: '#fff',
-      display: 'flex',
       fontSize: '16px',
-      fontWeight: 'normal',
-      justifyContent: 'space-between',
-      padding: '15px',
       margin: '0 auto',
+      padding: '15px 10px',
+      position: 'relative'
     },
     '& ul': {
       height: '100%',
@@ -78,27 +104,40 @@ export const JssPlayerBox = {
       justifyContent: 'flex-end',
       '& li': {
         alignItems: 'baseline',
-        borderBottom: '1px solid #d8d7d7',
+        borderBottom: '1px dashed #cac187',
         color: '#4f4f4f',
         display: 'flex',
         fontSize: '13px',
         fontWeight: 'bold',
         justifyContent: 'space-between',
-        padding: '12px 15px',
+        marginLeft: '15px',
+        marginRight: '15px',
+        paddingBottom: '12px',
+        paddingTop: '12px',
         transform: 'rotate(-180deg)',
       },
     },
   },
   score: {
-    backgroundColor: props => (props.isOpponent ? 'rgba(27, 191, 137, 0.12)' : 'rgba(86, 192, 224, 0.12)'),
-    border: props => (props.isOpponent ? '1px solid rgba(27, 191, 137, 0.50)' : '1px solid rgba(63, 160, 190, 0.30)'),
+    backgroundColor: 'rgba(202, 193, 135, 0.30)',
     borderRadius: '2px',
-    color: props => (props.isOpponent ? '#1bbf89' : '#3fa0be'),
+    color: '#8e8021',
     fontSize: '10px',
-    padding: '3px 7px',
+    padding: '4px 7px',
   },
   totalscore: {
-    fontSize: '13px;'
+    fontSize: '18px',
+    position: 'absolute',
+    top: '-41px',
+    backgroundColor: '#81cdc0',
+    minWidth: '44px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textIndent: '0',
+    padding: '10px 5px',
+    right: '15px',
+    zIndex: '-1',
   }
 };
 
@@ -148,14 +187,12 @@ export const JssPlay = {
   },
   playHeader: {
     alignItems: 'center',
-    backgroundColor: '#3479b4',
     display: 'flex',
-    justifyContent: 'space-around',
-    margin: '37px auto 0',
-    maxWidth: '439px;',
     padding: '14px 12px',
-    textAlign: 'center',
   },
+  playHeaderCol: {
+    flex: '0 0 33.333333%',
+  }
 };
 
 export const JssRandomLetter = {
@@ -170,6 +207,7 @@ export const JssRandomLetter = {
     '& div': {
       alignItems: 'center',
       backgroundColor: '#dadfe2',
+      borderRadius: '5px',
       color: '#dadfe2',
       cursor: 'default',
       display: 'flex',
@@ -187,12 +225,19 @@ export const JssRandomLetter = {
 export const JssReadyButton = {
   readyButton: {
     border: '0',
-    padding: '8px 25px',
+    padding: '8px 25px 10px',
     borderRadius: '50px',
     textTransform: 'uppercase',
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 'bold',
-    backgroundColor: '#2ea4d2',
-    color:' #fff',
+    backgroundColor: '#60b861',
+    color: '#fff',
+    cursor: 'pointer',
+    boxShadow: 'inset 0 -3px 0 #3b883b',
+    borderBottom: '3px solid #407b8e',
+  },
+  readyButtonWrap: {
+    display: 'flex',
+    justifyContent: 'flex-end'
   }
 };

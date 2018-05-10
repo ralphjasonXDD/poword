@@ -51,8 +51,11 @@ class Timer extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <h4 className={classes.time}>{this.state.time.mins}:{this.state.time.secs}</h4>
+      <div className={classes.timeWrap}>
+        <span className={classes.timeLabel}>timer</span>
+        <h4 className={classes.time}>
+          {this.state.time.mins}:{this.state.time.secs}
+        </h4>
       </div>
     );
   }

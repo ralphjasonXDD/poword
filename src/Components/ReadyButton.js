@@ -7,7 +7,7 @@ class ReadyButton extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.readyButtonWrap}>
         <button className={classes.readyButton} onClick={this.props.handler}>Play Game</button>
       </div>
     );

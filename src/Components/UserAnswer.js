@@ -19,7 +19,9 @@ class UserAnswer extends Component {
     this.keyEventHandler();
     this.state = {
       answerStyle: {
-        color: '#545454',
+        backgroundColor: '',
+        boxShadow: '',
+        color: '#fff',
       },
     };
   }
@@ -35,7 +37,7 @@ class UserAnswer extends Component {
   handleKeys(keyCode) {
     let ans = this.props.answer;
 
-    this.setState({ answerStyle: { color: '#545454' } });
+    this.setState({ answerStyle: { color: '#fff' } });
     if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
       ans += KeyCodes.letter_codes[keyCode];
     } else if (KeyCodes.action_codes[keyCode] === 'enter') {
@@ -68,7 +70,7 @@ class UserAnswer extends Component {
 
   isValidWord(word) {
     if (Dictionary.words.includes(word)) return true;
-    return this.setState({ answerStyle: { color: 'rgba(255,0,0,0.6)' } });
+    return this.setState({ answerStyle: { backgroundColor: '#bd081c', boxShadow: 'inset 0 -3px 0 #a60517' } });
   }
 
   render() {

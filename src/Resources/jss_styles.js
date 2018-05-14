@@ -17,7 +17,7 @@ export const JssUserAnswer = {
     justifyContent: 'center',
     letterSpacing: '10px',
     margin: '20px auto 0',
-    padding: '10px 30px',
+    padding: '10px 30px 13px',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
@@ -188,7 +188,7 @@ export const JssPlay = {
   playHeader: {
     alignItems: 'center',
     display: 'flex',
-    padding: '14px 12px',
+    padding: '20px 12px',
   },
   playHeaderCol: {
     flex: '0 0 33.333333%',
@@ -225,7 +225,7 @@ export const JssRandomLetter = {
 export const JssReadyButton = {
   readyButton: {
     border: '0',
-    padding: '8px 25px 10px',
+    padding: '8px 30px 11px',
     borderRadius: '50px',
     textTransform: 'uppercase',
     fontSize: '16px',
@@ -233,8 +233,9 @@ export const JssReadyButton = {
     backgroundColor: '#60b861',
     color: '#fff',
     cursor: 'pointer',
-    boxShadow: 'inset 0 -3px 0 #3b883b',
+    boxShadow: 'inset 0 -2px 0 #3b883b',
     borderBottom: '3px solid #407b8e',
+    fontFamily: 'Lato'
   },
   readyButtonWrap: {
     display: 'flex',

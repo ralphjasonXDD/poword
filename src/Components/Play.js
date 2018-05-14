@@ -31,7 +31,7 @@ class Play extends Component {
       gameId: params.gameId,
       current_answer: '',
       isPlay: false,
-      numPlayers: 1,
+      opponentAvailable: false,
       isMute: false,
     };
 
@@ -56,22 +56,19 @@ class Play extends Component {
   }
 
   getOpponents() {
-    const gameRef = fire.database().ref(`games/${this.state.gameId}`);
-    gameRef.on('value', (snapshot) => {
-      const { players, numPlayers } = snapshot.val();
-      const opponentID = Object.keys(players).find(e => e !== this.state.player.id);
-      if (!opponentID) return;
-      const userName = players[opponentID].username;
+    const playerRef = fire.database().ref('player').orderByChild('gameId').equalTo(this.state.gameId);
+    playerRef.on('child_added', (snapshot) => {
+      const { id, username } = snapshot.val();
+      if (id === this.state.player.id) return;
       this.setState({
         opponent: {
           ...this.state.opponent,
-          id: opponentID,
-          username: userName,
+          id,
+          username,
         },
-        numPlayers,
+        opponentAvailable: true,
       });
-
-      this.getWords(opponentID, 'opponent');
+      this.getWords(id, 'opponent');
     });
   }
 
@@ -188,7 +185,7 @@ class Play extends Component {
               <RandomLetter randomLetters={this.chunkRandomLetters()} />
             </div>
             {
-              this.state.numPlayers > 1 &&
+              this.state.opponentAvailable &&
                 <div className={classes.sideBar}>
                   <PlayerBox
                     username={this.state.opponent.username}

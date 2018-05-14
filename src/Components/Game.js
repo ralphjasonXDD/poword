@@ -46,10 +46,14 @@ class Game extends Component {
   }
 
   getRooms() {
-    const gamesRef = fire.database().ref('games');
-    gamesRef.on('value', (snapshot) => {
-      const list = Object.keys(snapshot.val() || {});
-      this.setState({ list });
+    const gamesRef = fire.database().ref('game');
+    gamesRef.on('child_added', (snapshot) => {
+      const { opponentAvailable } = snapshot.val();
+      if (opponentAvailable) return;
+      const gameId = snapshot.key;
+      this.setState(prevState => ({
+        list: prevState.list.concat(gameId),
+      }));
     });
   }
 
@@ -66,33 +70,33 @@ class Game extends Component {
       gameId,
       playerName,
     });
-    fire.database().ref('games').child(gameId).set({
+
+    fire.database().ref('game').child(gameId).set({
+      opponentAvailable: false,
       status: this.state.status,
       randomLetters,
-      numPlayers: 1,
-      players: {
-        [`${uid}`]: {
-          username: playerName,
-          points: 0,
-        },
-      },
+    });
+
+    this.savePlayer(uid, playerName, gameId);
+  }
+
+  savePlayer = (id, username, gameId) => {
+    fire.database().ref('player').push({
+      id,
+      username,
+      gameId,
     });
   }
 
-  savePlayer = (gameId) => {
+  addPlayer = (gameId) => {
     const playerId = UUID.v1();
     const playerName = `testchi-${playerId.substring(0, 7)}`;
-    fire.database().ref(`games/${gameId}/players`).update({
-      [`${playerId}`]: {
-        username: playerName,
-        points: 0,
-      },
-    });
-    const gameRef = fire.database().ref(`games/${gameId}`);
-    let numPlayers = null;
-    gameRef.on('value', (snapshot) => {
+
+    this.savePlayer(playerId, playerName, gameId);
+
+    const gameRef = fire.database().ref(`game/${gameId}`);
+    gameRef.once('value', (snapshot) => {
       const { randomLetters } = snapshot.val();
-      numPlayers = snapshot.val().numPlayers + 1;
       this.setState({
         challengeStatus: true,
         randomLetters,
@@ -101,12 +105,8 @@ class Game extends Component {
         playerName,
       });
     });
-    gameRef.update({ numPlayers });
-  }
 
-  cancelRoom = () => {
-    this.setState({ challengeStatus: false });
-    fire.database().ref(`games/${this.state.gameId}`).remove();
+    gameRef.update({ opponentAvailable: true });
   }
 
   render() {
@@ -130,17 +130,13 @@ class Game extends Component {
       );
     }
 
-    // const event = this.state.challengeStatus
-    //   ? <button onClick={this.cancelRoom}> - CANCEL CHALLENGE </button>
-    //   : <button onClick={this.createRoom}> + CHALLENGE </button>;
-
     return (
       <div style={JssRoom.container}>
         <div style={JssRoom.challenger}>
           <button onClick={this.createRoom}> + CHALLENGE </button>
         </div>
         <ul>
-          <Rooms rooms={this.state.list} handleClick={this.savePlayer} />
+          <Rooms rooms={this.state.list} handleClick={this.addPlayer} />
         </ul>
       </div>
     );

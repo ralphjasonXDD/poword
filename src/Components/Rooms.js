@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import injectSheet from 'react-jss';
+import { JssRooms } from '../Resources/jss_styles';
 
 const Rooms = ({
   rooms,
   handleClick,
+  classes
 }) => (
   rooms.map((room, index) => (
-    <li key={index}>
-      <button onClick={() => handleClick(room)}> {room} </button>
+    <li key={index} className={classes.entry}>
+      {room}
+      <button className={classes.button} onClick={() => handleClick(room)}>Join</button>
     </li>
   ))
 );
@@ -18,4 +22,4 @@ Rooms.propTypes = {
   handleClick: PropTypes.func.isRequired,
 };
 
-export default Rooms;
+export default injectSheet(JssRooms)(Rooms);

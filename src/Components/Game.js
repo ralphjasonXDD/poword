@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Redirect, Switch, Route } from 'react-router-dom';
 import UUID from 'uuid';
 import fire from '.././fire';
-import { JssRoom } from '../Resources/jss_styles';
+import { Scrollbars } from 'react-custom-scrollbars';
+import injectSheet from 'react-jss';
+import { JssGame } from '../Resources/jss_styles';
 import Play from './Play';
 import Rooms from './Rooms';
 
@@ -110,6 +112,7 @@ class Game extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     if (this.state.challengeStatus) {
       return (
         <div>
@@ -135,16 +138,21 @@ class Game extends Component {
     //   : <button onClick={this.createRoom}> + CHALLENGE </button>;
 
     return (
-      <div style={JssRoom.container}>
-        <div style={JssRoom.challenger}>
-          <button onClick={this.createRoom}> + CHALLENGE </button>
+      <div className={classes.container}>
+        <div className={classes.createRoomWrap}>
+          <button className={classes.createRoomButton} onClick={this.createRoom}>Create Room</button>
         </div>
-        <ul>
-          <Rooms rooms={this.state.list} handleClick={this.savePlayer} />
-        </ul>
+        <div className={classes.listWrap}>
+          <h3 className={classes.listTitle}>Lobby List</h3>
+          <Scrollbars style={{ height: 216 }}>
+            <ul className={classes.list}>
+              <Rooms rooms={this.state.list} handleClick={this.savePlayer} />
+            </ul>
+          </Scrollbars>
+        </div>
       </div>
     );
   }
 }
 
-export default Game;
+export default injectSheet(JssGame)(Game);

@@ -47,11 +47,11 @@ class Play extends Component {
     const ans = answer.split('');
     return this.state.random_letters.split('').map((letter) => {
       if (ans.indexOf(letter) === -1) {
-        return [letter, ['#545454', '#e7e7e7']];
+        return [letter, ['#336a7b', '#478294', 'inset 0 3px 0 #3b7688']];
       }
 
       ans.splice(ans.indexOf(letter), 1);
-      return [letter, ['#fff', '#edc53f']];
+      return [letter, ['#fff', '#f2b34c', 'inset 0 -3px 0 #ba7e1b']];
     });
   }
 
@@ -171,11 +171,24 @@ class Play extends Component {
     return (
       <div>
         <div className={classes.playHeader}>
+          <div className={classes.playHeaderCol}>
           <MuteButton toggleMute={this.toggleMute} />
+          </div>
+          <div className={classes.playHeaderCol}>
           <Timer seconds="5" start={this.state.isPlay} />
+          </div>
+          <div className={classes.playHeaderCol}>
           <ReadyButton handler={this.handlePlay} />
+          </div>
         </div>
         <div className={classes.container}>
+          <UserAnswer
+            sendWord={this.sendWord}
+            setAnswer={this.setAnswer}
+            answer={this.state.current_answer}
+            letters={this.state.random_letters}
+            playSound={this.playSound}
+          />
           <div className={classes.playWrap}>
             <div className={classes.sideBar}>
               <PlayerBox
@@ -198,15 +211,6 @@ class Play extends Component {
                   />
                 </div>
             }
-          </div>
-          <div>
-            <UserAnswer
-              sendWord={this.sendWord}
-              setAnswer={this.setAnswer}
-              answer={this.state.current_answer}
-              letters={this.state.random_letters}
-              playSound={this.playSound}
-            />
           </div>
         </div>
       </div>

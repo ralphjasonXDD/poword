@@ -6,7 +6,7 @@ import WebFont from 'webfontloader';
 
 WebFont.load({
   google: {
-    families: ['Boogaloo', 'sans-serif'],
+    families: ['Boogaloo', 'Lato:400'],
   },
 });
 

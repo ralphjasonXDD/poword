@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, Switch, Route } from 'react-router-dom';
 import UUID from 'uuid';
 import fire from '.././fire';
-import { JssRoom } from '../Resources/jss_styles';
+import { JssGame } from '../Resources/jss_styles';
 import Play from './Play';
 import Rooms from './Rooms';
 
@@ -135,13 +135,16 @@ class Game extends Component {
     //   : <button onClick={this.createRoom}> + CHALLENGE </button>;
 
     return (
-      <div style={JssRoom.container}>
-        <div style={JssRoom.challenger}>
-          <button onClick={this.createRoom}> + CHALLENGE </button>
+      <div style={JssGame.container}>
+        <div style={JssGame.createRoomWrap}>
+          <button style={JssGame.createRoomButton} onClick={this.createRoom}>Create Room</button>
         </div>
-        <ul>
-          <Rooms rooms={this.state.list} handleClick={this.savePlayer} />
-        </ul>
+        <div style={JssGame.listWrap}>
+          <h3 style={JssGame.listTitle}>Lobby List</h3>
+          <ul style={JssGame.list}>
+            <Rooms rooms={this.state.list} handleClick={this.savePlayer} />
+          </ul>
+        </div>
       </div>
     );
   }

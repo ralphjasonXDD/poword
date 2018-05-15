@@ -55,20 +55,80 @@ export const JssTimer = {
   }
 };
 
-export const JssRoom = {
+export const JssGame = {
   container: {
-    margin: '30px 30% 5% 30%',
+    maxWidth: '720px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingLeft: '15px',
+    paddingRight: '15px',
+  },
+  listWrap: {
+    backgroundColor: '#e9e2b4',
+    boxShadow: 'inset 0 -5px 0 #c3b873',
+    borderBottom: '5px solid #407b8e',
+    borderRadius: '20px',
+    padding: '30px'
+  },
+  listTitle: {
+    fontSize: '25px',
+    marginTop: '0',
+    textTransform: 'uppercase'
+  },
+  list: {
+    listStyle: 'none',
+    margin: '0 auto',
+    paddingLeft: '0'
   },
   listChallenger: {
     border: '1px solid',
   },
-  challenger: {
-    margin: '5px 0 5px 0',
-    textAlign: 'right',
+  createRoomWrap: {
+    padding: '40px 10px',
+    textAlign: 'center',
+  },
+  createRoomButton: {
+    border: '0',
+    color: '#fff',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    padding: '15px 30px 18px',
+    fontSize: '18px',
+    textTransform: 'uppercase',
+    borderRadius: '20px',
+    backgroundColor: '#f2b34c',
+    boxShadow: 'inset 0 -4px 0 #ba7e1b',
+    borderBottom: '5px solid #407b8e',
   },
   link: {
     textDecoration: 'none',
   },
+};
+
+export const JssRooms = {
+  button: {
+    border: '0',
+    padding: '8px 20px 11px',
+    textTransform: 'uppercase',
+    backgroundColor: '#60b861',
+    borderBottom: '3px solid #d4cb93',
+    color: '#fff',
+    fontSize: '14px',
+    borderRadius: '4px',
+    boxShadow: 'inset 0 -3px 0 #52a953',
+    cursor: 'pointer',
+  },
+  entry: {
+    backgroundColor: '#e0d8a4',
+    borderRadius: '5px',
+    boxShadow: 'inset 0 0 5px #d4cb93',
+    color: '#635919',
+    marginBottom: '5px',
+    padding: '15px 20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  }
 };
 
 export const JssPlayerBox = {

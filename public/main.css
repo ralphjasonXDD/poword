@@ -46,7 +46,7 @@ body {
 .switch-inner:before {
   content: "ON";
   padding-left: 13px;
-  background-color: #30c98f; color: #fff;
+  background-color: #60b861; color: #fff;
 }
 .switch-inner:after {
   content: "OFF";

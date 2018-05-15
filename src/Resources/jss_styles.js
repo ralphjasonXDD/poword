@@ -68,17 +68,18 @@ export const JssGame = {
     boxShadow: 'inset 0 -5px 0 #c3b873',
     borderBottom: '5px solid #407b8e',
     borderRadius: '20px',
-    padding: '30px'
+    padding: '30px',
   },
   listTitle: {
+    color: '#6b6122',
     fontSize: '25px',
     marginTop: '0',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   list: {
     listStyle: 'none',
     margin: '0 auto',
-    paddingLeft: '0'
+    paddingLeft: '0',
   },
   listChallenger: {
     border: '1px solid',
@@ -92,13 +93,17 @@ export const JssGame = {
     color: '#fff',
     cursor: 'pointer',
     fontWeight: 'bold',
-    padding: '15px 30px 18px',
+    padding: '18px 40px',
     fontSize: '18px',
     textTransform: 'uppercase',
-    borderRadius: '20px',
+    borderRadius: '40px',
     backgroundColor: '#f2b34c',
-    boxShadow: 'inset 0 -4px 0 #ba7e1b',
-    borderBottom: '5px solid #407b8e',
+    boxShadow: '0 6px 0 #ba7e1b',
+    position: 'relative',
+    '&:hover': {
+      boxShadow: '0 4px 0 #ba7e1b',
+      top: '2px',
+    },
   },
   link: {
     textDecoration: 'none',
@@ -108,15 +113,19 @@ export const JssGame = {
 export const JssRooms = {
   button: {
     border: '0',
-    padding: '8px 20px 11px',
+    padding: '11px 20px',
     textTransform: 'uppercase',
     backgroundColor: '#60b861',
-    borderBottom: '3px solid #d4cb93',
     color: '#fff',
     fontSize: '14px',
     borderRadius: '4px',
-    boxShadow: 'inset 0 -3px 0 #52a953',
+    boxShadow: '0 4px 0 #52a953',
     cursor: 'pointer',
+    position: 'relative',
+    '&:hover': {
+      boxShadow: '0 2px 0 #52a953',
+      top: '2px',
+    },
   },
   entry: {
     backgroundColor: '#e0d8a4',
@@ -128,7 +137,7 @@ export const JssRooms = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-  }
+  },
 };
 
 export const JssPlayerBox = {
@@ -285,7 +294,7 @@ export const JssRandomLetter = {
 export const JssReadyButton = {
   readyButton: {
     border: '0',
-    padding: '8px 30px 11px',
+    padding: '11px 30px',
     borderRadius: '50px',
     textTransform: 'uppercase',
     fontSize: '16px',
@@ -293,12 +302,16 @@ export const JssReadyButton = {
     backgroundColor: '#60b861',
     color: '#fff',
     cursor: 'pointer',
-    boxShadow: 'inset 0 -2px 0 #3b883b',
-    borderBottom: '3px solid #407b8e',
-    fontFamily: 'Lato'
+    boxShadow: '0 4px 0 #3b883b',
+    fontFamily: 'Lato',
+    position: 'relative',
+    '&:hover': {
+      boxShadow: '0 2px 0 #3b883b',
+      top: '2px'
+    },
   },
   readyButtonWrap: {
     display: 'flex',
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 };

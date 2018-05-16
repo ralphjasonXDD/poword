@@ -230,8 +230,7 @@ export const JssPlay = {
     width: '24%',
   },
   wordWrap: {
-    borderRadius: '4px',
-    width: '324px',
+    width: '340px',
   },
   wordRow: {
     display: 'flex',
@@ -270,7 +269,7 @@ export const JssRandomLetter = {
     fontFamily: 'Boogaloo',
     fontSize: '55px',
     fontWeight: 'bold',
-    marginBottom: '5px',
+    marginBottom: '7px',
     justifyContent: 'space-between',
     textTransform: 'uppercase',
     '& div': {
@@ -280,7 +279,7 @@ export const JssRandomLetter = {
       color: '#dadfe2',
       cursor: 'default',
       display: 'flex',
-      height: '78px',
+      height: '81px',
       justifyContent: 'center',
       position: 'relative',
       width: '78px',

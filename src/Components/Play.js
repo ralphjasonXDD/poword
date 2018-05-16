@@ -47,11 +47,11 @@ class Play extends Component {
     const ans = answer.split('');
     return this.state.random_letters.split('').map((letter) => {
       if (ans.indexOf(letter) === -1) {
-        return [letter, ['#336a7b', '#478294', 'inset 0 3px 0 #3b7688']];
+        return [letter, ['#717675', '#f6f8f7', 'inset 0 -5px 0 #abb7b7']];
       }
 
       ans.splice(ans.indexOf(letter), 1);
-      return [letter, ['#fff', '#f2b34c', 'inset 0 -3px 0 #ba7e1b']];
+      return [letter, ['#fff', '#f2b34c', 'inset 0 -5px 0 #ba7e1b']];
     });
   }
 

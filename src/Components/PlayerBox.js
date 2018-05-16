@@ -20,7 +20,7 @@ const PlayerBox = (props) => {
           {props.username}
           <span className={props.classes.totalscore}>{props.totalScore(props.words)}</span>
         </h4>
-        <Scrollbars style={{ height: 281 }}>
+        <Scrollbars style={{ height: 290 }}>
           <ul>
             <CSSTransitionGroup
               transitionName="word-list"

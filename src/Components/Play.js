@@ -6,6 +6,7 @@ import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
+import GameResult from './GameResult';
 import ReadyButton from './ReadyButton';
 import MuteButton from './MuteButton';
 import { JssPlay } from '../Resources/jss_styles';
@@ -33,6 +34,7 @@ class Play extends Component {
       isPlay: false,
       opponentAvailable: false,
       isMute: false,
+      gameDone: false,
     };
 
     this.handlePlay = this.handlePlay.bind(this);
@@ -161,6 +163,25 @@ class Play extends Component {
     this.setState({ isMute: !this.state.isMute });
   }
 
+  setGameDone = (val) => {
+    this.setState({ gameDone: val });
+  }
+
+  gameData = () => {
+    let data = {
+      player: {
+        name: this.state.player.username,
+        words: this.appendWordScore(this.state.player.words),
+      },
+      opponent: {
+        name: this.state.opponent.username,
+        words: this.appendWordScore(this.state.opponent.words),
+      },
+    };
+    data.player['score'] = this.totalScore(data.player['words']);
+    data.opponent['score'] = this.totalScore(data.opponent['words']);
+    return data;
+  }
 
   render() {
     const { isReady } = this.state.player;
@@ -172,7 +193,11 @@ class Play extends Component {
           <MuteButton toggleMute={this.toggleMute} />
           </div>
           <div className={classes.playHeaderCol}>
-          <Timer seconds="5" start={this.state.isPlay} />
+          <Timer
+            seconds="5"
+            start={this.state.isPlay}
+            setGameDone={this.setGameDone}
+          />
           </div>
           <div className={classes.playHeaderCol}>
           <ReadyButton handler={this.handlePlay} />
@@ -209,6 +234,10 @@ class Play extends Component {
                 </div>
             }
           </div>
+          <GameResult
+            gameData={this.gameData()}
+            gameDone={this.state.gameDone}
+          />
         </div>
       </div>
     );

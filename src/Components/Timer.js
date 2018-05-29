@@ -45,7 +45,8 @@ class Timer extends Component {
 
     if (seconds === 0) {
       clearInterval(this.timer);
-      alert("Times up!");
+      this.props.setGameDone(true);
+      //alert("Times up!");
     }
   }
   render() {

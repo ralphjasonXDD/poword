@@ -83,10 +83,12 @@ class Game extends Component {
   }
 
   savePlayer = (id, username, gameId) => {
+    let isReady = false;
     fire.database().ref('player').push({
       id,
       username,
       gameId,
+      isReady,
     });
   }
 

@@ -61,6 +61,9 @@ export const JssGameResult = {
 export const JssGameResultScore = {
 }
 
+export const JssStartTimer = {
+}
+
 export const JssGame = {
   container: {
     maxWidth: '720px',

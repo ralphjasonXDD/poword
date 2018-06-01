@@ -6,6 +6,7 @@ import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
 import RandomLetter from './RandomLetter';
 import Timer from './Timer';
+import StartTimer from './StartTimer';
 import GameResult from './GameResult';
 import ReadyButton from './ReadyButton';
 import MuteButton from './MuteButton';
@@ -22,11 +23,13 @@ class Play extends Component {
         username: params.playerName,
         words: [],
         isReady: false,
+        key: params.playerKey,
       },
       opponent: {
         id: null,
         username: 'chi',
         words: [],
+        isReady: false,
       },
       random_letters: params.randomLetters,
       gameId: params.gameId,
@@ -35,9 +38,12 @@ class Play extends Component {
       opponentAvailable: false,
       isMute: false,
       gameDone: false,
+      inputStart: false,
+      gameTime: 10,
+      timerStart: false,
     };
 
-    this.handlePlay = this.handlePlay.bind(this);
+    //this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentWillMount() {
@@ -60,17 +66,27 @@ class Play extends Component {
   getOpponents() {
     const playerRef = fire.database().ref('player').orderByChild('gameId').equalTo(this.state.gameId);
     playerRef.on('child_added', (snapshot) => {
-      const { id, username } = snapshot.val();
+      const { id, username, isReady } = snapshot.val();
       if (id === this.state.player.id) return;
       this.setState({
         opponent: {
           ...this.state.opponent,
           id,
           username,
+          isReady,
         },
         opponentAvailable: true,
       });
       this.getWords(id, 'opponent');
+      this.getOpponentReady(snapshot.key);
+    });
+  }
+
+  getOpponentReady(id) {
+    const opponentRef = fire.database().ref('player/' + id).on("child_changed", (snapshot) => {
+      this.setState({
+        opponent: { ...this.state.opponent, isReady: snapshot.val() },
+      });
     });
   }
 
@@ -102,14 +118,31 @@ class Play extends Component {
     return score;
   }
 
-  handlePlay() {
+  playerReady = () => {
+    const playerRef = fire.database().ref('player').orderByChild('id').equalTo(this.state.player.id);
+    playerRef.on('child_added', function(snapshot) {
+      snapshot.ref.update({ isReady: true })
+    });
+
+    this.setState({
+      player: {
+        ...this.state.player,
+        isReady: true,
+      },
+    });
+  }
+
+  handlePlay = () => {
     this.setState(prevState => ({
       player: {
         ...prevState.player,
-        isReady: true,
       },
       isPlay: true,
     }));
+    //temporary
+    this.setState({
+      inputStart: true,
+    });
   }
 
   chunkRandomLetters() {
@@ -163,8 +196,15 @@ class Play extends Component {
     this.setState({ isMute: !this.state.isMute });
   }
 
+  setStartTimer = () => {
+    this.setState({ timerStart: true });
+  }
+
   setGameDone = (val) => {
-    this.setState({ gameDone: val });
+    this.setState({
+      gameDone: val,
+      inputStart: !(val),
+    });
   }
 
   gameData = () => {
@@ -184,23 +224,55 @@ class Play extends Component {
   }
 
   render() {
-    const { isReady } = this.state.player;
     const { classes } = this.props;
+    const opponentText = this.state.opponentAvailable ? "available" : "not";
+    const opponentReadyText = this.state.opponent.isReady ? "ready" : "not ready";
+    const playerReadyText = this.state.player.isReady ? "ready" : "not ready";
+
     return (
       <div>
+        <div>
+          player: {this.state.player.username}
+        </div>
+        <div>
+          opponent: {this.state.opponent.username}
+        </div>
+        <div>
+          opponentAvailable: {opponentText}
+        </div>
+        <div>
+          opponentReady: {opponentReadyText}
+        </div>
+        <div>
+          playerReady: {playerReadyText}
+        </div>
+        <div>
+          gameId: {this.state.gameId}
+        </div>
+        <StartTimer
+          opponentReady = {this.state.opponent.isReady}
+          playerReady = {this.state.player.isReady}
+          handler={this.handlePlay}
+        />
+
         <div className={classes.playHeader}>
           <div className={classes.playHeaderCol}>
           <MuteButton toggleMute={this.toggleMute} />
           </div>
           <div className={classes.playHeaderCol}>
           <Timer
-            seconds="5"
+            seconds={this.state.gameTime}
             start={this.state.isPlay}
             setGameDone={this.setGameDone}
           />
           </div>
           <div className={classes.playHeaderCol}>
-          <ReadyButton handler={this.handlePlay} />
+          <ReadyButton
+            playerReady={this.playerReady}
+            opponentAvailable={this.state.opponentAvailable}
+            opponent={this.state.opponent}
+            player={this.state.player}
+          />
           </div>
         </div>
         <div className={classes.container}>
@@ -210,6 +282,7 @@ class Play extends Component {
             answer={this.state.current_answer}
             letters={this.state.random_letters}
             playSound={this.playSound}
+            inputStart={this.state.inputStart}
           />
           <div className={classes.playWrap}>
             <div className={classes.sideBar}>

@@ -35,6 +35,9 @@ class UserAnswer extends Component {
   }
 
   handleKeys(keyCode) {
+    if (!this.props.inputStart)
+      return false;
+
     let ans = this.props.answer;
 
     this.setState({ answerStyle: { color: '#fff' } });

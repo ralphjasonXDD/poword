@@ -11,6 +11,18 @@ import ReadyButton from './ReadyButton';
 import MuteButton from './MuteButton';
 import { JssPlay } from '../Resources/jss_styles';
 import LetterScores from '../Resources/keycodes.json';
+import Modal from 'react-modal';
+
+const modalResult = {
+  content: {
+    backgroundColor: '#f8f3d6',
+    borderColor: '#c8b89e',
+    boxShadow: 'inset 0 -7px 0 0 #c0b5a3',
+    height: '400px',
+    margin: '0 auto',
+    width: '500px',
+  }
+};
 
 class Play extends Component {
   constructor(props) {
@@ -234,10 +246,11 @@ class Play extends Component {
                 </div>
             }
           </div>
-          <GameResult
-            gameData={this.gameData()}
-            gameDone={this.state.gameDone}
-          />
+          <Modal isOpen={this.state.gameDone} style={modalResult}>
+            <GameResult
+              gameData={this.gameData()}
+            />
+          </Modal>
         </div>
       </div>
     );

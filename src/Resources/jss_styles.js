@@ -56,10 +56,59 @@ export const JssTimer = {
 };
 
 export const JssGameResult = {
-}
+  gameResultWrap: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  gameResultHeader: {
+    flex: '0 0 100%',
+    textAlign: 'center',
+  },
+  gameResultTitle: {
+    color: '#ffc80c',
+    textTransform: 'uppercase',
+    fontFamily: 'Boogaloo',
+    fontSize: '53px',
+    marginTop: '0',
+    letterSpacing: '2px',
+    textShadow: '1px 2px #7c620a',
+  },
+  gameResultCol: {
+    flex: '0 0 42%',
+    margin: '0 20px',
+  },
+};
 
 export const JssGameResultScore = {
-}
+  score: {
+    color: '#2ecc71',
+    fontFamily: 'Boogaloo',
+    fontSize: '63px',
+    letterSpacing: '2px',
+    margin: '0 auto',
+    textAlign: 'center',
+    textShadow: '1px 3px #247806',
+  },
+  scoreWrap: {
+    backgroundColor: '#e5ddc8',
+    padding: '20px 10px',
+  },
+  playerName: {
+    backgroundColor: props => (props.isOpponent ? '#f4777b' : '#56c0e0'),
+    boxShadow: props => (props.isOpponent ? 'inset 0 -2px 0 #d64d52' : 'inset 0 -2px 0 #43afd0'),
+    color: '#fff',
+    margin: '0 auto',
+    padding: '15px 10px',
+  },
+  status: {
+    textAlign: 'center',
+    fontSize: '35px',
+    margin: '0 auto 20px',
+    color: '#645e53',
+    fontFamily: 'Boogaloo',
+    textShadow: '1px 3px #d7cebd',
+  },
+};
 
 export const JssGame = {
   container: {

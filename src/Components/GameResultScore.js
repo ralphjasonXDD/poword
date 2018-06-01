@@ -8,7 +8,7 @@ const GameResultScore = (props) => {
     if (props.data.player['score'] === props.data.opponent['score'])
       return "DRAW";
     else
-      return resultStatus() ? "WIN" : "LOSE";
+      return resultStatus() ? "YOU WIN" : "YOU LOSE";
   };
   const resultStatus = function () {
     let playerWin = props.data.player['score'] > props.data.opponent['score'];
@@ -18,17 +18,16 @@ const GameResultScore = (props) => {
 
   return (
     <div>
-      <div>
-        Name:
-        { data['name'] }
-      </div>
-      <div className='score'>
-        Score:
-        { data['score'] }
-      </div>
-      <div className='status'>
-        Status:
+      <h3 className={props.classes.status}>
         { status() }
+      </h3>
+      <h4 className={props.classes.playerName}>
+        { data['name'] }
+      </h4>
+      <div className={props.classes.scoreWrap}>
+        <h3 className={props.classes.score}>
+          { data['score'] }
+        </h3>
       </div>
     </div>
   );

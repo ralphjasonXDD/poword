@@ -225,27 +225,9 @@ class Play extends Component {
 
   render() {
     const { classes } = this.props;
-    const opponentText = this.state.opponentAvailable ? "available" : "not";
-    const opponentReadyText = this.state.opponent.isReady ? "ready" : "not ready";
-    const playerReadyText = this.state.player.isReady ? "ready" : "not ready";
 
     return (
       <div>
-        <div>
-          player: {this.state.player.username}
-        </div>
-        <div>
-          opponent: {this.state.opponent.username}
-        </div>
-        <div>
-          opponentAvailable: {opponentText}
-        </div>
-        <div>
-          opponentReady: {opponentReadyText}
-        </div>
-        <div>
-          playerReady: {playerReadyText}
-        </div>
         <div>
           gameId: {this.state.gameId}
         </div>

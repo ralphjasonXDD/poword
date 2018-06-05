@@ -4,15 +4,17 @@ import { JssGameResult } from '../Resources/jss_styles.js';
 import GameResultScore from './GameResultScore';
 
 const GameResult = (props) => {
-  const insertClass = props.gameDone ? "SHOWN" : "HIDDEN";
   return (
-    <div>
-      <span>
-        this will be:
-        {insertClass}
-      </span>
-      <GameResultScore data={props.gameData} />
-      <GameResultScore data={props.gameData} isOpponent/>
+    <div className={props.classes.gameResultWrap}>
+      <div className={props.classes.gameResultHeader}>
+        <h2 className={props.classes.gameResultTitle}>Victory!</h2>
+      </div>
+      <div className={props.classes.gameResultCol}>
+        <GameResultScore data={props.gameData} />
+      </div>
+      <div className={props.classes.gameResultCol}>
+        <GameResultScore data={props.gameData} isOpponent/>
+      </div>
     </div>
   );
 };

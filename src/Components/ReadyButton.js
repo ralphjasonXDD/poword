@@ -12,9 +12,14 @@ class ReadyButton extends Component {
     const readyButtonText = this.props.player.isReady ? "Waiting other player ready" : "Ready to play"
     const buttonText = this.props.opponentAvailable ? readyButtonText : "Waiting for another player";
     const readyButton = (
-      <button className={classes.readyButton} onClick={this.props.playerReady}>{buttonText}</button>
+      <button
+        className={classes.readyButton}
+        disabled={!this.props.opponentAvailable}
+        onClick={this.props.playerReady}>
+        {buttonText}
+      </button>
     );
-    const displayButton = this.bothReady() ? "" : readyButton;
+    const displayButton = this.bothReady() ? '' : readyButton;
 
     return (
       <div className={classes.readyButtonWrap}>{displayButton}</div>

@@ -1,6 +1,7 @@
 export const JssUserAnswer = {
   answerHolder: {
-    textAlign: 'center'
+    height: '83px',
+    textAlign: 'center',
   },
   answerBox: {
     alignItems: 'center',
@@ -38,7 +39,7 @@ export const JssTimer = {
   timeWrap: {
     display: 'flex',
     justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   timeLabel: {
     background: '#f4b34f',
@@ -52,7 +53,7 @@ export const JssTimer = {
     letterSpacing: '2px',
     top: '-10px',
     fontFamily: 'Boogaloo',
-  }
+  },
 };
 
 export const JssGameResult = {
@@ -111,7 +112,24 @@ export const JssGameResultScore = {
 };
 
 export const JssStartTimer = {
-}
+  startTimeWrap: {
+    display: 'flex',
+    position: 'fixed',
+    left: '0',
+    right: '0',
+    top: '0',
+    bottom: '0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: '1',
+  },
+  startTimeDigit: {
+    color: '#f2b34c',
+    fontFamily: 'Boogaloo',
+    fontSize: '150px',
+    textShadow: '3px 3px 0 #50360a, -1px -1px 0 #50360a, 1px -1px 0 #50360a, -1px 1px 0 #50360a, 1px 1px 0 #50360a',
+  },
+};
 
 export const JssGame = {
   container: {
@@ -218,7 +236,7 @@ export const JssPlayerBox = {
       fontSize: '16px',
       margin: '0 auto',
       padding: '15px 10px',
-      position: 'relative'
+      position: 'relative',
     },
     '& ul': {
       height: '100%',
@@ -265,7 +283,7 @@ export const JssPlayerBox = {
     padding: '10px 5px',
     right: '15px',
     zIndex: '-1',
-  }
+  },
 };
 
 export const JssPlay = {
@@ -318,7 +336,7 @@ export const JssPlay = {
   },
   playHeaderCol: {
     flex: '0 0 33.333333%',
-  }
+  },
 };
 
 export const JssRandomLetter = {
@@ -354,17 +372,17 @@ export const JssReadyButton = {
     padding: '11px 30px',
     borderRadius: '50px',
     textTransform: 'uppercase',
-    fontSize: '16px',
+    fontSize: '15px',
     fontWeight: 'bold',
-    backgroundColor: '#60b861',
-    color: '#fff',
+    backgroundColor: props => (props.opponentAvailable && !props.player.isReady ? '#60b861' : '#397588'),
+    color: props => (props.opponentAvailable && !props.player.isReady ? '#fff' : '#184b5b'),
     cursor: 'pointer',
-    boxShadow: '0 4px 0 #3b883b',
+    boxShadow: props => (props.opponentAvailable && !props.player.isReady ? '0 4px 0 #3b883b' : 'none'),
     fontFamily: 'Lato',
     position: 'relative',
     '&:hover': {
-      boxShadow: '0 2px 0 #3b883b',
-      top: '2px'
+      boxShadow: props => (props.opponentAvailable && !props.player.isReady ? '0 2px 0 #3b883b' : 'none'),
+      top: props => (props.opponentAvailable && !props.player.isReady ? '2px' : '0'),
     },
   },
   readyButtonWrap: {

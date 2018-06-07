@@ -5,7 +5,10 @@ import { JssStartTimer } from '../Resources/jss_styles.js';
 class StartTimer extends Component {
   constructor(props) {
     super();
-    this.state = {  startTime: 3 };
+    this.state = {
+      startTime: 3,
+      displayTime: 3,
+    };
     this.timer = 0;
   }
 
@@ -20,20 +23,26 @@ class StartTimer extends Component {
   }
 
   countDown = () => {
-    let sec = this.state.startTime - 1;
-    this.setState({ startTime: sec });
+    const sec = this.state.startTime - 1;
+    this.setState({ startTime: sec, displayTime: sec });
 
     if (this.state.startTime === 0) {
+      this.setState({ displayTime: 'GO!' });
+    }
+
+    if (this.state.startTime < 0) {
       clearInterval(this.timer);
-      this.setState({ startTime: "START" });
       this.props.handler();
     }
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
-        Start Time: { this.state.startTime }
+      <div className={this.state.startTime < 0 || !this.props.opponentReady || !this.props.playerReady ? 'hidden' : 'show'}>
+        <div className={classes.startTimeWrap}>
+          <h3 className={classes.startTimeDigit}>{ this.state.displayTime }</h3>
+        </div>
       </div>
     );
   }

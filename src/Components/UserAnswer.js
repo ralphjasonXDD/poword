@@ -30,7 +30,6 @@ class UserAnswer extends Component {
     const keyHandle = (e) => {
       this.handleKeys(e.keyCode);
     };
-
     document.addEventListener('keydown', keyHandle.bind(this));
   }
 
@@ -78,11 +77,12 @@ class UserAnswer extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.answerHolder}>
-        <div className={classes.answerBox} style={this.state.answerStyle}>
-          { this.props.answer }
+        <div className={this.props.answer ? 'show' : 'hidden'}>
+          <div className={classes.answerBox} style={this.state.answerStyle}>
+            { this.props.answer }
+          </div>
         </div>
       </div>
     );

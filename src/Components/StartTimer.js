@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss';
 import { JssStartTimer } from '../Resources/jss_styles.js';
+import countdown from '../Resources/audio/countdown.mp3';
+import start from '../Resources/audio/start.mp3';
+
+const SOUNDS = {
+  countdown: new Audio(countdown),
+  start: new Audio(start),
+};
 
 class StartTimer extends Component {
   constructor(props) {
     super();
     this.state = {
-      startTime: 3,
-      displayTime: 3,
+      startTime: 4,
+      displayTime: 'READY',
     };
     this.timer = 0;
   }
@@ -26,7 +33,12 @@ class StartTimer extends Component {
     const sec = this.state.startTime - 1;
     this.setState({ startTime: sec, displayTime: sec });
 
+    if (this.state.startTime > 0) {
+      this.props.playSound(SOUNDS.countdown);
+    }
+
     if (this.state.startTime === 0) {
+      this.props.playSound(SOUNDS.start);
       this.setState({ displayTime: 'GO!' });
     }
 

@@ -4,12 +4,12 @@ import Game from './Game';
 import Play from './Play';
 
 const Main = () => (
-  <main>
+  <div>
     <Switch>
       <Route exact path="/" component={Game} />
       <Route path="/play" component={Play} />
     </Switch>
-  </main>
+  </div>
 );
 
 export default Main;

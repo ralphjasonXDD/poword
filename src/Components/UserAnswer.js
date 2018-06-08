@@ -7,10 +7,12 @@ import Dictionary from '../Resources/dictionary.json';
 
 import beep from '../Resources/audio/beep.mp3';
 import buzz from '../Resources/audio/buzz.mp3';
+import click from '../Resources/audio/click.mp3';
 
 const SOUNDS = {
   beep: new Audio(beep),
   buzz: new Audio(buzz),
+  click: new Audio(click),
 };
 
 class UserAnswer extends Component {
@@ -41,6 +43,7 @@ class UserAnswer extends Component {
 
     this.setState({ answerStyle: { color: '#fff' } });
     if (this.isLetterCode(keyCode) && this.isValidLetter(KeyCodes.letter_codes[keyCode])) {
+      this.props.playSound(SOUNDS.click);
       ans += KeyCodes.letter_codes[keyCode];
     } else if (KeyCodes.action_codes[keyCode] === 'enter') {
       if (!this.isValidWord(ans)) {

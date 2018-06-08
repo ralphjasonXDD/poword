@@ -63,7 +63,7 @@ class Game extends Component {
     const uid = UUID.v1();
     const gameId = `game_id_${uid}`;
     const randomLetters = this.setRandomLetters();
-    const playerName = `testchi-${uid.substring(0, 7)}`;
+    const playerName = `player-${uid.substring(0, 7)}`;
 
     this.setState({
       challengeStatus: true,
@@ -94,7 +94,7 @@ class Game extends Component {
 
   addPlayer = (gameId) => {
     const playerId = UUID.v1();
-    const playerName = `testchi-${playerId.substring(0, 7)}`;
+    const playerName = `player-${playerId.substring(0, 7)}`;
 
     this.savePlayer(playerId, playerName, gameId);
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { Link } from 'react-router-dom';
 import fire from '.././fire';
 import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
@@ -19,9 +20,9 @@ const modalResult = {
     backgroundColor: '#f8f3d6',
     borderColor: '#c8b89e',
     boxShadow: 'inset 0 -7px 0 0 #c0b5a3',
-    height: '400px',
+    height: '450px',
     margin: '0 auto',
-    width: '500px',
+    width: '550px',
   }
 };
 
@@ -305,6 +306,11 @@ class Play extends Component {
             <GameResult
               gameData={this.gameData()}
             />
+            <div className={classes.goBackWrap}>
+              <Link to="/" className={classes.goBack}>
+                  Go Back
+              </Link>
+            </div>
           </Modal>
         </div>
       </div>

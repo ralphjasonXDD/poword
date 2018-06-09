@@ -14,6 +14,7 @@ import MuteButton from './MuteButton';
 import { JssPlay } from '../Resources/jss_styles';
 import LetterScores from '../Resources/keycodes.json';
 import Modal from 'react-modal';
+import UUID from 'uuid';
 
 const modalResult = {
   content: {
@@ -30,13 +31,19 @@ class Play extends Component {
   constructor(props) {
     super();
     const params = props.location.state;
+    const game_id = props.match.params.id;
+
+    if (typeof params === 'undefined') {
+      this.generateOtherPlayer(game_id);
+    }
+
     this.state = {
       player: {
-        id: params.playerId,
-        username: params.playerName,
+        id: params ? params.playerId : null,
+        username: params ? params.playerName : "",
         words: [],
         isReady: false,
-        key: params.playerKey,
+        key: params ? params.playerKey : null,
       },
       opponent: {
         id: null,
@@ -44,24 +51,59 @@ class Play extends Component {
         words: [],
         isReady: false,
       },
-      random_letters: params.randomLetters,
-      gameId: params.gameId,
+      random_letters: params ? params.randomLetters : "....................",
+      gameId: game_id,
       current_answer: '',
       isPlay: false,
       opponentAvailable: false,
       isMute: false,
       gameDone: false,
       inputStart: false,
-      gameTime: 120,
+      gameTime: 20,
       timerStart: false,
     };
+  }
 
-    //this.handlePlay = this.handlePlay.bind(this);
+  generateRandomLetters(gameId) {
+    const gameRef = fire.database().ref(`game/${gameId}`);
+    gameRef.once('value', (snapshot) => {
+      this.setState({
+        random_letters: snapshot.val().randomLetters
+      });
+      this.getOpponents();
+      this.getWords(this.state.player.id, 'player');
+    });
+
+    gameRef.update({ opponentAvailable: true });
+  }
+
+  generateOtherPlayer(gameId) {
+    const playerId = UUID.v1();
+    const playerName = `player-${playerId.substring(0, 7)}`;
+
+    fire.database().ref('player').push({
+      id: playerId,
+      username: playerName,
+      gameId,
+      isReady: false,
+    }).then((snap) => {
+      this.setState({
+        player: {
+          ...this.state.player,
+          id: playerId,
+          username: playerName,
+          key: snap.key,
+        }
+      });
+      this.generateRandomLetters(gameId);
+    });
   }
 
   componentWillMount() {
-    this.getWords(this.state.player.id, 'player');
-    this.getOpponents();
+    if (this.state.player.id !== null) {
+      this.getWords(this.state.player.id, 'player');
+      this.getOpponents();
+    }
   }
 
   setLetterStyle(answer) {
@@ -151,11 +193,8 @@ class Play extends Component {
         ...prevState.player,
       },
       isPlay: true,
-    }));
-    //temporary
-    this.setState({
       inputStart: true,
-    });
+    }));
   }
 
   chunkRandomLetters() {

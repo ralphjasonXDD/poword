@@ -7,7 +7,7 @@ const Main = () => (
   <div>
     <Switch>
       <Route exact path="/" component={Game} />
-      <Route path="/play" component={Play} />
+      <Route path="/play/:id" component={Play} />
     </Switch>
   </div>
 );

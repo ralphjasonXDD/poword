@@ -291,9 +291,6 @@ class Play extends Component {
       <div>
         { this.state.gameNotFound ? <PageNotFound /> :
           <div>
-            <div>
-              gameId: {this.state.gameId}
-            </div>
             <StartTimer
               opponentReady = {this.state.opponent.isReady}
               playerReady = {this.state.player.isReady}

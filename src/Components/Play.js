@@ -51,7 +51,7 @@ class Play extends Component {
       isMute: false,
       gameDone: false,
       inputStart: false,
-      gameTime: 10,
+      gameTime: 120,
       timerStart: false,
     };
 
@@ -246,6 +246,7 @@ class Play extends Component {
         <StartTimer
           opponentReady = {this.state.opponent.isReady}
           playerReady = {this.state.player.isReady}
+          playSound={this.playSound}
           handler={this.handlePlay}
         />
 

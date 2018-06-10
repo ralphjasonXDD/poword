@@ -78,6 +78,15 @@ export const JssGameResult = {
     flex: '0 0 42%',
     margin: '0 20px',
   },
+  status: {
+    textAlign: 'center',
+    fontSize: '35px',
+    margin: '0 auto 20px',
+    color: '#645e53',
+    flex: '0 0 100%',
+    fontFamily: 'Boogaloo',
+    textShadow: '1px 3px #d7cebd',
+  },
 };
 
 export const JssGameResultScore = {
@@ -100,15 +109,7 @@ export const JssGameResultScore = {
     color: '#fff',
     margin: '0 auto',
     padding: '15px 10px',
-  },
-  status: {
-    textAlign: 'center',
-    fontSize: '35px',
-    margin: '0 auto 20px',
-    color: '#645e53',
-    fontFamily: 'Boogaloo',
-    textShadow: '1px 3px #d7cebd',
-  },
+  }
 };
 
 export const JssStartTimer = {
@@ -260,6 +261,7 @@ export const JssPlayerBox = {
         paddingBottom: '12px',
         paddingTop: '12px',
         transform: 'rotate(-180deg)',
+        filter: props => (props.isOpponent ? 'blur(5px)' : 'none'),
       },
     },
   },
@@ -281,7 +283,7 @@ export const JssPlayerBox = {
     alignItems: 'center',
     textIndent: '0',
     padding: '10px 5px',
-    right: '15px',
+    right: props => (props.isOpponent ? '15px' : '107px'),
     zIndex: '-1',
   },
 };

@@ -261,6 +261,7 @@ export const JssPlayerBox = {
         paddingBottom: '12px',
         paddingTop: '12px',
         transform: 'rotate(-180deg)',
+        filter: props => (props.isOpponent ? 'blur(5px)' : 'none'),
       },
     },
   },
@@ -282,7 +283,7 @@ export const JssPlayerBox = {
     alignItems: 'center',
     textIndent: '0',
     padding: '10px 5px',
-    right: '15px',
+    right: props => (props.isOpponent ? '15px' : '107px'),
     zIndex: '-1',
   },
 };

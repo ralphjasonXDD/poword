@@ -337,29 +337,6 @@ export const JssPlay = {
   playHeaderCol: {
     flex: '0 0 33.333333%',
   },
-  goBackWrap: {
-    textAlign: 'center',
-  },
-  goBack: {
-    border: '0',
-    color: '#fff',
-    cursor: 'pointer',
-    display: 'inline-flex',
-    fontWeight: 'bold',
-    padding: '12px 50px',
-    fontSize: '15px',
-    textTransform: 'uppercase',
-    borderRadius: '40px',
-    backgroundColor: '#0599df',
-    boxShadow: '0 4px 0 #015e89',
-    position: 'relative',
-    textDecoration: 'none',
-    marginTop: '40px',
-    '&:hover': {
-      boxShadow: '0 2px 0 #015e89',
-      top: '2px',
-    },
-  },
 };
 
 export const JssRandomLetter = {
@@ -411,5 +388,40 @@ export const JssReadyButton = {
   readyButtonWrap: {
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+};
+
+export const JssHomeButton = {
+  goBackWrap: {
+    textAlign: 'center',
+  },
+  goBack: {
+    border: '0',
+    color: '#fff',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    fontWeight: 'bold',
+    padding: '12px 50px',
+    fontSize: '15px',
+    textTransform: 'uppercase',
+    borderRadius: '40px',
+    backgroundColor: '#0599df',
+    boxShadow: '0 4px 0 #015e89',
+    position: 'relative',
+    textDecoration: 'none',
+    marginTop: '40px',
+    '&:hover': {
+      boxShadow: '0 2px 0 #015e89',
+      top: '2px',
+    },
+  },
+};
+
+export const JssPageNotFound = {
+  display: {
+    color: '#fff',
+    fontSize: '25px',
+    padding: '50px',
+    textAlign: 'center',
   },
 };

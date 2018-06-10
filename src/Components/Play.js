@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { Link } from 'react-router-dom';
 import fire from '.././fire';
 import PlayerBox from './PlayerBox';
 import UserAnswer from './UserAnswer';
@@ -9,6 +8,8 @@ import RandomLetter from './RandomLetter';
 import Timer from './Timer';
 import StartTimer from './StartTimer';
 import GameResult from './GameResult';
+import PageNotFound from './PageNotFound';
+import HomeButton from './HomeButton';
 import ReadyButton from './ReadyButton';
 import MuteButton from './MuteButton';
 import { JssPlay } from '../Resources/jss_styles';
@@ -32,10 +33,6 @@ class Play extends Component {
     super();
     const params = props.location.state;
     const game_id = props.match.params.id;
-
-    if (typeof params === 'undefined') {
-      this.generateOtherPlayer(game_id);
-    }
 
     this.state = {
       player: {
@@ -61,6 +58,7 @@ class Play extends Component {
       inputStart: false,
       gameTime: 20,
       timerStart: false,
+      gameNotFound: false,
     };
   }
 
@@ -100,6 +98,17 @@ class Play extends Component {
   }
 
   componentWillMount() {
+    const game_id = this.props.match.params.id;
+
+    if (typeof this.props.location.state === 'undefined') {
+      const gameRef = fire.database().ref('game').child(game_id);
+      gameRef.once('value', (snapshot) => {
+        if (snapshot.val() && !snapshot.val().opponentAvailable)
+          this.generateOtherPlayer(game_id);
+        else
+          this.setState({ gameNotFound: true });
+      });
+    }
     if (this.state.player.id !== null) {
       this.getWords(this.state.player.id, 'player');
       this.getOpponents();
@@ -280,79 +289,79 @@ class Play extends Component {
 
     return (
       <div>
-        <div>
-          gameId: {this.state.gameId}
-        </div>
-        <StartTimer
-          opponentReady = {this.state.opponent.isReady}
-          playerReady = {this.state.player.isReady}
-          playSound={this.playSound}
-          handler={this.handlePlay}
-        />
+        { this.state.gameNotFound ? <PageNotFound /> :
+          <div>
+            <div>
+              gameId: {this.state.gameId}
+            </div>
+            <StartTimer
+              opponentReady = {this.state.opponent.isReady}
+              playerReady = {this.state.player.isReady}
+              playSound={this.playSound}
+              handler={this.handlePlay}
+            />
 
-        <div className={classes.playHeader}>
-          <div className={classes.playHeaderCol}>
-          <MuteButton toggleMute={this.toggleMute} />
-          </div>
-          <div className={classes.playHeaderCol}>
-          <Timer
-            seconds={this.state.gameTime}
-            start={this.state.isPlay}
-            setGameDone={this.setGameDone}
-          />
-          </div>
-          <div className={classes.playHeaderCol}>
-          <ReadyButton
-            playerReady={this.playerReady}
-            opponentAvailable={this.state.opponentAvailable}
-            opponent={this.state.opponent}
-            player={this.state.player}
-          />
-          </div>
-        </div>
-        <div className={classes.container}>
-          <UserAnswer
-            sendWord={this.sendWord}
-            setAnswer={this.setAnswer}
-            answer={this.state.current_answer}
-            letters={this.state.random_letters}
-            playSound={this.playSound}
-            inputStart={this.state.inputStart}
-          />
-          <div className={classes.playWrap}>
-            <div className={classes.sideBar}>
-              <PlayerBox
-                username={this.state.player.username}
-                words={this.appendWordScore(this.state.player.words)}
-                totalScore={this.totalScore}
+            <div className={classes.playHeader}>
+              <div className={classes.playHeaderCol}>
+              <MuteButton toggleMute={this.toggleMute} />
+              </div>
+              <div className={classes.playHeaderCol}>
+              <Timer
+                seconds={this.state.gameTime}
+                start={this.state.isPlay}
+                setGameDone={this.setGameDone}
               />
+              </div>
+              <div className={classes.playHeaderCol}>
+              <ReadyButton
+                playerReady={this.playerReady}
+                opponentAvailable={this.state.opponentAvailable}
+                opponent={this.state.opponent}
+                player={this.state.player}
+              />
+              </div>
             </div>
-            <div className={classes.wordWrap}>
-              <RandomLetter randomLetters={this.chunkRandomLetters()} />
-            </div>
-            {
-              this.state.opponentAvailable &&
+            <div className={classes.container}>
+              <UserAnswer
+                sendWord={this.sendWord}
+                setAnswer={this.setAnswer}
+                answer={this.state.current_answer}
+                letters={this.state.random_letters}
+                playSound={this.playSound}
+                inputStart={this.state.inputStart}
+              />
+              <div className={classes.playWrap}>
                 <div className={classes.sideBar}>
                   <PlayerBox
-                    username={this.state.opponent.username}
-                    words={this.appendWordScore(this.state.opponent.words)}
+                    username={this.state.player.username}
+                    words={this.appendWordScore(this.state.player.words)}
                     totalScore={this.totalScore}
-                    isOpponent
                   />
                 </div>
-            }
-          </div>
-          <Modal isOpen={this.state.gameDone} style={modalResult}>
-            <GameResult
-              gameData={this.gameData()}
-            />
-            <div className={classes.goBackWrap}>
-              <Link to="/" className={classes.goBack}>
-                  Go Back
-              </Link>
+                <div className={classes.wordWrap}>
+                  <RandomLetter randomLetters={this.chunkRandomLetters()} />
+                </div>
+                {
+                  this.state.opponentAvailable &&
+                    <div className={classes.sideBar}>
+                      <PlayerBox
+                        username={this.state.opponent.username}
+                        words={this.appendWordScore(this.state.opponent.words)}
+                        totalScore={this.totalScore}
+                        isOpponent
+                      />
+                    </div>
+                }
+              </div>
+              <Modal isOpen={this.state.gameDone} style={modalResult}>
+                <GameResult
+                  gameData={this.gameData()}
+                />
+                <HomeButton />
+              </Modal>
             </div>
-          </Modal>
-        </div>
+          </div>
+        }
       </div>
     );
   }

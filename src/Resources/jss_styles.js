@@ -78,6 +78,15 @@ export const JssGameResult = {
     flex: '0 0 42%',
     margin: '0 20px',
   },
+  status: {
+    textAlign: 'center',
+    fontSize: '35px',
+    margin: '0 auto 20px',
+    color: '#645e53',
+    flex: '0 0 100%',
+    fontFamily: 'Boogaloo',
+    textShadow: '1px 3px #d7cebd',
+  },
 };
 
 export const JssGameResultScore = {
@@ -100,15 +109,7 @@ export const JssGameResultScore = {
     color: '#fff',
     margin: '0 auto',
     padding: '15px 10px',
-  },
-  status: {
-    textAlign: 'center',
-    fontSize: '35px',
-    margin: '0 auto 20px',
-    color: '#645e53',
-    fontFamily: 'Boogaloo',
-    textShadow: '1px 3px #d7cebd',
-  },
+  }
 };
 
 export const JssStartTimer = {
@@ -260,6 +261,7 @@ export const JssPlayerBox = {
         paddingBottom: '12px',
         paddingTop: '12px',
         transform: 'rotate(-180deg)',
+        filter: props => (props.isOpponent ? 'blur(5px)' : 'none'),
       },
     },
   },
@@ -281,7 +283,7 @@ export const JssPlayerBox = {
     alignItems: 'center',
     textIndent: '0',
     padding: '10px 5px',
-    right: '15px',
+    right: props => (props.isOpponent ? '15px' : '107px'),
     zIndex: '-1',
   },
 };
@@ -337,29 +339,6 @@ export const JssPlay = {
   playHeaderCol: {
     flex: '0 0 33.333333%',
   },
-  goBackWrap: {
-    textAlign: 'center',
-  },
-  goBack: {
-    border: '0',
-    color: '#fff',
-    cursor: 'pointer',
-    display: 'inline-flex',
-    fontWeight: 'bold',
-    padding: '12px 50px',
-    fontSize: '15px',
-    textTransform: 'uppercase',
-    borderRadius: '40px',
-    backgroundColor: '#0599df',
-    boxShadow: '0 4px 0 #015e89',
-    position: 'relative',
-    textDecoration: 'none',
-    marginTop: '40px',
-    '&:hover': {
-      boxShadow: '0 2px 0 #015e89',
-      top: '2px',
-    },
-  },
 };
 
 export const JssRandomLetter = {
@@ -411,5 +390,40 @@ export const JssReadyButton = {
   readyButtonWrap: {
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+};
+
+export const JssHomeButton = {
+  goBackWrap: {
+    textAlign: 'center',
+  },
+  goBack: {
+    border: '0',
+    color: '#fff',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    fontWeight: 'bold',
+    padding: '12px 50px',
+    fontSize: '15px',
+    textTransform: 'uppercase',
+    borderRadius: '40px',
+    backgroundColor: '#0599df',
+    boxShadow: '0 4px 0 #015e89',
+    position: 'relative',
+    textDecoration: 'none',
+    marginTop: '40px',
+    '&:hover': {
+      boxShadow: '0 2px 0 #015e89',
+      top: '2px',
+    },
+  },
+};
+
+export const JssPageNotFound = {
+  display: {
+    color: '#fff',
+    fontSize: '25px',
+    padding: '50px',
+    textAlign: 'center',
   },
 };

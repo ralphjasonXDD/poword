@@ -78,6 +78,15 @@ export const JssGameResult = {
     flex: '0 0 42%',
     margin: '0 20px',
   },
+  status: {
+    textAlign: 'center',
+    fontSize: '35px',
+    margin: '0 auto 20px',
+    color: '#645e53',
+    flex: '0 0 100%',
+    fontFamily: 'Boogaloo',
+    textShadow: '1px 3px #d7cebd',
+  },
 };
 
 export const JssGameResultScore = {
@@ -100,15 +109,7 @@ export const JssGameResultScore = {
     color: '#fff',
     margin: '0 auto',
     padding: '15px 10px',
-  },
-  status: {
-    textAlign: 'center',
-    fontSize: '35px',
-    margin: '0 auto 20px',
-    color: '#645e53',
-    fontFamily: 'Boogaloo',
-    textShadow: '1px 3px #d7cebd',
-  },
+  }
 };
 
 export const JssStartTimer = {

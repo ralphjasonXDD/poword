@@ -6,12 +6,16 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { JssPlayerBox } from '../Resources/jss_styles';
 
 const PlayerBox = (props) => {
-  const wordList = props.words.map((word, index) => (
-    <li key={index}>
-      {word[1]}
-      <span className={props.classes.score}>{word[0]}</span>
-    </li>
-  ));
+  const wordList = props.words.map((word) => {
+    const asterisk = [...Array(word[1].length)].map(() => ('*'));
+
+    return (
+      <li key={`${word}-${props.username}`}>
+        {props.isOpponent ? asterisk : word[1]}
+        <span className={props.classes.score}>{word[0]}</span>
+      </li>
+    );
+  });
 
   return (
     <div>

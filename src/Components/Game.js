@@ -48,13 +48,13 @@ class Game extends Component {
   }
 
   getRooms() {
-    let room_list = [];
+    let roomList = [];
     const gamesRef = fire.database().ref('game');
 
     gamesRef.on('child_added', (snapshot) => {
       if (snapshot.val().opponentAvailable) return;
-      room_list.push(snapshot.key);
-      this.setState({list: room_list});
+      roomList.push(snapshot.key);
+      this.setState({ list: roomList });
     });
     gamesRef.on('child_removed', (snapshot) => {
       this.updateRoomList(snapshot);
@@ -62,13 +62,13 @@ class Game extends Component {
     gamesRef.on('child_changed', (snapshot) => {
       this.updateRoomList(snapshot);
     });
-
   }
 
   updateRoomList(snapshot) {
-    let room_list = this.state.list; 
-    room_list = room_list.filter(r => r !== snapshot.key)
-    this.setState({ list:room_list });
+    let roomList = this.state.list;
+    roomList = roomList.filter(r => r !== snapshot.key);
+
+    this.setState({ list: roomList });
   }
 
   createRoom = () => {
@@ -95,12 +95,11 @@ class Game extends Component {
   }
 
   savePlayer = (id, username, gameId) => {
-    let isReady = false;
     fire.database().ref('player').push({
       id,
       username,
       gameId,
-      isReady,
+      isReady: false,
     });
   }
 

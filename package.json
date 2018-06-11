@@ -8,6 +8,7 @@
     "normalize.css": "^7.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.0.0",
     "react-jss": "^7.2.0",

@@ -352,6 +352,24 @@ export const JssPlay = {
   playHeaderCol: {
     flex: '0 0 33.333333%',
   },
+  copyBtn: {
+    border: '0',
+    backgroundColor: '#478294',
+    color: '#fff',
+    cursor: 'pointer',
+    padding: '17px 13px',
+    marginLeft: '10px',
+    fontSize: '12px',
+    borderRadius: '10px',
+    textTransform: 'uppercase',
+    '&:hover': {
+      backgroundColor: '#f6f8f7',
+      color: '#717675',
+    },
+  },
+  copyBtnWrap: {
+    display: 'inline-flex',
+  },
 };
 
 export const JssRandomLetter = {

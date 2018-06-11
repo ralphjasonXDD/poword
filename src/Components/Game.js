@@ -48,22 +48,34 @@ class Game extends Component {
   }
 
   getRooms() {
+    let room_list = [];
     const gamesRef = fire.database().ref('game');
+
     gamesRef.on('child_added', (snapshot) => {
-      const { opponentAvailable } = snapshot.val();
-      if (opponentAvailable) return;
-      const gameId = snapshot.key;
-      this.setState(prevState => ({
-        list: prevState.list.concat(gameId),
-      }));
+      if (snapshot.val().opponentAvailable) return;
+      room_list.push(snapshot.key);
+      this.setState({list: room_list});
     });
+    gamesRef.on('child_removed', (snapshot) => {
+      this.updateRoomList(snapshot);
+    });
+    gamesRef.on('child_changed', (snapshot) => {
+      this.updateRoomList(snapshot);
+    });
+
+  }
+
+  updateRoomList(snapshot) {
+    let room_list = this.state.list;
+    room_list = room_list.filter(r => r !== snapshot.key)
+    this.setState({ list:room_list });
   }
 
   createRoom = () => {
     const uid = UUID.v1();
     const gameId = `game_id_${uid}`;
     const randomLetters = this.setRandomLetters();
-    const playerName = `testchi-${uid.substring(0, 7)}`;
+    const playerName = `player-${uid.substring(0, 7)}`;
 
     this.setState({
       challengeStatus: true,
@@ -94,7 +106,7 @@ class Game extends Component {
 
   addPlayer = (gameId) => {
     const playerId = UUID.v1();
-    const playerName = `testchi-${playerId.substring(0, 7)}`;
+    const playerName = `player-${playerId.substring(0, 7)}`;
 
     this.savePlayer(playerId, playerName, gameId);
 
@@ -115,14 +127,16 @@ class Game extends Component {
 
   render() {
     const { classes } = this.props;
+    let address = "/play/" + this.state.gameId;
+
     if (this.state.challengeStatus) {
       return (
         <div>
           <Switch>
-            <Route path="/play" component={Play} />
+            <Route path={address} component={Play} />
           </Switch>
           <Redirect to={{
-            pathname: '/play',
+            pathname: address,
             state: {
               gameId: this.state.gameId,
               randomLetters: this.state.randomLetters,

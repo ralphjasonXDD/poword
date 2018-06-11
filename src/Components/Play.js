@@ -8,20 +8,23 @@ import RandomLetter from './RandomLetter';
 import Timer from './Timer';
 import StartTimer from './StartTimer';
 import GameResult from './GameResult';
+import PageNotFound from './PageNotFound';
+import HomeButton from './HomeButton';
 import ReadyButton from './ReadyButton';
 import MuteButton from './MuteButton';
 import { JssPlay } from '../Resources/jss_styles';
 import LetterScores from '../Resources/keycodes.json';
 import Modal from 'react-modal';
+import UUID from 'uuid';
 
 const modalResult = {
   content: {
     backgroundColor: '#f8f3d6',
     borderColor: '#c8b89e',
     boxShadow: 'inset 0 -7px 0 0 #c0b5a3',
-    height: '400px',
+    height: '450px',
     margin: '0 auto',
-    width: '500px',
+    width: '550px',
   }
 };
 
@@ -29,13 +32,15 @@ class Play extends Component {
   constructor(props) {
     super();
     const params = props.location.state;
+    const game_id = props.match.params.id;
+
     this.state = {
       player: {
-        id: params.playerId,
-        username: params.playerName,
+        id: params ? params.playerId : null,
+        username: params ? params.playerName : "",
         words: [],
         isReady: false,
-        key: params.playerKey,
+        key: params ? params.playerKey : null,
       },
       opponent: {
         id: null,
@@ -43,24 +48,76 @@ class Play extends Component {
         words: [],
         isReady: false,
       },
-      random_letters: params.randomLetters,
-      gameId: params.gameId,
+      random_letters: params ? params.randomLetters : "....................",
+      gameId: game_id,
       current_answer: '',
       isPlay: false,
       opponentAvailable: false,
       isMute: false,
       gameDone: false,
       inputStart: false,
-      gameTime: 120,
+      gameTime: 20,
       timerStart: false,
+      gameNotFound: false,
+      isLoading: true,
     };
+  }
 
-    //this.handlePlay = this.handlePlay.bind(this);
+  componentDidMount() {
+    setTimeout(() => this.setState({isLoading: false}), 3000)
+  }
+
+  generateRandomLetters(gameId) {
+    const gameRef = fire.database().ref(`game/${gameId}`);
+    gameRef.once('value', (snapshot) => {
+      this.setState({
+        random_letters: snapshot.val().randomLetters
+      });
+      this.getOpponents();
+      this.getWords(this.state.player.id, 'player');
+    });
+
+    gameRef.update({ opponentAvailable: true });
+  }
+
+  generateOtherPlayer(gameId) {
+    const playerId = UUID.v1();
+    const playerName = `player-${playerId.substring(0, 7)}`;
+
+    fire.database().ref('player').push({
+      id: playerId,
+      username: playerName,
+      gameId,
+      isReady: false,
+    }).then((snap) => {
+      this.setState({
+        player: {
+          ...this.state.player,
+          id: playerId,
+          username: playerName,
+          key: snap.key,
+        }
+      });
+      this.generateRandomLetters(gameId);
+    });
   }
 
   componentWillMount() {
-    this.getWords(this.state.player.id, 'player');
-    this.getOpponents();
+    const game_id = this.props.match.params.id;
+
+    if (typeof this.props.location.state === 'undefined') {
+      const gameRef = fire.database().ref('game').child(game_id);
+      gameRef.once('value', (snapshot) => {
+        if (snapshot.val() && !snapshot.val().opponentAvailable)
+          this.generateOtherPlayer(game_id);
+        else
+          this.setState({ gameNotFound: true });
+      });
+    }
+    if (this.state.player.id !== null) {
+      this.getWords(this.state.player.id, 'player');
+      this.getOpponents();
+    }
   }
 
   setLetterStyle(answer) {
@@ -150,11 +207,8 @@ class Play extends Component {
         ...prevState.player,
       },
       isPlay: true,
-    }));
-    //temporary
-    this.setState({
       inputStart: true,
-    });
+    }));
   }
 
   chunkRandomLetters() {
@@ -237,77 +291,84 @@ class Play extends Component {
 
   render() {
     const { classes } = this.props;
+    if (this.state.isLoading) {
+      return (
+        <div className="loader"></div>
+      );
+    }
 
     return (
       <div>
-        <div>
-          gameId: {this.state.gameId}
-        </div>
-        <StartTimer
-          opponentReady = {this.state.opponent.isReady}
-          playerReady = {this.state.player.isReady}
-          playSound={this.playSound}
-          handler={this.handlePlay}
-        />
+        { this.state.gameNotFound ? <PageNotFound /> :
+          <div>
+            <StartTimer
+              opponentReady = {this.state.opponent.isReady}
+              playerReady = {this.state.player.isReady}
+              playSound={this.playSound}
+              handler={this.handlePlay}
+            />
 
-        <div className={classes.playHeader}>
-          <div className={classes.playHeaderCol}>
-          <MuteButton toggleMute={this.toggleMute} />
-          </div>
-          <div className={classes.playHeaderCol}>
-          <Timer
-            seconds={this.state.gameTime}
-            start={this.state.isPlay}
-            setGameDone={this.setGameDone}
-          />
-          </div>
-          <div className={classes.playHeaderCol}>
-          <ReadyButton
-            playerReady={this.playerReady}
-            opponentAvailable={this.state.opponentAvailable}
-            opponent={this.state.opponent}
-            player={this.state.player}
-          />
-          </div>
-        </div>
-        <div className={classes.container}>
-          <UserAnswer
-            sendWord={this.sendWord}
-            setAnswer={this.setAnswer}
-            answer={this.state.current_answer}
-            letters={this.state.random_letters}
-            playSound={this.playSound}
-            inputStart={this.state.inputStart}
-          />
-          <div className={classes.playWrap}>
-            <div className={classes.sideBar}>
-              <PlayerBox
-                username={this.state.player.username}
-                words={this.appendWordScore(this.state.player.words)}
-                totalScore={this.totalScore}
+            <div className={classes.playHeader}>
+              <div className={classes.playHeaderCol}>
+              <MuteButton toggleMute={this.toggleMute} />
+              </div>
+              <div className={classes.playHeaderCol}>
+              <Timer
+                seconds={this.state.gameTime}
+                start={this.state.isPlay}
+                setGameDone={this.setGameDone}
               />
+              </div>
+              <div className={classes.playHeaderCol}>
+              <ReadyButton
+                playerReady={this.playerReady}
+                opponentAvailable={this.state.opponentAvailable}
+                opponent={this.state.opponent}
+                player={this.state.player}
+              />
+              </div>
             </div>
-            <div className={classes.wordWrap}>
-              <RandomLetter randomLetters={this.chunkRandomLetters()} />
-            </div>
-            {
-              this.state.opponentAvailable &&
+            <div className={classes.container}>
+              <UserAnswer
+                sendWord={this.sendWord}
+                setAnswer={this.setAnswer}
+                answer={this.state.current_answer}
+                letters={this.state.random_letters}
+                playSound={this.playSound}
+                inputStart={this.state.inputStart}
+              />
+              <div className={classes.playWrap}>
                 <div className={classes.sideBar}>
                   <PlayerBox
-                    username={this.state.opponent.username}
-                    words={this.appendWordScore(this.state.opponent.words)}
+                    username={this.state.player.username}
+                    words={this.appendWordScore(this.state.player.words)}
                     totalScore={this.totalScore}
-                    isOpponent
                   />
                 </div>
-            }
+                <div className={classes.wordWrap}>
+                  <RandomLetter randomLetters={this.chunkRandomLetters()} />
+                </div>
+                {
+                  this.state.opponentAvailable &&
+                    <div className={classes.sideBar}>
+                      <PlayerBox
+                        username={this.state.opponent.username}
+                        words={this.appendWordScore(this.state.opponent.words)}
+                        totalScore={this.totalScore}
+                        isOpponent
+                      />
+                    </div>
+                }
+              </div>
+              <Modal isOpen={this.state.gameDone} style={modalResult}>
+                <GameResult
+                  gameData={this.gameData()}
+                />
+                <HomeButton />
+              </Modal>
+            </div>
           </div>
-          <Modal isOpen={this.state.gameDone} style={modalResult}>
-            <GameResult
-              gameData={this.gameData()}
-            />
-          </Modal>
-        </div>
+        }
       </div>
     );
   }

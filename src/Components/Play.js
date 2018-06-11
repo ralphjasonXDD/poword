@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import injectSheet from 'react-jss';
 import fire from '.././fire';
 import PlayerBox from './PlayerBox';
@@ -65,6 +66,7 @@ class Play extends Component {
       inputStart: false,
       gameTime: 0,
       gameNotFound: false,
+      copied: false
     };
   }
 
@@ -332,8 +334,13 @@ class Play extends Component {
     return data;
   }
 
+  onCopy = () => {
+    this.setState({copied: true});
+  };
+
   render() {
     const { classes } = this.props;
+    const ID = `http://localhost:3000/play/${this.state.gameId}`;
 
     let readyButton = null;
 
@@ -362,6 +369,9 @@ class Play extends Component {
             <div className={classes.playHeader}>
               <div className={classes.playHeaderCol}>
                 <MuteButton toggleMute={this.toggleMute} />
+                <CopyToClipboard onCopy={this.onCopy} text={ID}>
+                  <button className={classes.copyBtn}>Share game link</button>
+                </CopyToClipboard>
               </div>
               <div className={classes.playHeaderCol}>
                 <Timer

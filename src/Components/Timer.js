@@ -18,6 +18,10 @@ class Timer extends Component {
   }
 
   componentWillReceiveProps(props) {
+    if (this.state.seconds !== 0 && this.state.seconds < props.seconds) {
+      return;
+    }
+
     this.setState({
       seconds: props.seconds,
       start: props.start,

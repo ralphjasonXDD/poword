@@ -64,7 +64,6 @@ class Play extends Component {
       gameDone: false,
       inputStart: false,
       gameTime: 0,
-      timerStart: false,
       gameNotFound: false,
     };
   }
@@ -105,21 +104,22 @@ class Play extends Component {
   }
 
   componentWillMount() {
-    const game_id = this.props.match.params.id;
+    const gameId = this.props.match.params.id;
 
     if (typeof this.props.location.state === 'undefined') {
-      const gameRef = fire.database().ref('game').child(game_id);
+      const gameRef = fire.database().ref('game').child(gameId);
       gameRef.once('value', (snapshot) => {
-        if (snapshot.val() && !snapshot.val().opponentAvailable)
-          this.generateOtherPlayer(game_id);
-        else
+        if (snapshot.val() && !snapshot.val().opponentAvailable) {
+          this.generateOtherPlayer(gameId);
+        } else {
           this.setState({ gameNotFound: true });
+        }
       });
     }
+
     if (this.state.player.id !== null) {
       this.getWords(this.state.player.id, 'player');
       this.getOpponents();
-
       this.checkInGame();
     }
   }
@@ -139,33 +139,53 @@ class Play extends Component {
   checkInGame = () => {
     const playerRef = fire.database().ref('player').orderByChild('gameId').equalTo(this.state.gameId);
 
-    let gameTime = this.getGameInitTime();
     let inGameCount = 0;
 
     playerRef.on('child_added', (snapshot) => {
-      const { id, startTime, isReady } = snapshot.val();
+      const { isReady } = snapshot.val();
+      let { startTime } = snapshot.val();
+
       if (isReady) {
         inGameCount += 1;
       }
 
-      if (id === this.state.player.id) {
-        const currentTime = (new Date()).getTime();
-        const endTime = (startTime + GAME_TIME_RANGE);
+      const inGame = (startTime + GAME_TIME_RANGE) > (new Date()).getTime();
 
-        if (endTime > currentTime) {
-          gameTime = Math.floor(((endTime - currentTime) / 1000));
-        } else {
-          gameTime = 0;
-        }
+      if (inGame) {
+        startTime = this.getCalculateGameTime(startTime);
+      } else {
+        startTime = 0;
       }
 
       if (!this.state.isPlay && inGameCount === NUM_PLAYER) {
         this.setState({
-          gameTime,
+          gameTime: startTime,
           isPlay: true,
           inputStart: true,
         });
       }
+    });
+  }
+
+  getCalculateGameTime = (gameTime) => {
+    const currentTime = (new Date()).getTime();
+    const endTime = (gameTime + GAME_TIME_RANGE);
+
+    return Math.floor(((endTime - currentTime) / 1000));
+  }
+
+  handlePlay = () => {
+    const playerRef = fire.database().ref('player').orderByChild('id').equalTo(this.state.player.id);
+    const gameTime = (new Date()).getTime();
+
+    this.setState({
+      gameTime: this.getCalculateGameTime(gameTime),
+      isPlay: true,
+      inputStart: true,
+    });
+
+    playerRef.on('child_added', (snapshot) => {
+      snapshot.ref.update({ startTime: gameTime });
     });
   }
 
@@ -231,11 +251,8 @@ class Play extends Component {
 
   playerReady = () => {
     const playerRef = fire.database().ref('player').orderByChild('id').equalTo(this.state.player.id);
-    playerRef.on('child_added', function(snapshot) {
-      snapshot.ref.update({
-        startTime: (new Date()).getTime(),
-        isReady: true,
-      });
+    playerRef.on('child_added', (snapshot) => {
+      snapshot.ref.update({ isReady: true });
     });
 
     this.setState({
@@ -244,16 +261,6 @@ class Play extends Component {
         isReady: true,
       },
     });
-  }
-
-  handlePlay = () => {
-    this.setState({
-      gameTime: this.getGameInitTime(),
-      isPlay: true,
-      inputStart: true,
-    });
-
-    this.checkInGame();
   }
 
   chunkRandomLetters() {
@@ -305,10 +312,6 @@ class Play extends Component {
 
   toggleMute = () => {
     this.setState({ isMute: !this.state.isMute });
-  }
-
-  setStartTimer = () => {
-    this.setState({ timerStart: true });
   }
 
   setGameDone = (val) => {

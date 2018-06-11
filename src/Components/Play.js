@@ -149,7 +149,6 @@ class Play extends Component {
         inGameCount += 1;
       }
 
-
       if (id === this.state.player.id) {
         const inGame = (startTime + GAME_TIME_RANGE) > (new Date()).getTime();
 

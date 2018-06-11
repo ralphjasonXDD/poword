@@ -369,9 +369,12 @@ class Play extends Component {
             <div className={classes.playHeader}>
               <div className={classes.playHeaderCol}>
                 <MuteButton toggleMute={this.toggleMute} />
-                <CopyToClipboard onCopy={this.onCopy} text={ID}>
-                  <button className={classes.copyBtn}>Share game link</button>
-                </CopyToClipboard>
+                <div className={classes.copyBtnWrap}>
+                  <CopyToClipboard onCopy={this.onCopy} text={ID}>
+                    <button className={classes.copyBtn}>Share game link</button>
+                  </CopyToClipboard>
+                  <span className={this.state.copied ? 'show-copied' : 'hidden'}>Copied!</span>
+                </div>
               </div>
               <div className={classes.playHeaderCol}>
                 <Timer

@@ -367,6 +367,9 @@ export const JssPlay = {
       color: '#717675',
     },
   },
+  copyBtnWrap: {
+    display: 'inline-flex',
+  },
 };
 
 export const JssRandomLetter = {

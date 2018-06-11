@@ -16,6 +16,13 @@ button:focus {
   display: block;
 }
 
+.show-copied {
+  color: #fff;
+  display: inline-block;
+  line-height: 2.9;
+  padding-left: 10px;
+}
+
 .word-list-enter {
   opacity: 0.01;
 }

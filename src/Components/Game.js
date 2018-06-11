@@ -126,7 +126,7 @@ class Game extends Component {
 
   render() {
     const { classes } = this.props;
-    let address = "/play/" + this.state.gameId;
+    const address = '/play/' + this.state.gameId;
 
     if (this.state.challengeStatus) {
       return (

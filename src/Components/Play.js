@@ -65,7 +65,12 @@ class Play extends Component {
       inputStart: false,
       gameTime: 0,
       gameNotFound: false,
+      isLoading: true,
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({isLoading: false}), 3000)
   }
 
   generateRandomLetters(gameId) {
@@ -334,6 +339,11 @@ class Play extends Component {
 
   render() {
     const { classes } = this.props;
+    if (this.state.isLoading) {
+      return (
+        <div className="loader"></div>
+      );
+    }
 
     let readyButton = null;
 

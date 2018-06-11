@@ -1,16 +1,17 @@
 import React from 'react';
-import Letter from './Letter';
-import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
+import injectSheet from 'react-jss';
+import Letter from './Letter';
 import { JssRandomLetter } from '../Resources/jss_styles';
 
 const RandomLetter = ({
   classes,
   randomLetters,
+  isPlay,
 }) => {
   const letters = letter => (
     letter.map((l, i) => (
-      <Letter key={i} letter={l[0]} letterStyle={l[1]} />
+      <Letter key={i} letter={l[0]} letterStyle={l[1]} isPlay={isPlay} />
     ))
   );
 
@@ -26,6 +27,7 @@ const RandomLetter = ({
 RandomLetter.propTypes = {
   randomLetters: PropTypes.arrayOf(PropTypes.array).isRequired,
   classes: PropTypes.shape().isRequired,
+  isPlay: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(JssRandomLetter)(RandomLetter);

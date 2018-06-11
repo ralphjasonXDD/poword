@@ -5,7 +5,7 @@ import LetterScores from '../Resources/keycodes.json';
 const Letter = (props) => {
   const LetterStyle = {
     letter: {
-      color: props.letterStyle[0],
+      color: props.isPlay ? props.letterStyle[0] : '#f6f8f7' ,
       backgroundColor: props.letterStyle[1],
       boxShadow: props.letterStyle[2],
     },

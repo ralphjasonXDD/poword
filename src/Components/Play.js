@@ -392,7 +392,10 @@ class Play extends Component {
                   />
                 </div>
                 <div className={classes.wordWrap}>
-                  <RandomLetter randomLetters={this.chunkRandomLetters()} />
+                  <RandomLetter
+                    isPlay={this.state.isPlay}
+                    randomLetters={this.chunkRandomLetters()}
+                  />
                 </div>
                 {
                   this.state.opponentAvailable &&

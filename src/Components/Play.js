@@ -140,26 +140,29 @@ class Play extends Component {
     const playerRef = fire.database().ref('player').orderByChild('gameId').equalTo(this.state.gameId);
 
     let inGameCount = 0;
+    let gameTime = 0;
 
     playerRef.on('child_added', (snapshot) => {
-      const { isReady } = snapshot.val();
-      let { startTime } = snapshot.val();
+      const { id, isReady, startTime } = snapshot.val();
 
       if (isReady) {
         inGameCount += 1;
       }
 
-      const inGame = (startTime + GAME_TIME_RANGE) > (new Date()).getTime();
 
-      if (inGame) {
-        startTime = this.getCalculateGameTime(startTime);
-      } else {
-        startTime = 0;
+      if (id === this.state.player.id) {
+        const inGame = (startTime + GAME_TIME_RANGE) > (new Date()).getTime();
+
+        if (inGame) {
+          gameTime = this.getCalculateGameTime(startTime);
+        } else {
+          gameTime = 0;
+        }
       }
 
       if (!this.state.isPlay && inGameCount === NUM_PLAYER) {
         this.setState({
-          gameTime: startTime,
+          gameTime,
           isPlay: true,
           inputStart: true,
         });

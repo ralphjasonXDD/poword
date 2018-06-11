@@ -10,6 +10,7 @@ class Timer extends Component {
       time: {},
       seconds: this.props.seconds,
       start: this.props.start,
+      done: false,
     };
 
     this.timer = 0;
@@ -18,7 +19,7 @@ class Timer extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (this.state.seconds !== 0 && this.state.seconds < props.seconds) {
+    if (this.state.done || (this.state.seconds !== 0 && this.state.seconds < props.seconds)) {
       return;
     }
 
@@ -64,9 +65,11 @@ class Timer extends Component {
       seconds,
     });
 
-    if (seconds < 0) {
+    if (seconds <= 0) {
       clearInterval(this.timer);
       this.props.setGameDone(true);
+
+      this.setState({ done: true });
     }
   }
 

@@ -16,6 +16,10 @@ const GameResult = (props) => {
 
   return (
     <div className={props.classes.gameResultWrap}>
+      <div className="pyro">
+        <div className="before"></div>
+        <div className="after"></div>
+      </div>
       <div className={props.classes.gameResultHeader}>
         <h2 className={props.classes.gameResultTitle}>Game over!</h2>
       </div>

@@ -25,14 +25,21 @@ const modalResult = {
     height: '450px',
     margin: '0 auto',
     width: '550px',
-  }
+  },
 };
+
+// game time is 30.seconds
+const GAME_TIME_RANGE = (1000 * 30);
+
+// supported number of players
+const NUM_PLAYER = 2;
 
 class Play extends Component {
   constructor(props) {
     super();
+
     const params = props.location.state;
-    const game_id = props.match.params.id;
+    const gameId = props.match.params.id;
 
     this.state = {
       player: {
@@ -48,23 +55,17 @@ class Play extends Component {
         words: [],
         isReady: false,
       },
-      random_letters: params ? params.randomLetters : "....................",
-      gameId: game_id,
+      random_letters: (params ? params.randomLetters : '....................'),
+      gameId,
       current_answer: '',
       isPlay: false,
       opponentAvailable: false,
       isMute: false,
       gameDone: false,
       inputStart: false,
-      gameTime: 20,
-      timerStart: false,
+      gameTime: 0,
       gameNotFound: false,
-      isLoading: true,
     };
-  }
-
-  componentDidMount() {
-    setTimeout(() => this.setState({isLoading: false}), 2000)
   }
 
   generateRandomLetters(gameId) {
@@ -103,20 +104,23 @@ class Play extends Component {
   }
 
   componentWillMount() {
-    const game_id = this.props.match.params.id;
+    const gameId = this.props.match.params.id;
 
     if (typeof this.props.location.state === 'undefined') {
-      const gameRef = fire.database().ref('game').child(game_id);
+      const gameRef = fire.database().ref('game').child(gameId);
       gameRef.once('value', (snapshot) => {
-        if (snapshot.val() && !snapshot.val().opponentAvailable)
-          this.generateOtherPlayer(game_id);
-        else
+        if (snapshot.val() && !snapshot.val().opponentAvailable) {
+          this.generateOtherPlayer(gameId);
+        } else {
           this.setState({ gameNotFound: true });
+        }
       });
     }
+
     if (this.state.player.id !== null) {
       this.getWords(this.state.player.id, 'player');
       this.getOpponents();
+      this.checkInGame();
     }
   }
 
@@ -129,6 +133,61 @@ class Play extends Component {
 
       ans.splice(ans.indexOf(letter), 1);
       return [letter, ['#fff', '#f2b34c', 'inset 0 -5px 0 #ba7e1b']];
+    });
+  }
+
+  checkInGame = () => {
+    const playerRef = fire.database().ref('player').orderByChild('gameId').equalTo(this.state.gameId);
+
+    let inGameCount = 0;
+
+    playerRef.on('child_added', (snapshot) => {
+      const { isReady } = snapshot.val();
+      let { startTime } = snapshot.val();
+
+      if (isReady) {
+        inGameCount += 1;
+      }
+
+      const inGame = (startTime + GAME_TIME_RANGE) > (new Date()).getTime();
+
+      if (inGame) {
+        startTime = this.getCalculateGameTime(startTime);
+      } else {
+        startTime = 0;
+      }
+
+        console.log('play play1');
+      if (!this.state.isPlay && inGameCount === NUM_PLAYER) {
+        console.log('play play');
+        this.setState({
+          gameTime: startTime,
+          isPlay: true,
+          inputStart: true,
+        });
+      }
+    });
+  }
+
+  getCalculateGameTime = (gameTime) => {
+    const currentTime = (new Date()).getTime();
+    const endTime = (gameTime + GAME_TIME_RANGE);
+
+    return Math.floor(((endTime - currentTime) / 1000));
+  }
+
+  handlePlay = () => {
+    const playerRef = fire.database().ref('player').orderByChild('id').equalTo(this.state.player.id);
+    const gameTime = (new Date()).getTime();
+
+    this.setState({
+      gameTime: this.getCalculateGameTime(gameTime),
+      isPlay: true,
+      inputStart: true,
+    });
+
+    playerRef.on('child_added', (snapshot) => {
+      snapshot.ref.update({ startTime: gameTime });
     });
   }
 
@@ -189,8 +248,8 @@ class Play extends Component {
 
   playerReady = () => {
     const playerRef = fire.database().ref('player').orderByChild('id').equalTo(this.state.player.id);
-    playerRef.on('child_added', function(snapshot) {
-      snapshot.ref.update({ isReady: true })
+    playerRef.on('child_added', (snapshot) => {
+      snapshot.ref.update({ isReady: true });
     });
 
     this.setState({
@@ -199,16 +258,6 @@ class Play extends Component {
         isReady: true,
       },
     });
-  }
-
-  handlePlay = () => {
-    this.setState(prevState => ({
-      player: {
-        ...prevState.player,
-      },
-      isPlay: true,
-      inputStart: true,
-    }));
   }
 
   chunkRandomLetters() {
@@ -262,10 +311,6 @@ class Play extends Component {
     this.setState({ isMute: !this.state.isMute });
   }
 
-  setStartTimer = () => {
-    this.setState({ timerStart: true });
-  }
-
   setGameDone = (val) => {
     this.setState({
       gameDone: val,
@@ -291,9 +336,17 @@ class Play extends Component {
 
   render() {
     const { classes } = this.props;
-    if (this.state.isLoading) {
-      return (
-        <div className="loader"></div>
+
+    let readyButton = null;
+
+    if (!this.state.isPlay) {
+      readyButton = (
+        <ReadyButton
+          playerReady={this.playerReady}
+          opponentAvailable={this.state.opponentAvailable}
+          opponent={this.state.opponent}
+          player={this.state.player}
+        />
       );
     }
 
@@ -310,22 +363,17 @@ class Play extends Component {
 
             <div className={classes.playHeader}>
               <div className={classes.playHeaderCol}>
-              <MuteButton toggleMute={this.toggleMute} />
+                <MuteButton toggleMute={this.toggleMute} />
               </div>
               <div className={classes.playHeaderCol}>
-              <Timer
-                seconds={this.state.gameTime}
-                start={this.state.isPlay}
-                setGameDone={this.setGameDone}
-              />
+                <Timer
+                  seconds={this.state.gameTime}
+                  start={this.state.isPlay}
+                  setGameDone={this.setGameDone}
+                />
               </div>
               <div className={classes.playHeaderCol}>
-              <ReadyButton
-                playerReady={this.playerReady}
-                opponentAvailable={this.state.opponentAvailable}
-                opponent={this.state.opponent}
-                player={this.state.player}
-              />
+                { readyButton }
               </div>
             </div>
             <div className={classes.container}>

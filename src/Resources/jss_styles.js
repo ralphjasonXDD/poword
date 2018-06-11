@@ -150,6 +150,7 @@ export const JssGame = {
   listTitle: {
     color: '#6b6122',
     fontSize: '25px',
+    marginBottom: '0',
     marginTop: '0',
     textTransform: 'uppercase',
   },
@@ -162,28 +163,40 @@ export const JssGame = {
     border: '1px solid',
   },
   createRoomWrap: {
-    padding: '40px 10px',
+    alignItems: 'center',
+    borderBottom: '1px dashed #cac187',
+    marginBottom: '20px',
     textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingBottom: '30px',
   },
   createRoomButton: {
     border: '0',
     color: '#fff',
     cursor: 'pointer',
     fontWeight: 'bold',
-    padding: '18px 40px',
-    fontSize: '18px',
+    padding: '13px 40px',
+    fontSize: '16px',
     textTransform: 'uppercase',
     borderRadius: '40px',
     backgroundColor: '#f2b34c',
-    boxShadow: '0 6px 0 #ba7e1b',
+    boxShadow: '0 4px 0 #ba7e1b',
     position: 'relative',
     '&:hover': {
-      boxShadow: '0 4px 0 #ba7e1b',
+      boxShadow: '0 2px 0 #ba7e1b',
       top: '2px',
     },
   },
   link: {
     textDecoration: 'none',
+  },
+  logoWrap: {
+    margin: '40px auto',
+    textAlign: 'center',
+  },
+  logoImg: {
+    width: '450px',
   },
 };
 

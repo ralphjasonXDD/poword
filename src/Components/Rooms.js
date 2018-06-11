@@ -6,16 +6,17 @@ import { JssRooms } from '../Resources/jss_styles';
 const Rooms = ({
   rooms,
   handleClick,
-  classes
+  classes,
 }) => (
-  rooms.map((room, index) => (
-    <li key={index} className={classes.entry}>
-      {room}
-      <button className={classes.button} onClick={() => handleClick(room)}>Join</button>
-    </li>
-  ))
+  rooms.map((room) => {
+    return (
+      <li key={room} className={classes.entry}>
+        {room}
+        <button className={classes.button} onClick={() => handleClick(room)}>Join</button>
+      </li>
+    );
+  })
 );
-
 
 Rooms.propTypes = {
   rooms: PropTypes.arrayOf(PropTypes.string).isRequired,

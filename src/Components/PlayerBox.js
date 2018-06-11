@@ -42,7 +42,6 @@ const PlayerBox = (props) => {
 
 PlayerBox.propTypes = {
   username: PropTypes.string.isRequired,
-  words: PropTypes.array.isRequired,
   classes: PropTypes.shape().isRequired,
 };
 

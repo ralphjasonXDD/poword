@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect, Switch, Route } from 'react-router-dom';
-import UUID from 'uuid';
-import fire from '.././fire';
 import { Scrollbars } from 'react-custom-scrollbars';
 import injectSheet from 'react-jss';
+import UUID from 'uuid';
+import fire from '.././fire';
 import { JssGame } from '../Resources/jss_styles';
 import Logo from '.././logo.png';
 import Play from './Play';
@@ -127,7 +127,7 @@ class Game extends Component {
 
   render() {
     const { classes } = this.props;
-    const address = '/play/' + this.state.gameId;
+    const address = `/play/${this.state.gameId}`;
 
     if (this.state.challengeStatus) {
       return (

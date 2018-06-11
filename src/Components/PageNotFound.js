@@ -1,6 +1,5 @@
 import React from 'react';
 import injectSheet from 'react-jss';
-import { Link } from 'react-router-dom';
 import { JssPageNotFound } from '../Resources/jss_styles';
 import HomeButton from './HomeButton';
 

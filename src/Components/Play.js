@@ -64,7 +64,7 @@ class Play extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({isLoading: false}), 3000)
+    setTimeout(() => this.setState({isLoading: false}), 2000)
   }
 
   generateRandomLetters(gameId) {

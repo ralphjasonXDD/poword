@@ -5,6 +5,7 @@ import fire from '.././fire';
 import { Scrollbars } from 'react-custom-scrollbars';
 import injectSheet from 'react-jss';
 import { JssGame } from '../Resources/jss_styles';
+import Logo from '.././logo.png';
 import Play from './Play';
 import Rooms from './Rooms';
 
@@ -150,11 +151,15 @@ class Game extends Component {
 
     return (
       <div className={classes.container}>
-        <div className={classes.createRoomWrap}>
-          <button className={classes.createRoomButton} onClick={this.createRoom}>Create Room</button>
+        <div className={classes.logoWrap}>
+          <img className={classes.logoImg} src={Logo} alt="" />
         </div>
+
         <div className={classes.listWrap}>
-          <h3 className={classes.listTitle}>Lobby List</h3>
+          <div className={classes.createRoomWrap}>
+            <h3 className={classes.listTitle}>Lobby List</h3>
+            <button className={classes.createRoomButton} onClick={this.createRoom}>Create Room</button>
+          </div>
           <Scrollbars style={{ height: 216 }}>
             <ul className={classes.list}>
               <Rooms rooms={this.state.list} handleClick={this.addPlayer} />

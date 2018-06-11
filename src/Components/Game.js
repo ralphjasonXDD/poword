@@ -66,7 +66,7 @@ class Game extends Component {
   }
 
   updateRoomList(snapshot) {
-    let room_list = this.state.list; 
+    let room_list = this.state.list;
     room_list = room_list.filter(r => r !== snapshot.key)
     this.setState({ list:room_list });
   }

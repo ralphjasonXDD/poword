@@ -189,11 +189,6 @@ class Play extends Component {
     });
   }
 
-  getGameInitTime = () => {
-    const currentTime = (new Date()).getTime();
-    return (((currentTime + GAME_TIME_RANGE) - currentTime) / 1000);
-  }
-
   getOpponents() {
     const playerRef = fire.database().ref('player').orderByChild('gameId').equalTo(this.state.gameId);
     playerRef.on('child_added', (snapshot) => {

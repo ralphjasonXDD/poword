@@ -4,13 +4,14 @@ import { JssGameResult } from '../Resources/jss_styles.js';
 import GameResultScore from './GameResultScore';
 
 const GameResult = (props) => {
-  const status = function() {
-    if (props.gameData.player['score'] === props.gameData.opponent['score'])
-      return "DRAW";
-    else if (props.gameData.player['score'] > props.gameData.opponent['score'])
-      return "YOU WIN";
-    else
-      return "YOU LOSE";
+  const status = () => {
+    if (props.gameData.player['score'] === props.gameData.opponent['score']) {
+      return 'DRAW';
+    } else if (props.gameData.player['score'] > props.gameData.opponent['score']) {
+      return 'YOU WIN';
+    }
+
+    return 'YOU LOSE';
   };
 
   return (

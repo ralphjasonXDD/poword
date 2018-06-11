@@ -11,7 +11,7 @@ const SOUNDS = {
 
 class StartTimer extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       startTime: 4,
       displayTime: 'READY',

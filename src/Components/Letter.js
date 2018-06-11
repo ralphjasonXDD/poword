@@ -7,7 +7,7 @@ const Letter = (props) => {
     letter: {
       color: props.letterStyle[0],
       backgroundColor: props.letterStyle[1],
-      boxShadow:props.letterStyle[2]
+      boxShadow: props.letterStyle[2],
     },
     wordScore: {
       fontSize: '13px',

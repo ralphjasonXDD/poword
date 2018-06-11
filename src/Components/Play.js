@@ -157,9 +157,7 @@ class Play extends Component {
         startTime = 0;
       }
 
-        console.log('play play1');
       if (!this.state.isPlay && inGameCount === NUM_PLAYER) {
-        console.log('play play');
         this.setState({
           gameTime: startTime,
           isPlay: true,
